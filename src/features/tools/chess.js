@@ -27,7 +27,7 @@ function sanitize(c) {
 }
 
 export function chessScreen(el) {
-  const saved = loadState('chess', {});
+  const saved = loadState('chess', {}) ?? {};
   let cfg = { base: M.clamp(Number(saved.cfg?.base) || 5, 1, 180), inc: M.clamp(Number(saved.cfg?.inc) || 0, 0, 60) };
   let game = sanitize(saved.game) ?? M.newChess(cfg.base, cfg.inc);
   const save = () => saveState('chess', { cfg, game });

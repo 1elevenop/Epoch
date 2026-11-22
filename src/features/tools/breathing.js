@@ -8,9 +8,9 @@ import * as M from './models.js';
 const STEP_LABELS = ['In', 'Hold', 'Out', 'Hold'];
 
 function load() {
-  const s = loadState('breathing', {});
+  const s = loadState('breathing', {}) ?? {};
   return {
-    pattern: s.pattern in M.BREATHING || s.pattern === 'custom' ? s.pattern : 'box',
+    pattern: Object.hasOwn(M.BREATHING, s.pattern ?? '') || s.pattern === 'custom' ? s.pattern : 'box',
     custom: M.sanitizeSteps(s.custom ?? [4, 2, 6, 0]),
     cycles: M.clamp(Math.round(Number(s.cycles) || 6), 1, 50),
   };

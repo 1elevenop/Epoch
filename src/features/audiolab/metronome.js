@@ -12,8 +12,8 @@ const CLICK = { accent: [1600, 1], mid: [1250, 0.8], beat: [1000, 0.7], sub: [75
 function sanitize(s) {
   return {
     bpm: clamp(Math.round(Number(s?.bpm) || 100), BPM_MIN, BPM_MAX),
-    sig: s?.sig in SIGNATURES ? s.sig : '4/4',
-    subdiv: s?.subdiv in SUBDIVISIONS ? s.subdiv : 'none',
+    sig: Object.hasOwn(SIGNATURES, s?.sig ?? '') ? s.sig : '4/4',
+    subdiv: Object.hasOwn(SUBDIVISIONS, s?.subdiv ?? '') ? s.subdiv : 'none',
     volume: clamp(Number(s?.volume ?? DEFAULT_VOLUME) || 0, 0, 1),
   };
 }

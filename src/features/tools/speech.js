@@ -8,7 +8,7 @@ import { getCtx, unlock, beepAt } from '../../core/audio.js';
 import * as M from './models.js';
 
 function load() {
-  const s = loadState('speech', {});
+  const s = loadState('speech', {}) ?? {};
   const yellow = M.clamp(Math.round(Number(s.yellow) || 5), 1, 180);
   return { yellow, red: M.clamp(Math.round(Number(s.red) || 7), yellow + 1, 181), run: M.sanitizeRun(s.run) };
 }

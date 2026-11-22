@@ -65,7 +65,7 @@ const TR_IDS = new Set(TRANSITIONS.map((t) => t.id));
 function checkSettings(s, err) {
   if (!s || typeof s !== 'object' || isArr(s)) return err('settings: not an object');
   for (const [k, v] of Object.entries(s)) {
-    if (!(k in DEFAULT_SETTINGS)) {
+    if (!Object.hasOwn(DEFAULT_SETTINGS, k)) { // own keys only: rejects __proto__, constructor …
       err(`settings: unknown key "${k}"`);
       continue;
     }
@@ -109,7 +109,7 @@ export function validateBackup(data) {
   data.tasks.forEach((t, i) => checkTask(t, i + 1, err));
   data.sessions.forEach((s, i) => checkSession(s, i + 1, err));
   checkSettings(data.settings, err);
-  const ids = (arr) => new Set(arr.map((x) => x.id)).size === arr.length;
+  const ids = (arr) => new Set(arr.map((x) => x?.id)).size === arr.length;
   if (!ids(data.alarms)) err('duplicate alarm ids');
   if (!ids(data.tasks)) err('duplicate task ids');
   if (!ids(data.sessions)) err('duplicate session ids');
@@ -125,6 +125,12 @@ export function parseBackup(text) {
   } catch {
     return { data: null, ok: false, errors: ['The file is not valid JSON'], counts: null };
   }
-  const v = validateBackup(data);
+  let v;
+  try {
+    v = validateBackup(data);
+  } catch (e) {
+    // A validator bug must never let a file through or crash the import screen.
+    v = { ok: false, errors: [`The file could not be checked (${e?.message ?? e})`], counts: null };
+  }
   return { ...v, data: v.ok ? data : null };
 }

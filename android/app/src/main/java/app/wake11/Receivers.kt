@@ -49,6 +49,8 @@ class BootReceiver : BroadcastReceiver() {
 /** System time or timezone changed: recompute every next trigger from the rule. */
 class TimeChangeReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
+        // Exported for the system broadcasts; ignore anything else another app might send.
+        if (intent.action != Intent.ACTION_TIME_CHANGED && intent.action != Intent.ACTION_TIMEZONE_CHANGED) return
         AlarmScheduler.rescheduleAll(context)
         AlarmPlugin.emit("alarmsChanged", org.json.JSONObject())
     }

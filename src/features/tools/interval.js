@@ -30,7 +30,7 @@ const say = (text) => {
 };
 
 function loadAll() {
-  const s = loadState('interval', {});
+  const s = loadState('interval', {}) ?? {};
   return {
     plan: M.sanitizePlan(s.plan ?? M.TABATA),
     presets: (Array.isArray(s.presets) ? s.presets : []).slice(0, 20).map(M.sanitizePlan),

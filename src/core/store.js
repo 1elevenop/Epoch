@@ -137,7 +137,7 @@ export function replaceSettings(obj) {
 }
 
 export function setSetting(key, value) {
-  if (!(key in DEFAULT_SETTINGS)) throw new Error(`Unknown setting: ${key}`);
+  if (!Object.hasOwn(DEFAULT_SETTINGS, key)) throw new Error(`Unknown setting: ${key}`);
   const next = { ...getSettings(), [key]: value };
   writeRaw(JSON.stringify(next));
   return next;

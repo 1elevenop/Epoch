@@ -1,5 +1,27 @@
 # Changelog
 
+## Security hardening for the GitHub release (2026-11-23)
+
+### Changed
+- **No network at all:** `INTERNET` and `ACCESS_NETWORK_STATE` removed with `tools:node="remove"` (the second came from Google ML Kit's usage logging). The QR scanner runs in Google Play services and still works.
+- **Data stays on the phone (D8):** `allowBackup="false"`, `fullBackupContent="false"`, `data_extraction_rules.xml` excludes everything from cloud backup and device transfer. Export / import JSON remains the backup.
+- **Content-Security-Policy** in `index.html`: scripts, fonts and connections from the app only; no `eval`, objects, base or form targets; inline styles allowed for 3 `style` attributes.
+- `TimeChangeReceiver` (exported) now ignores everything except `TIME_SET` / `TIMEZONE_CHANGED`.
+
+### Fixed
+- Backup import accepted prototype names (`__proto__`, `constructor`, …) as setting keys (`in` → `Object.hasOwn`); same pattern fixed in `setSetting`, metronome and breathing state loaders.
+- A `null` inside a backup list crashed the validator; `parseBackup` now always returns a clean error instead of throwing.
+- Interval, breathing, speech and chess screens no longer crash on a `null` saved state.
+
+### Removed
+- Capacitor template tests (`ExampleUnitTest`, `ExampleInstrumentedTest`); local folder path in CHANGELOG.
+
+### Tests
+- `tests/security.test.js` (6 tests): crafted backup files, garbage JSON, prototype keys, `setSetting` names, `esc()`. 115 tests pass.
+
+### Device test results
+- 2026-11-23, phone (debug build, same key, data kept): Android lists no INTERNET / network-state permission and no ALLOW_BACKUP flag; 25 screens opened with 0 CSP violations and 0 JS errors; fonts load; native bridge answers; Google QR scanner opens and closes cleanly. Release 0.6.0 reinstalled over it and runs. ✅
+
 ## Version control + signed release 0.6.0 (2026-11-23)
 
 ### Added
@@ -12,7 +34,7 @@
 - `app-release.apk` 0.6.0: apksigner verifies (v2), signer `CN=WAKE11`, cert SHA-256 `9eb4f185cc72353e2ae5a66e7f521cabbc2a27b9f16e8042096b320389accb3d`, not debuggable.
 
 ### Device migration (debug key → own key), 2026-11-23 00:17–00:19
-- Full backup first (localStorage, IndexedDB, native alarms + log, raw shared_prefs) to `D:\Aa Dev\WAKE11-backups\` (outside the repo).
+- Full backup first (localStorage, IndexedDB, native alarms + log, raw shared_prefs) to a private folder outside the repo.
 - Owner approved the uninstall → old app removed → debug build with the new key installed → backup restored (web storage compared key by key: identical; 1 alarm-log entry; timer sound re-synced) → release APK installed over it with `adb install -r` → opens on the Clock tab with the restored settings. ✅
 - Owner to redo: notifications, battery "Unrestricted", Do Not Disturb access, microphone; re-add home-screen widgets.
 
