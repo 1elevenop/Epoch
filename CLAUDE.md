@@ -28,5 +28,8 @@ Source of truth: `BLUEPRINT.md`. If a decision changes, update BLUEPRINT.md and 
 ## Project facts
 - App name: WAKE11 · appId `app.wake11` · web root `src/`, build output `dist/`.
 - **No browser app.** Develop and test on the phone only (wireless adb); never use a browser preview or a dev server. `src/core/bridge.js` is native-only; the fake plugin in `tests/support/` is for unit tests only.
-- Commands: `npm test` (vitest), `npm run build`, `npx cap sync android`, then `cd android && gradlew installDebug` (JAVA_HOME = Android Studio `jbr`). For on-phone checks, drive the WebView over adb (`adb forward tcp:9222 localabstract:webview_devtools_remote_<pid>`).
+- Commands: `npm test` (vitest), `npm run build`, `npx cap sync android`, then `cd android && gradlew installDebug` (JAVA_HOME = Android Studio `jbr`). Release: `gradlew assembleRelease` → `android/app/build/outputs/apk/release/app-release.apk`.
+- **Signing:** `android/keystore.properties` (git-ignored) → owner's keystore outside the repo. Debug and release both use that key, so they install over each other without data loss. Never commit keystores or passwords; never uninstall the app on the phone without a backup and the owner's OK.
+- On-phone checks over adb/WebView debugging need the **debug** build (release is not debuggable); install release afterwards with `adb install -r`.
+- Git: repo on `main`, local only (no remote). For on-phone checks, drive the WebView over adb (`adb forward tcp:9222 localabstract:webview_devtools_remote_<pid>`).
 - Windows dev box: Android SDK at `%LOCALAPPDATA%\Android\Sdk`, JDK = Android Studio's `jbr`.

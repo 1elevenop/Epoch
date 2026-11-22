@@ -1,5 +1,21 @@
 # Changelog
 
+## Version control + signed release 0.6.0 (2026-11-23)
+
+### Added
+- Git repository (`main`): `.gitignore` extended (keystores, `keystore.properties`, local Claude data), `.gitattributes` (LF, CRLF for .bat, binaries marked). Local only, no remote.
+- Release signing: `android/app/build.gradle` reads `android/keystore.properties` (git-ignored; template `keystore.properties.example`). Release builds stop with a clear message without it. Debug builds use the same key when present, so debug and release install over each other.
+- Version 0.6.0 (versionCode 6), shown in Settings.
+
+### Release
+- Owner created the keystore (RSA 4096, PKCS12, alias `wake11`, `CN=WAKE11`) outside the repo with their own password.
+- `app-release.apk` 0.6.0: apksigner verifies (v2), signer `CN=WAKE11`, cert SHA-256 `9eb4f185cc72353e2ae5a66e7f521cabbc2a27b9f16e8042096b320389accb3d`, not debuggable.
+
+### Device migration (debug key → own key), 2026-11-23 00:17–00:19
+- Full backup first (localStorage, IndexedDB, native alarms + log, raw shared_prefs) to `D:\Aa Dev\WAKE11-backups\` (outside the repo).
+- Owner approved the uninstall → old app removed → debug build with the new key installed → backup restored (web storage compared key by key: identical; 1 alarm-log entry; timer sound re-synced) → release APK installed over it with `adb install -r` → opens on the Clock tab with the restored settings. ✅
+- Owner to redo: notifications, battery "Unrestricted", Do Not Disturb access, microphone; re-add home-screen widgets.
+
 ## Phase 6 — Home-screen widgets (2026-11-23)
 
 ### Decisions
