@@ -13,7 +13,7 @@ const SCREENS = [
   ['stopwatch', 'Stopwatch'],
   ['focus', 'Focus'],
 ];
-const APP_VERSION = '0.5.6 (Phase 5)';
+const APP_VERSION = '0.6.0';
 
 function themeTile(t, selected) {
   const v = t.t;
