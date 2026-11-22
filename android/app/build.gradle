@@ -34,6 +34,11 @@ android {
         }
     }
     buildTypes {
+        // Debug builds use the same key when it is set up, so debug and release install over each
+        // other on the phone without uninstalling (which would wipe alarms and settings).
+        debug {
+            if (keystoreProps['storeFile']) signingConfig signingConfigs.release
+        }
         release {
             if (!keystoreProps['storeFile']) {
                 gradle.taskGraph.whenReady { graph ->
