@@ -1,5 +1,15 @@
 # Changelog
 
+## Package renamed to app.wake11 (2026-11-23)
+
+### Changed
+- Package / application id `app.wake11` (decision D-R4), Kotlin sources in `android/app/src/main/java/app/wake11/`. Internal intent actions follow (`app.wake11.FIRE`, …).
+- Git history rewritten (before any public release) so no commit contains the old id or the owner's name; older CHANGELOG entries therefore show the new id. Commits use the GitHub noreply address. Pushed to the private repo `1elevenop/WAKE11`.
+- RELEASE_PLAN: D-R3 and D-R4 done.
+
+### Tests
+- 115 JS + 18 Kotlin unit tests pass; debug and release build as `app.wake11` 0.6.0.
+
 ## New logo: D2 (2026-11-23)
 
 ### Decisions

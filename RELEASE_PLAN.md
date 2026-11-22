@@ -11,8 +11,8 @@ Findings below come from checks run on 2026-11-23 (git history scan, `npm audit`
 |---|---|
 | D-R1 | **Public** repository |
 | D-R2 | **MIT** licence |
-| D-R3 | Rewrite commits to the GitHub **noreply** address before the first push |
-| D-R4 | **Change** package id to **`app.wake11`** now (one more backup → uninstall → restore on the phone) |
+| D-R3 | Commits rewritten to the GitHub **noreply** address — done; pushed to private `1elevenop/WAKE11` 2026-11-23 (public on release day) |
+| D-R4 | Package id changed to **`app.wake11`** — done 2026-11-23; name removed from the whole git history |
 | D-R5 | Move `BLUEPRINT.md`, `RELEASE_PLAN.md` to **`docs/`**; `CLAUDE.md` stays at the root |
 | D-R6 | Logo made in **Affinity**; owner chose **D2** (dark tile, blue italic 11, orange bar) — done 2026-11-23 |
 
