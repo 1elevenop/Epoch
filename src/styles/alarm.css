@@ -1,0 +1,105 @@
+/* ---------- Generic bits added in Phase 2 ---------- */
+.muted { color: var(--text-2); font-size: 14px; }
+.lead { font-size: 17px; margin: 0; }
+.row { display: flex; gap: 8px; align-items: center; }
+.sub.left { text-align: left; }
+.back-link { color: var(--accent); text-decoration: none; min-height: var(--touch); display: inline-flex; align-items: center; }
+a.list-item.link { color: var(--text); text-decoration: none; }
+.banner { display: flex; flex-direction: column; gap: 2px; color: var(--text); text-decoration: none; border-color: var(--accent); }
+.banner span { color: var(--text-2); font-size: 14px; }
+body.no-tabbar .tabbar { display: none; }
+body.no-tabbar #view { padding-bottom: calc(var(--safe-bottom) + var(--gap)); }
+
+.toast {
+  position: fixed;
+  left: var(--gap);
+  right: var(--gap);
+  bottom: calc(var(--tabbar-h) + var(--safe-bottom) + 12px);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: var(--raised);
+  border: 1px solid var(--border);
+  animation: fade-in var(--dur) var(--ease);
+}
+.toast-action { min-height: 40px; border: 0; background: none; color: var(--accent); font-weight: 700; }
+
+/* ---------- Alarm list ---------- */
+.alarm-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.alarm-row { position: relative; border-radius: var(--radius); overflow: hidden; touch-action: pan-y; }
+.swipe-bg {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 20px;
+  background: var(--danger);
+  color: #000;
+  font-weight: 700;
+}
+.swipe-fg {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: transform var(--dur) var(--ease);
+}
+.alarm-main { flex: 1; display: flex; flex-direction: column; align-items: flex-start; background: none; border: 0; padding: 0; text-align: left; min-height: var(--touch); }
+.alarm-time { font-size: 40px; font-weight: 300; line-height: 1.1; }
+.alarm-time small { font-size: 16px; margin-left: 4px; color: var(--text-2); }
+.alarm-meta { color: var(--text-2); font-size: 14px; }
+.alarm-next { color: var(--accent); font-size: 13px; }
+.alarm-row.off .alarm-time, .alarm-row.off .alarm-next { color: var(--text-2); }
+
+.toggle { position: relative; width: 56px; height: var(--touch); display: inline-flex; align-items: center; flex: none; }
+.toggle input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.toggle-ui { width: 52px; height: 30px; border-radius: 999px; background: var(--raised); border: 1px solid var(--border); position: relative; transition: background var(--dur); }
+.toggle-ui::after { content: ''; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: var(--text-2); transition: transform var(--dur) var(--ease), background var(--dur); }
+.toggle input:checked + .toggle-ui { background: var(--accent); }
+.toggle input:checked + .toggle-ui::after { transform: translateX(22px); background: #000; }
+.toggle input:focus-visible + .toggle-ui { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ---------- Editor ---------- */
+.editor { overflow-y: auto; }
+.sheet-title { margin: 0; flex: 1; text-align: center; font-size: 17px; align-self: center; }
+.form { display: flex; flex-direction: column; gap: 16px; padding-bottom: 40px; }
+.time-input { font-size: 44px; width: 100%; font-weight: 300; text-align: center; background: none; border: 0; color: var(--text); color-scheme: dark; min-height: 80px; }
+.days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; border: 0; padding: 0; margin: 0; }
+.day-chip { min-height: var(--touch); border-radius: 50%; border: 1px solid var(--border); background: var(--raised); color: var(--text-2); font-weight: 600; }
+.day-chip[aria-pressed='true'] { background: var(--accent); color: #000; border-color: var(--accent); }
+.field { display: flex; flex-direction: column; gap: 6px; color: var(--text-2); font-size: 14px; }
+.field output { color: var(--text); }
+.field input[type='range'] { accent-color: var(--accent); min-height: 32px; }
+select.input { appearance: auto; color-scheme: dark; }
+.switch-row { display: flex; align-items: center; justify-content: space-between; min-height: var(--touch); }
+.switch-row input { width: 24px; height: 24px; accent-color: var(--accent); }
+.form-error { color: var(--danger); margin: 0; min-height: 1em; }
+
+/* ---------- Reliability & onboarding ---------- */
+.rel-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.rel-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+.rel-icon { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; flex: none; }
+.rel-item.ok .rel-icon { background: var(--success); color: #000; }
+.rel-item.bad .rel-icon { background: var(--danger); color: #000; }
+.rel-text { flex: 1; display: flex; flex-direction: column; }
+.rel-text span { color: var(--text-2); font-size: 14px; }
+.steps { margin: 8px 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; color: var(--text); }
+.card a { color: var(--accent); }
+.onboarding { min-height: calc(100vh - var(--safe-top) - var(--safe-bottom) - 2 * var(--gap)); }
+.dots { list-style: none; display: flex; gap: 6px; padding: 0; margin: 0; }
+.dots li { flex: 1; font-size: 0; height: 4px; border-radius: 2px; background: var(--raised); }
+.dots li.on { background: var(--accent); }
+.ticks { padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+.ob-nav { display: flex; justify-content: space-between; margin-top: auto; padding-top: 24px; }
+.banner.danger { border-color: var(--danger); gap: 6px; }
+.banner.danger strong { color: var(--danger); }
+.banner.danger .btn { align-self: flex-start; margin-top: 4px; }

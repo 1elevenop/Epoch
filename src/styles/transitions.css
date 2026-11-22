@@ -1,0 +1,100 @@
+/* Digit slots + 9 transitions (features/bigdisplay/transitions). Only transform/opacity/clip/filter. */
+.bd-digits { display: flex; align-items: center; justify-content: center; line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bd-slot { position: relative; display: inline-block; width: var(--slot-w, 0.66em); height: 1.12em; }
+.bd-slot > * { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; line-height: 1.12em; }
+.bd-sep { display: inline-block; width: 0.3em; text-align: center; opacity: 0.85; }
+
+/* 1 · Flip clock */
+/* Every half is the SAME full-size card with the same digit layout, clipped to its half, so top and
+   bottom line up exactly on every font; flaps hinge on the card's centre line (transform-origin 50%). */
+[data-transition='flip'] .bd-slot { width: calc(var(--slot-w, 0.66em) + 0.12em); margin: 0 0.04em; perspective: 14em; font-weight: 700; }
+[data-transition='flip'] .bd-slot > * {
+  border-radius: 0.08em; backface-visibility: hidden; transform-origin: 50% 50%;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--raised) 85%, #fff 15%) 0%, var(--raised) 49%, var(--surface) 51%, color-mix(in srgb, var(--surface) 80%, #000 20%) 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+.fl-top { clip-path: inset(0 0 50% 0); }
+.fl-bot { clip-path: inset(50% 0 0 0); }
+/* hinge gap across the card + two side tabs, like a real split-flap */
+[data-transition='flip'] .bd-slot::after { content: ''; position: absolute; left: 0; right: 0; top: calc(50% - 0.012em); height: 0.024em; background: rgba(0, 0, 0, 0.85); z-index: 5; }
+[data-transition='flip'] .bd-slot::before {
+  content: ''; position: absolute; left: -0.025em; right: -0.025em; top: calc(50% - 0.05em); height: 0.1em; z-index: 6; border-radius: 0.02em;
+  background: linear-gradient(90deg, #5a5d63 0 0.05em, transparent 0.05em calc(100% - 0.05em), #5a5d63 calc(100% - 0.05em));
+}
+/* flap shading uses an overlay's opacity (filters on clipped 3D layers render unreliably on Android) */
+.fl-flap-top::after, .fl-flap-bot::after { content: ''; position: absolute; inset: 0; background: #000; pointer-events: none; }
+.fl-flap-top { z-index: 3; animation: flipTop 300ms ease-in forwards; }
+.fl-flap-top::after { opacity: 0; animation: shadeIn 300ms ease-in forwards; }
+.fl-flap-bot { z-index: 3; transform: rotateX(90deg); animation: flipBot 300ms 300ms cubic-bezier(0.2, 0.7, 0.3, 1) forwards; }
+.fl-flap-bot::after { opacity: 0.5; animation: shadeOut 300ms 300ms ease-out forwards; }
+@keyframes flipTop { from { transform: rotateX(0deg); } to { transform: rotateX(-90deg); } }
+/* Lands with ease-out, no overshoot: an overshoot swings the flap toward the viewer and it spills past the card. */
+@keyframes flipBot { from { transform: rotateX(90deg); } to { transform: rotateX(0deg); } }
+@keyframes shadeIn { to { opacity: 0.5; } }
+@keyframes shadeOut { to { opacity: 0; } }
+
+/* 2 · Glitch */
+[data-transition='glitch'] .bd-slot::before, [data-transition='glitch'] .bd-slot::after {
+  content: attr(data-ch); position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; line-height: 1.12em;
+}
+.gl-on::before { color: #ff2d55; opacity: 0.9 !important; animation: glA 220ms steps(2) both; mix-blend-mode: screen; }
+.gl-on::after { color: #00e5ff; opacity: 0.9 !important; animation: glB 220ms steps(2) both; mix-blend-mode: screen; }
+.gl-on .gl-txt { animation: glMain 220ms steps(3) both; }
+@keyframes glA { 0% { clip-path: inset(0 0 66% 0); transform: translate(-0.08em, 0); } 50% { clip-path: inset(40% 0 30% 0); transform: translate(0.06em, 0); } 100% { clip-path: inset(70% 0 0 0); transform: translate(-0.03em, 0); } }
+@keyframes glB { 0% { clip-path: inset(60% 0 0 0); transform: translate(0.08em, 0); } 50% { clip-path: inset(0 0 55% 0); transform: translate(-0.05em, 0); } 100% { clip-path: inset(30% 0 40% 0); transform: translate(0.02em, 0); } }
+@keyframes glMain { 0% { transform: skewX(-12deg); opacity: 0.6; } 50% { transform: translateX(0.04em); opacity: 1; } 100% { transform: none; } }
+
+/* 3 · Odometer roll */
+[data-transition='odometer'] .bd-slot { overflow: hidden; }
+.od-roll { bottom: auto !important; height: 200%; flex-direction: column; animation: odRoll 440ms cubic-bezier(0.3, 1.35, 0.5, 1) forwards; }
+.od-cell { height: 50%; display: flex; align-items: center; justify-content: center; }
+@keyframes odRoll { 0% { transform: translateY(0); filter: blur(0); } 45% { filter: blur(0.025em); } 100% { transform: translateY(-50%); filter: blur(0); } }
+
+/* 4 · Matrix scramble */
+.sc-on .sc-txt { color: #39ff14; text-shadow: 0 0 0.15em #39ff14; font-family: 'Share Tech Mono', monospace; }
+
+/* 5 · Nixie tube */
+[data-transition='nixie'] .bd-slot { color: #ffb15c; margin: 0 0.03em; border-radius: 0.3em 0.3em 0.08em 0.08em;
+  background: radial-gradient(ellipse at 50% 40%, rgba(255, 140, 40, 0.12), rgba(20, 10, 4, 0.6) 70%); box-shadow: inset 0 0 0.08em rgba(255, 200, 150, 0.25); }
+.nx-ghost { color: #ffb15c; opacity: 0.07; text-shadow: none; }
+.nx-lit { text-shadow: 0 0 0.06em #ffd08a, 0 0 0.2em #ff7a1a, 0 0 0.45em #ff5a00; }
+.nx-out { animation: nxOut 380ms ease-in forwards; }
+.nx-in { opacity: 0; animation: nxIn 500ms 120ms ease-out forwards; }
+@keyframes nxOut { to { opacity: 0; filter: blur(0.04em); } }
+@keyframes nxIn { 0% { opacity: 0; } 30% { opacity: 1; filter: brightness(1.8); } 45% { opacity: 0.6; } 100% { opacity: 1; filter: brightness(1); } }
+
+/* 6 · Hologram scan */
+[data-transition='holo'] .bd-slot { color: #9ff0ff; }
+.ho-txt { text-shadow: 0 0 0.12em rgba(120, 230, 255, 0.8); }
+.ho-old { animation: hoOld 520ms linear forwards; }
+.ho-new { clip-path: inset(0 0 100% 0); animation: hoNew 520ms linear forwards, hoFlick 520ms steps(6) forwards; }
+.ho-beam { inset: auto 0 auto 0 !important; top: 0; height: 0.03em; background: #c9f8ff; box-shadow: 0 0 0.12em 0.04em #6fe3ff; animation: hoBeam 520ms linear forwards; }
+@keyframes hoOld { to { clip-path: inset(100% 0 0 0); opacity: 0.3; } }
+@keyframes hoNew { to { clip-path: inset(0 0 0 0); } }
+@keyframes hoFlick { 0%, 40%, 80% { opacity: 1; } 20%, 60% { opacity: 0.55; } 100% { opacity: 1; } }
+@keyframes hoBeam { to { top: 100%; opacity: 0.2; } }
+
+/* 7 · Particle burst */
+.pa-canvas { width: 100%; height: 100%; }
+
+/* 8 · Liquid morph */
+.lq-old { animation: lqOld 600ms ease-in forwards; }
+.lq-new { opacity: 0; animation: lqNew 600ms 120ms ease-out forwards; }
+@keyframes lqOld { to { opacity: 0; transform: scale(0.55) translateY(0.15em); } }
+@keyframes lqNew { 0% { opacity: 0; transform: scale(1.35) translateY(-0.1em); } 100% { opacity: 1; transform: none; } }
+
+/* 9 · 7-segment LED */
+[data-transition='segment'] .bd-slot { width: 0.62em !important; margin: 0 0.04em; }
+.sg-box { inset: 0.1em 0.06em !important; transform: skewX(-6deg); display: block !important; }
+.sg { position: absolute; background: currentColor; opacity: 0.08; border-radius: 0.05em; transition: opacity 140ms ease, box-shadow 140ms ease; }
+.sg.on { opacity: 1; box-shadow: 0 0 0.08em currentColor; }
+.sg-a, .sg-g, .sg-d { left: 13%; right: 13%; height: 9%; }
+.sg-a { top: 0; }
+.sg-g { top: 45.5%; }
+.sg-d { bottom: 0; }
+.sg-b, .sg-c, .sg-e, .sg-f { width: 15%; height: 42%; }
+.sg-f { top: 5%; left: 0; }
+.sg-b { top: 5%; right: 0; }
+.sg-e { bottom: 5%; left: 0; }
+.sg-c { bottom: 5%; right: 0; }
+.sg-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

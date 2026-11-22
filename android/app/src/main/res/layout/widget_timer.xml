@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/w_root" android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:gravity="center" android:padding="10dp" android:background="@drawable/widget_bg"
+    android:contentDescription="Timer. Opens the Timer tab.">
+    <TextView android:id="@+id/w_label" android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:textColor="#C8CDD2" android:textSize="13sp" android:maxLines="1" android:ellipsize="end" />
+    <Chronometer android:id="@+id/w_chrono" android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:textColor="#FFFFFF" android:textSize="34sp" />
+    <TextView android:id="@+id/w_idle" android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="No timer running" android:textColor="#FF8A3D" android:textSize="15sp" />
+</LinearLayout>

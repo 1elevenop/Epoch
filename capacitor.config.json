@@ -1,0 +1,9 @@
+{
+  "appId": "app.wake11",
+  "appName": "WAKE11",
+  "webDir": "dist",
+  "backgroundColor": "#000000",
+  "android": {
+    "backgroundColor": "#000000"
+  }
+}

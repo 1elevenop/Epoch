@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">WAKE11</string>
+    <string name="title_activity_main">WAKE11</string>
+    <string name="package_name">app.wake11</string>
+    <string name="custom_url_scheme">app.wake11</string>
+    <string name="widget_digital_desc">Time, date and next alarm</string>
+    <string name="widget_digital_label">WAKE11 Clock</string>
+    <string name="widget_analog_desc">Analog clock</string>
+    <string name="widget_analog_label">WAKE11 Analog clock</string>
+    <string name="widget_world_desc">Up to 3 world clocks</string>
+    <string name="widget_world_label">WAKE11 World clocks</string>
+    <string name="widget_alarm_desc">Next alarm and quick nap buttons</string>
+    <string name="widget_alarm_label">WAKE11 Alarm</string>
+    <string name="widget_timer_desc">Running timer</string>
+    <string name="widget_timer_label">WAKE11 Timer</string>
+    <string name="widget_countdown_desc">Nearest event countdown</string>
+    <string name="widget_countdown_label">WAKE11 Countdown</string>
+</resources>

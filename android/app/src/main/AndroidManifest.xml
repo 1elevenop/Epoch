@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode|navigation|density"
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBarLaunch"
+            android:launchMode="singleTask"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
+        <service android:name=".RingService" android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
+
+        <activity android:name=".RingActivity" android:exported="false"
+            android:showWhenLocked="true" android:turnScreenOn="true"
+            android:launchMode="singleInstance" android:excludeFromRecents="true"
+            android:taskAffinity="app.wake11.ring"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode|navigation|density"
+            android:theme="@style/AppTheme.Ring" />
+
+        <receiver android:name=".AlarmReceiver" android:exported="false" />
+        <receiver android:name=".SunriseReceiver" android:exported="false" />
+        <!-- Home-screen widgets (Phase 6) -->
+        <receiver android:name=".DigitalWidget" android:exported="false" android:label="@string/widget_digital_label">
+            <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_digital_info" />
+        </receiver>
+        <receiver android:name=".AnalogWidget" android:exported="false" android:label="@string/widget_analog_label">
+            <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_analog_info" />
+        </receiver>
+        <receiver android:name=".WorldWidget" android:exported="false" android:label="@string/widget_world_label">
+            <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_world_info" />
+        </receiver>
+        <receiver android:name=".AlarmWidget" android:exported="false" android:label="@string/widget_alarm_label">
+            <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_alarm_info" />
+        </receiver>
+        <receiver android:name=".TimerWidget" android:exported="false" android:label="@string/widget_timer_label">
+            <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_timer_info" />
+        </receiver>
+        <receiver android:name=".CountdownWidget" android:exported="false" android:label="@string/widget_countdown_label">
+            <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_countdown_info" />
+        </receiver>
+        <receiver android:name=".WidgetActionReceiver" android:exported="false" />
+        <activity android:name=".SunriseActivity" android:exported="false"
+            android:showWhenLocked="true" android:turnScreenOn="true"
+            android:launchMode="singleTask" android:excludeFromRecents="true"
+            android:taskAffinity="app.wake11.sunrise"
+            android:theme="@style/AppTheme.Ring" />
+        <receiver android:name=".WakeCheckReceiver" android:exported="false" />
+        <receiver android:name=".TimerReceiver" android:exported="false" />
+        <service android:name=".TimerRingService" android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
+        <activity android:name=".TimerDoneActivity" android:exported="false"
+            android:showWhenLocked="true" android:turnScreenOn="true"
+            android:launchMode="singleTask" android:excludeFromRecents="true"
+            android:taskAffinity="app.wake11.timer"
+            android:theme="@style/AppTheme.Ring" />
+
+        <receiver android:name=".BootReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".TimeChangeReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+    <!-- Permissions -->
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+    <!-- Audio Lab tuner: the WebView asks for the mic on first use (Capacitor requests it at runtime) -->
+    <!-- Focus mode: Do Not Disturb during a session (owner grants access once in Settings) -->
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+</manifest>

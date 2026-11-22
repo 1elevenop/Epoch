@@ -1,0 +1,53 @@
+/* Big display overlay (landscape-first). Digit size follows the short side of the screen. */
+@import './transitions.css';
+
+body.bd-open { overflow: hidden; }
+body.bd-open #app { visibility: hidden; }
+.bd-overlay {
+  position: fixed; inset: 0; z-index: 45;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2vh;
+  padding: max(var(--safe-top), 12px) max(var(--safe-bottom), 16px);
+  color: var(--text);
+  animation: fade-in var(--dur) var(--ease);
+}
+.bd-label { margin: 0; color: var(--accent); font-size: clamp(14px, 4.5vh, 28px); letter-spacing: 0.12em; text-transform: uppercase; font-family: var(--digit-font, inherit); }
+.bd-digits-host { font-family: var(--digit-font, inherit); font-weight: 500; font-size: min(56vh, 20vw); }
+.bd-overlay.over .bd-digits-host { color: var(--danger); --glow: var(--danger); }
+.bd-progress { width: min(70vw, 900px); height: 4px; border-radius: 2px; background: var(--raised); overflow: hidden; }
+.bd-progress-fill { height: 100%; background: var(--accent); transform-origin: left; transform: scaleX(0); transition: transform 300ms linear; box-shadow: 0 0 10px var(--accent); }
+.bd-close { position: absolute; top: max(var(--safe-top), 12px); right: 16px; opacity: 0.6; }
+
+@media (orientation: portrait) {
+  .bd-digits-host { font-size: 18vw; }
+}
+
+/* ⤢ button in screen headers */
+.bd-open-btn { font-size: 20px; }
+.screen-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+
+/* ---------- Settings galleries ---------- */
+.theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.theme-tile { display: flex; flex-direction: column; gap: 6px; padding: 0; border: 2px solid transparent; border-radius: 14px; background: none; color: var(--text); }
+.theme-tile.selected { border-color: var(--accent); }
+.tt-preview { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; height: 72px;
+  border-radius: 12px; background: var(--bg); border: 1px solid color-mix(in srgb, var(--text) 18%, transparent); overflow: hidden; }
+.tt-digits { color: var(--text); font-family: var(--digit-font, inherit); font-size: 22px; text-shadow: 0 0 8px var(--glow); }
+.tt-bar { width: 60%; height: 4px; border-radius: 2px; background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+.tt-preview[data-tt='synthwave'] { background: linear-gradient(180deg, #1a0b2e, #5b1460 80%, #a8326e); }
+.tt-preview[data-tt='neon'], .tt-preview[data-tt='blueprint'] { background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px); background-size: 12px 12px; }
+.tt-preview[data-tt='matrix'] { background-image: repeating-linear-gradient(0deg, rgba(57,255,20,.08) 0 1px, transparent 1px 3px); }
+.tt-preview[data-tt='aurora'], .tt-preview[data-tt='holo'] { background-image: radial-gradient(circle at 25% 30%, rgba(93,255,176,.35), transparent 50%), radial-gradient(circle at 80% 70%, rgba(179,136,255,.35), transparent 50%); }
+.tt-name { font-size: 12px; text-align: center; color: var(--text-2); }
+.swatches { display: flex; flex-wrap: wrap; gap: 10px; }
+.swatch { width: var(--touch); height: var(--touch); border-radius: 50%; border: 2px solid var(--border); background: var(--c); }
+.swatch.auto { background: var(--raised); color: var(--text); font-weight: 700; }
+.swatch.on { outline: 3px solid var(--text); outline-offset: 2px; }
+.seg { display: flex; background: var(--surface); border-radius: 999px; padding: 4px; gap: 4px; }
+.seg-btn { flex: 1; min-height: 40px; border: 0; border-radius: 999px; background: none; color: var(--text-2); font-weight: 600; }
+.seg-btn[aria-selected='true'] { background: var(--accent); color: var(--on-accent); }
+.tr-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.tr-card { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 4px; border-radius: 14px; border: 2px solid var(--border); background: var(--surface); color: var(--text); }
+.tr-card.selected { border-color: var(--accent); box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 40%, transparent); }
+.tr-preview { font-size: 40px; height: 52px; display: flex; color: var(--text); font-family: var(--digit-font, inherit); }
+.tr-name { font-size: 12px; font-weight: 600; }
+.tr-used { font-size: 10px; color: var(--accent); min-height: 12px; }
