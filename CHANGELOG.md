@@ -1,5 +1,24 @@
 # Changelog
 
+## New logo: D2 (2026-11-23)
+
+### Decisions
+- GitHub release decisions (RELEASE_PLAN §0): public repo, MIT licence, commits rewritten to the GitHub noreply address before the first push, package id to become `app.wake11`, developer notes to `docs/`, logo made in Affinity.
+- Logo: owner chose **D2** — OLED-black tile with a faint diagonal grid, blue gradient italic "11", orange bar behind (from drafts A–D and the D1–D6 variations, made in Affinity).
+
+### Added
+- `scripts/gen-icons.py`: one source of geometry for the master SVGs and the Android vector icons.
+- `media/logo/`: `wake11-icon.svg`, `wake11-mark.svg`, white/black one-colour marks, PNGs (icon 512/1024, mark 512) exported from Affinity; drafts and previews in `media/logo/drafts/`.
+- Adaptive launcher icon as vector drawables: background (black + grid), foreground (11 + bar), **monochrome** layer ("11") for Android 13+ themed icons.
+- Notification icon `ic_stat_wake11` used by ringing alarms, timers, sunrise and wake-check notifications.
+- Launch screen: Android 12+ system splash (`windowSplashScreenBackground` black, mark as icon), `splash.xml` for older versions.
+
+### Removed
+- Capacitor's default launcher PNGs (all densities) and splash images.
+
+### Checks
+- Master icon rendered in Affinity (smooth curves after increasing the bar's arc samples). Release APK: launcher icon resolves to an adaptive icon with background, foreground and monochrome; `ic_stat_wake11` and splash present. Installed on the phone; visual check on the home screen pending (phone was locked).
+
 ## Security hardening for the GitHub release (2026-11-23)
 
 ### Changed

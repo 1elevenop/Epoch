@@ -77,7 +77,7 @@ class TimerRingService : Service() {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
         return Notification.Builder(this, RingService.CHANNEL)
-            .setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
+            .setSmallIcon(R.drawable.ic_stat_wake11)
             .setContentTitle("Time's up")
             .setContentText(ringing.values.joinToString(", ").ifBlank { "Timer" })
             .setCategory(Notification.CATEGORY_ALARM)

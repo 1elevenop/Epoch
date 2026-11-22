@@ -121,7 +121,7 @@ object WakeCheck {
         )
         val confirm = pending(ctx, ACTION_CONFIRM)
         val n = Notification.Builder(ctx, RingService.CHANNEL)
-            .setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
+            .setSmallIcon(R.drawable.ic_stat_wake11)
             .setContentTitle("Are you up?")
             .setContentText("Tap ✓ within $windowSec s or the alarm rings again.")
             .setCategory(Notification.CATEGORY_ALARM)

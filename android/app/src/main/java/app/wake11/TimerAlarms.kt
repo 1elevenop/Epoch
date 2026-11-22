@@ -125,7 +125,7 @@ object TimerAlarms {
         )
         val count = all(ctx).size
         val n = Notification.Builder(ctx, RUNNING_CHANNEL)
-            .setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
+            .setSmallIcon(R.drawable.ic_stat_wake11)
             .setContentTitle(next.label.ifBlank { "Timer" } + if (count > 1) " (+${count - 1} more)" else "")
             .setUsesChronometer(true)
             .setChronometerCountDown(true)

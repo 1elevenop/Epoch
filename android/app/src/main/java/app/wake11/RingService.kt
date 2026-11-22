@@ -67,7 +67,7 @@ class RingService : Service() {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
         val n = Notification.Builder(this, CHANNEL)
-            .setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
+            .setSmallIcon(R.drawable.ic_stat_wake11)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(if (escalated) "You missed the wake-up check — snooze locked" else label.ifBlank { "Alarm" } + " — tap to dismiss")
             .setCategory(Notification.CATEGORY_ALARM)

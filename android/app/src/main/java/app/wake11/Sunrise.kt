@@ -71,7 +71,7 @@ object Sunrise {
             .putExtra(EXTRA_ID, alarmId).putExtra(EXTRA_START, startAt).putExtra(EXTRA_END, endAt)
         val pi = PendingIntent.getActivity(ctx, NOTIF_ID, open, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         val n = Notification.Builder(ctx, CHANNEL)
-            .setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
+            .setSmallIcon(R.drawable.ic_stat_wake11)
             .setContentTitle("Sunrise")
             .setContentText("Your alarm rings soon")
             .setCategory(Notification.CATEGORY_ALARM)
