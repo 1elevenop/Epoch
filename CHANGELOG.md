@@ -1,8 +1,10 @@
 # Changelog
 
-## 0.6.0 — first public release (summary)
+## 1.0.0 — first public release (2026-11-23)
 
-WAKE11 0.6.0 is the first release on GitHub. Everything below this summary is the detailed development log.
+WAKE11 1.0.0 is the first release on GitHub (released as 1.0.0 instead of the planned 0.6.0; the 0.6.0 build was never published). Everything below this summary is the detailed development log.
+
+### What is in it
 
 - **Alarm:** native alarms that ring on a locked, silent or restarted phone; dismiss challenges (math, type, memory, shake, walk, QR) in chains; anti-snooze escalation with a weekly budget; "Are you up?" wake-up check; sunrise pre-alarm; nap and test alarms; alarm log; native fallback ring screen.
 - **Clock, Timer, Stopwatch:** world clocks, night mode, analog face, several timers, laps, big landscape display with nine digit styles.
@@ -12,9 +14,10 @@ WAKE11 0.6.0 is the first release on GitHub. Everything below this summary is th
 - **Privacy:** no internet permission, no account or analytics, excluded from cloud backup, JSON export / import.
 - **Known limitations:** device tests T3 (deep Doze overnight), T8 (three real nights), T9 (full snooze sequence), T10 (power off while ringing), T11 (wrong QR 3×) and T14 (15 min auto-silence) have not passed on a real phone yet.
 
-## Unreleased
+### Release
+- `WAKE11-1.0.0.apk` (versionCode 7): SHA-256 `06e7b25594f6550999514c423f00ba7136e98a78eb58b06cb9cf6d00e1969c73`, signing certificate SHA-256 `9E:B4:F1:85:CC:72:35:3E:2A:E5:A6:6E:7F:52:1C:AB:BC:2A:27:B9:F1:6E:80:42:09:6B:32:03:89:AC:CB:3D` (same key as 0.6.0). Installed over 0.6.0 on the phone: data kept, Settings shows 1.0.0.
 
-### Changed
+### Changed since the 0.6.0 build
 - Reliability / setup guide, Samsung step 3: "Make sure WAKE11 is NOT in …" → "Settings → Battery → Background usage limits: WAKE11 must not be in Sleeping apps or Deep sleeping apps" (no shouting, says where to look).
 
 ## Release checks 0.6.0 (2026-11-23)

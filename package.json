@@ -1,6 +1,6 @@
 {
   "name": "wake-app",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "description": "WAKE11 — clock, alarm, focus and audio app (Capacitor + vanilla JS)",

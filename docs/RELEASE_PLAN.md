@@ -1,6 +1,6 @@
-# WAKE11 — GitHub release plan (v0.6.0)
+# WAKE11 — GitHub release plan (released as v1.0.0)
 
-Status: **§1 security fixes done 2026-11-23** (see CHANGELOG); everything else still to do. Tick items as they land; log decisions in `CHANGELOG.md`.
+Status: **released as v1.0.0 on 2026-11-23, repository public.** §1 security fixes done 2026-11-23 (see CHANGELOG); everything else still to do. Tick items as they land; log decisions in `CHANGELOG.md`.
 Findings below come from checks run on 2026-11-23 (git history scan, `npm audit`, `npm outdated`, manifest, repo files).
 
 ---
@@ -102,7 +102,7 @@ Extra Android items:
 - [x] Build signed release, record SHA-256 of each APK, publish checksums in the release notes. ✅ `WAKE11-0.6.0.apk` SHA-256 `9062a37aa4662b71f1c950fe886875fa8d0e5b43ce25fda0fa0f70288378dfc7`, v2 signature verified.
 - [x] Publish signing-certificate fingerprint in README so users can verify updates. ✅ `9E:B4:…:CB:3D`, cert DN `CN=WAKE11`.
 - [ ] Optional CI (GitHub Actions): `npm ci && npm test` on every push (no signing secrets in CI; releases stay signed locally).
-- [ ] Tag `v0.6.0`, GitHub Release with notes, APK(s), checksums, screenshots.
+- [x] Tag `v1.0.0` and GitHub Release with notes, APK and checksums (2026-11-23). The owner chose 1.0.0 for the first public release (versionName 1.0.0, versionCode 7); the v0.6.0 draft and tag were removed unpublished. `WAKE11-1.0.0.apk` SHA-256 `06e7b25594f6550999514c423f00ba7136e98a78eb58b06cb9cf6d00e1969c73`, same signing certificate.
 
 ## 6. Release day gate (must all be ✅)
 
