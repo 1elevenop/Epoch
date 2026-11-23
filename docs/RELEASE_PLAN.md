@@ -78,9 +78,9 @@ Extra Android items:
 
 - [x] **Screenshots** — 2026-11-23: `media/screenshots/dark/` (11) and `light/` (8), demo data from `scripts/demo-backup.mjs`, status bar cropped off. Retaken after the unslop pass, ring screen without One UI's pop-up; added Focus running (dark + light), big display landscape (Nixie, focus) and widgets (dark). All demo data, status bar / dock cropped.
   Plan: (from the phone via `adb exec-out screencap`, light + dark themes): Clock, Alarm list, Alarm editor, Ring screen + challenge, Focus running, Focus stats, Audio Lab, Tools (interval green screen), Big display (landscape), Widgets on home screen. Use demo data, not personal data.
-- [ ] **Short demo** (GIF/MP4, < 30 s): set alarm → ring → challenge → wake-check. Use `adb shell screenrecord`.
-- [ ] **Social preview** image for GitHub (1280×640): logo + tagline + 2 phone screenshots.
-- [ ] **README banner** (logo + tagline).
+- [x] **Short demo** (GIF/MP4, < 30 s): set alarm → ring → challenge → wake-check. Use `adb shell screenrecord`. Done 2026-11-23: `media/demo/wake11-demo.gif` (11.8 s, built from screenshots: test alarm → ring → math → dismissed; no wake-check in the clip).
+- [x] **Social preview** image for GitHub (1280×640): logo + tagline + 2 phone screenshots. Done: `media/banner/wake11-social.png` (`scripts/gen-banners.py`). Upload it in GitHub → Settings → Social preview (no API for it).
+- [x] **README banner** (logo + tagline). Done: `media/banner/wake11-banner.png`.
 - [ ] Optional: feature graphic 1024×500 (if F-Droid / Play later).
 - [x] Remove personal data from all images: demo data only, status bar cropped (2026-11-23). Re-check any new captures.
 
@@ -97,17 +97,17 @@ Extra Android items:
 
 ## 5. Build & release artefacts
 
-- [ ] Version bump check (`versionName 0.6.0`, `versionCode 6`, Settings shows 0.6.0).
+- [x] Version bump check (`versionName 0.6.0`, `versionCode 6`, Settings shows 0.6.0). ✅ APK reports app.wake11 0.6.0 (6).
 - [ ] APK size is 27 MB (ML Kit barcode model is large): consider per-ABI split APKs (arm64-v8a only for modern phones) in addition to the universal APK.
-- [ ] Build signed release, record SHA-256 of each APK, publish checksums in the release notes.
-- [ ] Publish signing-certificate fingerprint in README so users can verify updates.
+- [x] Build signed release, record SHA-256 of each APK, publish checksums in the release notes. ✅ `WAKE11-0.6.0.apk` SHA-256 `9062a37aa4662b71f1c950fe886875fa8d0e5b43ce25fda0fa0f70288378dfc7`, v2 signature verified.
+- [x] Publish signing-certificate fingerprint in README so users can verify updates. ✅ `9E:B4:…:CB:3D`, cert DN `CN=WAKE11`.
 - [ ] Optional CI (GitHub Actions): `npm ci && npm test` on every push (no signing secrets in CI; releases stay signed locally).
 - [ ] Tag `v0.6.0`, GitHub Release with notes, APK(s), checksums, screenshots.
 
 ## 6. Release day gate (must all be ✅)
 
 - [x] Rewrite commit author email (D-R3) **before** the first push (done 2026-11-23).
-- [ ] `gitleaks detect` clean; `npm audit` clean; `npm test` 100 % pass; Kotlin unit tests pass.
+- [ ] `gitleaks detect` clean (**not run**: running the downloaded gitleaks binary was blocked; owner to run it); `npm audit` clean ✅ (0 vulnerabilities, 2026-11-23); `npm test` 100 % pass; Kotlin unit tests pass.
 - [ ] Fresh install of the release APK on the phone: onboarding → all permissions → alarm rings on locked phone (T1) → widgets → backup export/import.
 - [ ] Device tests still open (T3, T8, T9, T10, T11, T14) listed as **known limitations** in the release notes if not done.
 - [ ] README renders correctly on GitHub; all images load; no personal data in screenshots.

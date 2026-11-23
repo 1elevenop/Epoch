@@ -1,6 +1,4 @@
-<p align="center"><img src="media/logo/wake11-icon-512.png" width="112" alt="WAKE11 icon"></p>
-
-<h1 align="center">WAKE11</h1>
+<p align="center"><img src="media/banner/wake11-banner.png" alt="WAKE11 — the alarm clock that makes sure you actually get up"></p>
 
 <p align="center">An alarm clock for Android that makes sure you actually get up, with timers, a stopwatch, focus sessions and small audio tools. Offline, no account, no ads.</p>
 
@@ -10,6 +8,8 @@
   <img src="media/screenshots/dark/12-focus-running.png" width="200" alt="Focus session running">
   <img src="media/screenshots/dark/01-clock.png" width="200" alt="Clock with world clocks">
 </p>
+
+<p align="center"><img src="media/demo/wake11-demo.gif" width="240" alt="Test alarm rings, a math challenge is solved, the alarm is dismissed"></p>
 
 ## Features
 
@@ -53,7 +53,13 @@ WAKE11 is not on the Play Store. Install the APK from GitHub:
    - macOS / Linux: `shasum -a 256 WAKE11-<version>.apk`
 3. Open the APK on your phone. Android asks to allow installs from your browser or file manager once; allow it, install, then you can turn that permission off again.
 
-Updates install over the old version and keep your data, because every release is signed with the same key. The certificate fingerprint is in the release notes.
+Updates install over the old version and keep your data, because every release is signed with the same key. Signing certificate SHA-256 fingerprint:
+
+```
+9E:B4:F1:85:CC:72:35:3E:2A:E5:A6:6E:7F:52:1C:AB:BC:2A:27:B9:F1:6E:80:42:09:6B:32:03:89:AC:CB:3D
+```
+
+To check it: `apksigner verify --print-certs WAKE11-<version>.apk` (Android SDK build-tools).
 
 Requires Android 8.0 or newer. Tested on a Samsung Galaxy S25 Ultra with Android 17.
 

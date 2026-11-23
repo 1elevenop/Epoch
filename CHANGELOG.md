@@ -12,6 +12,17 @@ WAKE11 0.6.0 is the first release on GitHub. Everything below this summary is th
 - **Privacy:** no internet permission, no account or analytics, excluded from cloud backup, JSON export / import.
 - **Known limitations:** device tests T3 (deep Doze overnight), T8 (three real nights), T9 (full snooze sequence), T10 (power off while ringing), T11 (wrong QR 3×) and T14 (15 min auto-silence) have not passed on a real phone yet.
 
+## Release build 0.6.0 (2026-11-23)
+
+### Added
+- `media/banner/wake11-banner.png` (README) and `wake11-social.png` (GitHub social preview), made by `scripts/gen-banners.py` from the logo and real screenshots.
+- `media/demo/wake11-demo.gif`: test alarm → ring → math challenge → dismissed (11.8 s, status bar cropped).
+- README: banner, demo GIF, signing-certificate fingerprint and how to check it.
+
+### Release
+- `WAKE11-0.6.0.apk` (26.8 MB, universal): SHA-256 `9062a37aa4662b71f1c950fe886875fa8d0e5b43ce25fda0fa0f70288378dfc7`. Signing certificate `CN=WAKE11`, SHA-256 `9E:B4:F1:85:CC:72:35:3E:2A:E5:A6:6E:7F:52:1C:AB:BC:2A:27:B9:F1:6E:80:42:09:6B:32:03:89:AC:CB:3D`.
+- Checks: `npm audit` 0 vulnerabilities; 115 JS + Kotlin unit tests pass; release installed over the debug build on the phone (data kept, not debuggable, no backup flag), Reliability items OK except battery. gitleaks not run (see RELEASE_PLAN §6).
+
 ## Repository docs (2026-11-23)
 
 ### Added
