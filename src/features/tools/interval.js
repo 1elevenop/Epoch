@@ -188,7 +188,7 @@ export function intervalScreen(el) {
     scheduleCues(segs, ms);
     if (at.done) {
       section.dataset.kind = 'done';
-      $('#kind').textContent = 'Done 🎉';
+      $('#kind').textContent = 'Done';
       $('#time').textContent = formatDuration(M.totalMs(segs));
       $('#meta').textContent = `${st.plan.rounds * st.plan.sets} rounds`;
       $('#next').textContent = '';
@@ -204,7 +204,7 @@ export function intervalScreen(el) {
     $('#time').textContent = formatDuration(Math.ceil(at.remainingMs / 1000) * 1000);
     $('#meta').textContent = at.seg.kind === 'prep' ? '' : `Round ${at.seg.round}/${st.plan.rounds}${st.plan.sets > 1 ? ` · Set ${at.seg.set}/${st.plan.sets}` : ''}`;
     const nx = segs[at.index + 1];
-    $('#next').textContent = nx ? `Next: ${KIND[nx.kind]} ${nx.secs} s` : 'Last one!';
+    $('#next').textContent = nx ? `Next: ${KIND[nx.kind]} ${nx.secs} s` : 'Last round';
   }, { fps: 10 });
 
   fillForm();

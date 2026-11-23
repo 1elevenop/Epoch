@@ -8,6 +8,7 @@ import { createAnalog } from './analog.js';
 import { mountWorldClocks } from './worldclocks.js';
 import { mountCountdownCards } from '../tools/countdowns.js';
 import { openNightMode } from './nightmode.js';
+import { ic } from '../../core/icons.js';
 
 export function clockScreen(el) {
   el.innerHTML = `
@@ -16,7 +17,7 @@ export function clockScreen(el) {
       <div class="toolbar">
         <button class="btn btn-ghost" id="face-toggle"></button>
         <button class="btn btn-ghost" id="sec-toggle"></button>
-        <button class="btn btn-ghost" id="night" aria-label="Night mode">☾ Night</button>
+        <button class="btn btn-ghost" id="night" aria-label="Night mode">${ic('moon')}Night</button>
       </div>
       <div id="face" class="face-host"></div>
       <p class="sub" id="today"></p>
@@ -80,7 +81,7 @@ export function clockScreen(el) {
   const unsubSlow = subscribe(
     (t) => {
       dateEl.textContent = dateFmt.format(t);
-      nextEl.textContent = nextAlarmAt && nextAlarmAt > t ? `⏰ Alarm in ${formatUntil(nextAlarmAt - t)}` : 'No alarms set';
+      nextEl.textContent = nextAlarmAt && nextAlarmAt > t ? `Next alarm in ${formatUntil(nextAlarmAt - t)}` : 'No alarms set';
       updateWorld(t);
       const day = new Date(t).toDateString();
       if (day !== cdDay) {

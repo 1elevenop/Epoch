@@ -11,6 +11,8 @@ import { saveSession } from './data.js';
 const KEY = 'focusSession';
 const TIMER_ID = 'focus';
 const LABEL = { focus: 'Focus block done — time for a break', break: 'Break over — back to focus', long_break: 'Long break over — back to focus' };
+/** Shown while the phase runs (widget, ongoing notification); LABEL is shown when it ends. */
+const TITLE = { focus: 'Focus', break: 'Break', long_break: 'Long break' };
 
 let state = sanitize(loadState(KEY, null));
 const listeners = new Set();
@@ -34,7 +36,7 @@ async function syncAlarm() {
     await AlarmPlugin.cancelTimer(TIMER_ID);
     const cur = state && E.current(state.run);
     if (cur && cur.endAt && cur.endAt > Date.now()) {
-      await AlarmPlugin.scheduleTimer({ id: TIMER_ID, endAt: cur.endAt, label: LABEL[cur.kind] });
+      await AlarmPlugin.scheduleTimer({ id: TIMER_ID, endAt: cur.endAt, label: LABEL[cur.kind], title: TITLE[cur.kind] });
     }
   } catch (err) {
     console.warn('[focus] native phase alarm failed', err);

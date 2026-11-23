@@ -34,7 +34,7 @@ export function onboardingScreen(el) {
       body.innerHTML = `<h1 id="screen-title">WAKE11</h1>
         <p class="lead">An alarm clock that actually gets you up, plus timers, a stopwatch and focus sessions.</p>
         <ul class="ticks"><li>Alarms ring even when the phone is locked, silent or rebooted.</li>
-        <li>Snoozing gets harder each time (coming next).</li>
+        <li>Snoozing gets harder each time, and a wake-up check makes sure you stay up.</li>
         <li>Everything stays on this phone. No account.</li></ul>
         <p class="muted">Setup takes about 2 minutes and ends with a real 10-second test alarm.</p>`;
     }

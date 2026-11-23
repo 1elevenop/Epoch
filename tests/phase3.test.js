@@ -35,9 +35,10 @@ describe('escalation (mirrors Escalation.kt)', () => {
     expect(escalation.budgetLeft(null, 9)).toBeNull();
     expect(escalation.canSnooze(0, 3, true, false, escalation.budgetLeft(2, 2)).reason).toBe('budget');
   });
-  it('challenge gets harder each snooze, max 4; escalated = 4', () => {
+  it('challenge gets harder each snooze, max 4; escalated = one level up', () => {
     expect([0, 1, 2, 3].map((n) => escalation.challengeLevel(2, n, false))).toEqual([2, 3, 4, 4]);
-    expect(escalation.challengeLevel(1, 0, true)).toBe(4);
+    expect(escalation.challengeLevel(1, 0, true)).toBe(2); // missed wake-check: one level up, not the hardest
+    expect(escalation.challengeLevel(4, 0, true)).toBe(4);
     expect(escalation.canSnooze(0, 3, true, true, null).allowed).toBe(false);
   });
 });
@@ -71,10 +72,10 @@ describe('challenge generators', () => {
   });
   it('math ranges match the levels', () => {
     const r = rng(9);
-    const l1 = math.problem(1, r).text.split(' + ').map(Number);
-    expect(l1.every((n) => n >= 10 && n <= 99)).toBe(true);
-    expect(math.problem(2, r).text).toMatch(/^\d{2} × \d$/);
-    expect(math.problem(3, r).text).toMatch(/^\(\d+ × \d\) \+ \d{2}$/);
+    expect(math.problem(1, r).text).toMatch(/^\d \+ \d$/);
+    expect(math.problem(2, r).text).toMatch(/^\d{2} \+ \d$/);
+    expect(math.problem(3, r).text).toMatch(/^\d{2} \+ \d{2}$/);
+    expect(math.problem(4, r).text).toMatch(/^\d × \d$/);
   });
   it('type phrases have 4/6/9/12 words and match exactly', () => {
     const r = rng(3);

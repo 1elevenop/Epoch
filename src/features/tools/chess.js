@@ -6,6 +6,7 @@ import { loadState, saveState } from '../../core/store.js';
 import { keepAwake } from '../../core/screen.js';
 import { getCtx, unlock, beepAt } from '../../core/audio.js';
 import * as M from './models.js';
+import { ic } from '../../core/icons.js';
 
 const PRESETS = [[1, 0], [3, 2], [5, 0], [10, 0], [15, 10], [30, 0]];
 
@@ -41,8 +42,8 @@ export function chessScreen(el) {
         <select class="input" id="preset" aria-label="Time control">
           ${PRESETS.map(([b, i]) => `<option value="${b}|${i}" ${b === cfg.base && i === cfg.inc ? 'selected' : ''}>${b}+${i}</option>`).join('')}
         </select>
-        <button class="icon-btn" id="pause" aria-label="Pause">❚❚</button>
-        <button class="icon-btn" id="reset" aria-label="Reset clocks">↺</button>
+        <button class="icon-btn" id="pause" aria-label="Pause">${ic('pause')}</button>
+        <button class="icon-btn" id="reset" aria-label="Reset clocks">${ic('reset')}</button>
       </div>
       <button class="chess-side bottom" data-side="0" aria-label="Player 1 clock: tap after your move"><span class="chess-time digits"></span><span class="chess-moves"></span></button>
     </section>`;
@@ -100,7 +101,7 @@ export function chessScreen(el) {
       b.dataset.state = game.flag === i ? 'flag' : game.active === i ? (game.since != null ? 'run' : 'paused') : '';
       b.classList.toggle('low', left < 20_000 && game.flag == null);
     });
-    $('#pause').textContent = game.since != null ? '❚❚' : '▶';
+    $('#pause').innerHTML = ic(game.since != null ? 'pause' : 'play');
     $('#pause').setAttribute('aria-label', game.since != null ? 'Pause' : 'Resume');
     $('#pause').disabled = game.active == null || game.flag != null;
     $('#preset').disabled = game.active != null && game.flag == null;

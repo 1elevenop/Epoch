@@ -33,7 +33,9 @@ class EscalationTest {
 
     @Test fun escalatedIsAlwaysLocked() {
         assertFalse(Escalation.canSnooze(0, 3, true, true, null).allowed)
-        assertEquals(4, Escalation.challengeLevel(1, 0, escalated = true))
+        // Missed wake-check: one level above the alarm's own, capped at 4.
+        assertEquals(2, Escalation.challengeLevel(1, 0, escalated = true))
+        assertEquals(4, Escalation.challengeLevel(4, 0, escalated = true))
     }
 
     @Test fun weeklyBudget() {

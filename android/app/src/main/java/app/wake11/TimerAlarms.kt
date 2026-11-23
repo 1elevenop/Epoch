@@ -23,7 +23,10 @@ object TimerAlarms {
     private const val RUNNING_CHANNEL = "timers_running"
     private const val RUNNING_NOTIF = 4720
 
-    data class T(val id: String, val endAt: Long, val label: String)
+    /** label: shown when it rings. title: shown while it runs (widget, ongoing notification); falls back to label. */
+    data class T(val id: String, val endAt: Long, val label: String, val title: String = "") {
+        fun runningName(): String = title.ifBlank { label.ifBlank { "Timer" } }
+    }
 
     private fun prefs(ctx: Context) = ctx.applicationContext.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
 
@@ -40,23 +43,23 @@ object TimerAlarms {
         val o = JSONObject(prefs(ctx).getString("timers", "{}") ?: "{}")
         return o.keys().asSequence().map { k ->
             val t = o.getJSONObject(k)
-            T(k, t.getLong("endAt"), t.optString("label"))
+            T(k, t.getLong("endAt"), t.optString("label"), t.optString("title"))
         }.toList()
     }
 
     @Synchronized
     private fun save(ctx: Context, list: List<T>) {
         val o = JSONObject()
-        list.forEach { o.put(it.id, JSONObject().put("endAt", it.endAt).put("label", it.label)) }
+        list.forEach { o.put(it.id, JSONObject().put("endAt", it.endAt).put("label", it.label).put("title", it.title)) }
         prefs(ctx).edit().putString("timers", o.toString()).commit()
         Widgets.refreshAll(ctx)
     }
 
-    fun schedule(ctx: Context, id: String, endAt: Long, label: String) {
+    fun schedule(ctx: Context, id: String, endAt: Long, label: String, title: String = "") {
         require(id.isNotBlank() && id.length <= 64) { "timer id must be 1..64 chars" }
         require(endAt > 0) { "endAt is required" }
         if (!AlarmScheduler.canScheduleExact(ctx)) throw ExactAlarmDeniedException()
-        save(ctx, all(ctx).filter { it.id != id } + T(id, endAt, label.take(60)))
+        save(ctx, all(ctx).filter { it.id != id } + T(id, endAt, label.take(60), title.take(60)))
         setClock(ctx, id, endAt)
         updateRunningNotification(ctx)
     }
@@ -126,7 +129,7 @@ object TimerAlarms {
         val count = all(ctx).size
         val n = Notification.Builder(ctx, RUNNING_CHANNEL)
             .setSmallIcon(R.drawable.ic_stat_wake11)
-            .setContentTitle(next.label.ifBlank { "Timer" } + if (count > 1) " (+${count - 1} more)" else "")
+            .setContentTitle(next.runningName() + if (count > 1) " (+${count - 1} more)" else "")
             .setUsesChronometer(true)
             .setChronometerCountDown(true)
             .setWhen(next.endAt)

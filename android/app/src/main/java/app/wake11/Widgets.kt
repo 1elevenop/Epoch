@@ -41,7 +41,7 @@ object Widgets {
 
     // ---------- data mirrored from the web (rule 6: validated here too) ----------
 
-    fun setData(ctx: Context, worldClocks: JSONArray, countdowns: JSONArray) {
+    fun setData(ctx: Context, worldClocks: JSONArray, countdowns: JSONArray, hour12: Boolean? = null) {
         val wc = JSONArray()
         for (i in 0 until minOf(worldClocks.length(), 10)) {
             val c = worldClocks.optJSONObject(i) ?: throw IllegalArgumentException("worldClocks[$i] is not an object")
@@ -59,7 +59,8 @@ object Widgets {
             try { LocalDate.parse(c.optString("date")) } catch (e: Exception) { throw IllegalArgumentException("countdowns[$i].date") }
             cd.put(JSONObject().put("title", title).put("date", c.optString("date")))
         }
-        prefs(ctx).edit().putString("worldClocks", wc.toString()).putString("countdowns", cd.toString()).commit()
+        prefs(ctx).edit().putString("worldClocks", wc.toString()).putString("countdowns", cd.toString())
+            .apply { if (hour12 == null) remove("hourFmt") else putString("hourFmt", if (hour12) "12" else "24") }.commit()
         refreshAll(ctx)
     }
 
@@ -129,8 +130,12 @@ object Widgets {
         return "${dayLabel(next, now)} ${time(ctx, next)}"
     }
 
+    /** The app's own 12/24 h setting (mirrored from the web); the phone's setting until the app has sent one. */
+    private fun use24(ctx: Context): Boolean =
+        prefs(ctx).getString("hourFmt", null)?.let { it == "24" } ?: android.text.format.DateFormat.is24HourFormat(ctx)
+
     private fun time(ctx: Context, at: Long): String {
-        val pattern = if (android.text.format.DateFormat.is24HourFormat(ctx)) "HH:mm" else "h:mm a"
+        val pattern = if (use24(ctx)) "HH:mm" else "h:mm a"
         return SimpleDateFormat(pattern, Locale.getDefault()).format(at)
     }
 
@@ -151,7 +156,10 @@ object Widgets {
 
     private fun digital(ctx: Context) = RemoteViews(ctx.packageName, R.layout.widget_digital).apply {
         val next = nextAlarmText(ctx)
-        setTextViewText(R.id.w_next, next?.let { "⏰ $it" } ?: "")
+        val clock = if (use24(ctx)) "HH:mm" else "h:mm"
+        setCharSequence(R.id.w_clock, "setFormat12Hour", clock)
+        setCharSequence(R.id.w_clock, "setFormat24Hour", clock)
+        setTextViewText(R.id.w_next, next?.let { "Alarm $it" } ?: "")
         setViewVisibility(R.id.w_next, if (next == null) View.GONE else View.VISIBLE)
         setOnClickPendingIntent(R.id.w_root, open(ctx, "clock"))
     }
@@ -168,6 +176,9 @@ object Widgets {
             if (c != null) {
                 setTextViewText(WORLD_NAMES[i], c.optString("name"))
                 setString(WORLD_TIMES[i], "setTimeZone", c.optString("zone"))
+                val fmt = if (use24(ctx)) "HH:mm" else "h:mm a"
+                setCharSequence(WORLD_TIMES[i], "setFormat12Hour", fmt)
+                setCharSequence(WORLD_TIMES[i], "setFormat24Hour", fmt)
             }
         }
         setViewVisibility(R.id.w_empty, if (list.length() == 0) View.VISIBLE else View.GONE)
@@ -197,7 +208,7 @@ object Widgets {
             setChronometerCountDown(R.id.w_chrono, true)
             setChronometer(R.id.w_chrono, SystemClock.elapsedRealtime() + (t.endAt - now), null, true)
             val more = if (all.size > 1) " +${all.size - 1}" else ""
-            setTextViewText(R.id.w_label, (t.label.ifBlank { "Timer" }) + more)
+            setTextViewText(R.id.w_label, t.runningName() + more)
         }
         setOnClickPendingIntent(R.id.w_root, open(ctx, "timer"))
     }

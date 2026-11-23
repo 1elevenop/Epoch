@@ -16,7 +16,7 @@ import java.util.Locale
 import kotlin.random.Random
 
 /**
- * Native ring screen with a level-3 math problem: (a×b)+c (BLUEPRINT §5.3 native fallback).
+ * Native ring screen with a level-3 math problem: 2-digit + 2-digit (BLUEPRINT §5.3 native fallback).
  * Built in code — no XML — so it works even if the WebView is broken.
  */
 class FallbackMathView(
@@ -60,11 +60,10 @@ class FallbackMathView(
     }
 
     private fun newProblem() {
-        val a = random.nextInt(3, 13)
-        val b = random.nextInt(3, 10)
-        val c = random.nextInt(10, 100)
-        expected = a * b + c
-        problem.text = "($a × $b) + $c = ?"
+        val a = random.nextInt(10, 50)
+        val b = random.nextInt(10, 50)
+        expected = a + b
+        problem.text = "$a + $b = ?"
         typed = ""
         answer.text = "_"
     }

@@ -149,7 +149,7 @@ class AlarmPlugin : Plugin() {
         val id = call.getString("id") ?: throw IllegalArgumentException("id is required")
         val endAt = call.getLong("endAt") ?: call.getDouble("endAt")?.toLong() ?: throw IllegalArgumentException("endAt is required")
         if (!notificationsOk()) throw NotificationsDeniedException()
-        TimerAlarms.schedule(context, id, endAt, call.getString("label") ?: "")
+        TimerAlarms.schedule(context, id, endAt, call.getString("label") ?: "", call.getString("title") ?: "")
         call.resolve()
     }
 
@@ -254,7 +254,7 @@ class AlarmPlugin : Plugin() {
     /** Web → native copy of world clocks and countdowns for the home-screen widgets (validated). */
     @PluginMethod
     fun setWidgetData(call: PluginCall) = guard(call) {
-        Widgets.setData(context, call.getArray("worldClocks") ?: JSArray(), call.getArray("countdowns") ?: JSArray())
+        Widgets.setData(context, call.getArray("worldClocks") ?: JSArray(), call.getArray("countdowns") ?: JSArray(), call.getBoolean("hour12"))
         call.resolve()
     }
 

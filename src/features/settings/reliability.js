@@ -4,6 +4,7 @@ import { AlarmPlugin } from '../../core/bridge.js';
 import { esc } from '../../core/dom.js';
 import { toast } from '../../core/toast.js';
 import { startTestAlarm } from '../alarm/alarm.js';
+import { ic } from '../../core/icons.js';
 
 const OEM_STEPS = {
   samsung: [
@@ -35,7 +36,7 @@ export function statusList(status, items = ITEMS) {
     .map(([key, title, why, setting]) => {
       const ok = !!status?.[key];
       return `<li class="rel-item ${ok ? 'ok' : 'bad'}">
-        <span class="rel-icon" aria-hidden="true">${ok ? '✓' : '!'}</span>
+        <span class="rel-icon" aria-hidden="true">${ic(ok ? 'check' : 'alert')}</span>
         <span class="rel-text"><strong>${title}</strong><span>${ok ? 'OK' : why}</span></span>
         ${ok ? '' : `<button class="btn btn-ghost" data-setting="${setting}" aria-label="Fix ${title}">Fix</button>`}
       </li>`;

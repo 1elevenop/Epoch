@@ -2,11 +2,16 @@
 .btn {
   min-height: var(--touch);
   padding: 0 18px;
-  border-radius: 999px;
+  border-radius: 10px;
   border: 0;
   background: var(--accent);
   color: var(--on-accent);
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
 }
 .btn:disabled { opacity: 0.4; }
 .btn-ghost { background: var(--raised); color: var(--text); font-weight: 500; }
@@ -20,13 +25,15 @@
   border: 0;
   background: var(--raised);
   font-size: 16px;
+  display: inline-grid;
+  place-items: center;
 }
 .icon-btn.primary { background: var(--accent); color: var(--on-accent); }
 .input {
   width: 100%;
   min-height: var(--touch);
   padding: 0 14px;
-  border-radius: 12px;
+  border-radius: 10px;
   border: 1px solid var(--border);
   background: var(--bg);
   color: var(--text);
@@ -143,7 +150,7 @@
 .chip {
   min-height: var(--touch);
   padding: 0 16px;
-  border-radius: 999px;
+  border-radius: 10px;
   border: 1px solid var(--border);
   background: var(--raised);
 }
@@ -182,3 +189,7 @@
 .done-label { font-weight: 600; }
 .done-over { font-size: 32px; color: var(--danger); text-align: right; }
 .done-actions { grid-column: 1 / -1; display: flex; gap: 8px; justify-content: flex-end; }
+
+/* Line icons (core/icons.js): one size and stroke, colour of the text they sit in. */
+.ic { width: 18px; height: 18px; flex: none; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.icon-btn .ic { width: 20px; height: 20px; }

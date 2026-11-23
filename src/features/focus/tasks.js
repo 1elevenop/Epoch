@@ -3,6 +3,7 @@
 import { esc } from '../../core/dom.js';
 import { toast } from '../../core/toast.js';
 import { listTasks, saveTask, deleteTask, newTask, newSubtask, toggleSubtask, toggleTask, progressOf } from './data.js';
+import { ic } from '../../core/icons.js';
 
 export function taskRow(t, { open = false } = {}) {
   const p = progressOf(t);
@@ -11,7 +12,7 @@ export function taskRow(t, { open = false } = {}) {
       <button class="drag" aria-label="Drag to reorder ${esc(t.title)}">⋮⋮</button>
       <label class="check"><input type="checkbox" data-act="task" ${t.done ? 'checked' : ''} aria-label="${esc(t.title)} done" /></label>
       <button class="task-title" data-act="open" aria-expanded="${open}">${esc(t.title)}${p.total ? ` <span class="muted">${p.done}/${p.total}</span>` : ''}</button>
-      <button class="icon-btn" data-act="del" aria-label="Delete ${esc(t.title)}">✕</button>
+      <button class="icon-btn" data-act="del" aria-label="Delete ${esc(t.title)}">${ic('close')}</button>
     </div>
     <ul class="subtasks" ${open ? '' : 'hidden'}>
       ${t.subtasks.map((s) => `<li><label class="check"><input type="checkbox" data-sub="${esc(s.id)}" ${s.done ? 'checked' : ''} /> <span>${esc(s.title)}</span></label></li>`).join('')}

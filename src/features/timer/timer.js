@@ -9,6 +9,7 @@ import { createWheel } from './wheel.js';
 import * as T from './model.js';
 import { setBigSource, bigButton } from '../bigdisplay/bigdisplay.js';
 import { timerView } from '../bigdisplay/sources.js';
+import { ic } from '../../core/icons.js';
 
 const PRESETS = [1, 3, 5, 10, 25];
 const RING_R = 26;
@@ -29,10 +30,10 @@ function card(t) {
       </div>
       <div class="timer-actions">
         <button class="icon-btn" data-act="plus" aria-label="Add 1 minute to ${name}">+1</button>
-        <button class="icon-btn" data-act="reset" aria-label="Reset ${name}">↺</button>
+        <button class="icon-btn" data-act="reset" aria-label="Reset ${name}">${ic('reset')}</button>
         <button class="icon-btn primary" data-act="${running ? 'pause' : 'start'}"
-          aria-label="${running ? 'Pause' : 'Start'} ${name}">${running ? '❚❚' : '▶'}</button>
-        <button class="icon-btn" data-act="remove" aria-label="Delete ${name}">✕</button>
+          aria-label="${running ? 'Pause' : 'Start'} ${name}">${ic(running ? 'pause' : 'play')}</button>
+        <button class="icon-btn" data-act="remove" aria-label="Delete ${name}">${ic('close')}</button>
       </div>
     </li>`;
 }

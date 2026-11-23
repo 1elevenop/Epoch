@@ -10,6 +10,7 @@ import * as qr from './qr.js';
 import * as steps from './steps.js';
 import { rng, shouldEscape, ESCAPE_CHAIN, CHALLENGE_INFO } from './rules.js';
 import { esc } from '../../core/dom.js';
+import { ic } from '../../core/icons.js';
 
 const MODULES = { math, type, memory, shake, qr, steps };
 
@@ -34,7 +35,7 @@ export function runChain(host, { chain, level, qrPayload, seed, onComplete }) {
   function drawSteps() {
     const all = [...completed.map((id) => ({ id, done: true })), ...queue.map((q, i) => ({ id: q.id, current: i === 0 }))];
     stepsEl.innerHTML = all
-      .map((s) => `<span class="ch-step ${s.done ? 'done' : ''} ${s.current ? 'current' : ''}">${CHALLENGE_INFO[s.id].icon} ${esc(CHALLENGE_INFO[s.id].name)}</span>`)
+      .map((s) => `<span class="ch-step ${s.done ? 'done' : ''} ${s.current ? 'current' : ''}">${esc(CHALLENGE_INFO[s.id].name)}</span>`)
       .join('<span class="ch-arrow" aria-hidden="true">→</span>');
   }
 
@@ -52,7 +53,7 @@ export function runChain(host, { chain, level, qrPayload, seed, onComplete }) {
     cleanup();
     clearTimeout(escapeTimer);
     if (!queue.length) {
-      body.innerHTML = '<p class="ch-big">✓</p>';
+      body.innerHTML = `<p class="ch-big">${ic('check')}</p>`;
       onComplete({ completed, fails: totalFails, escaped });
       return;
     }

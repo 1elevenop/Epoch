@@ -53,14 +53,14 @@ WAKE11 is an **offline Android app**: no server, no accounts, no network calls, 
 | 15 | Exposed files | ✅ done | Capacitor template tests removed; local path removed from CHANGELOG. Your name remains only in the package id + BLUEPRINT owner line (decision D-R4). |
 | 16 | Secure the database | ✅ done | `allowBackup="false"`, `fullBackupContent="false"`, `dataExtractionRules` exclude everything from cloud backup and device-to-device copy (follows D8). Export/import JSON is the backup. |
 | 17 | Hash passwords | ➖ n/a | No passwords in the app. |
-| 18 | Git leaked secrets | ✅ checked | History scan clean. **Task:** run `gitleaks` (or GitHub secret scanning after push) once more before making the repo public. Author email: see D-R3. |
+| 18 | Git leaked secrets | ✅ checked | History scan clean (again 2026-11-23: manual pattern scan of tree + all commits + image metadata, see CHANGELOG). **Task:** run `gitleaks` (or GitHub secret scanning after push) once more before making the repo public. Author email: see D-R3. |
 | 19 | Full security audit | 🔜 | Run `/security-review` (or a manual pass) on the native plugins (`AlarmPlugin`, `BackupPlugin`, `DevicePlugin`, widgets receiver) before release. |
 | 20 | Make no mistakes | — | Covered by the checklist + "Release day" gate in §6. |
 
 Extra Android items:
 - [x] `INTERNET` and `ACCESS_NETWORK_STATE` removed (`tools:node="remove"`, also stops ML Kit usage logging). Phone: all screens work, QR scanner (Google Play services) still opens.
-- [ ] Explain every sensitive permission in README (exact alarms, full-screen intent, camera, mic, activity recognition, DND access, battery).
-- [ ] Privacy statement: "no data leaves the phone, no analytics, no ads".
+- [x] Explain every sensitive permission: table in `PRIVACY.md`, linked from README (2026-11-23).
+- [x] Privacy statement: `PRIVACY.md` + README section (2026-11-23).
 
 ---
 
@@ -71,27 +71,29 @@ Extra Android items:
 - [x] Android launcher icon (vector, no PNGs): adaptive background + foreground + **monochrome** layer ("11" only). Old Capacitor PNGs removed.
 - [x] Splash: Android 12+ system splash (black + mark) and `splash.xml` for older; Capacitor images removed.
 - [x] Notification icon `ic_stat_wake11` (white "11") in all 5 notification builders.
-- [ ] Widget previews use the new look.
+- [x] Launcher icon checked on the phone (One UI app drawer, 2026-11-23): tile, grid, "11" and bar render inside the mask, no clipping. Notification icon seen in the status bar while ringing.
+- [x] Widgets use the new look (2026-11-23): analog clock has its own dial and hands; all widgets checked on the phone.
 
 ## 3. Media package (`media/`)
 
-- [ ] **Screenshots** (from the phone via `adb exec-out screencap`, light + dark themes): Clock, Alarm list, Alarm editor, Ring screen + challenge, Focus running, Focus stats, Audio Lab, Tools (interval green screen), Big display (landscape), Widgets on home screen. Use demo data, not personal data.
+- [x] **Screenshots** — 2026-11-23: `media/screenshots/dark/` (11) and `light/` (8), demo data from `scripts/demo-backup.mjs`, status bar cropped off. Retaken after the unslop pass, ring screen without One UI's pop-up; added Focus running (dark + light), big display landscape (Nixie, focus) and widgets (dark). All demo data, status bar / dock cropped.
+  Plan: (from the phone via `adb exec-out screencap`, light + dark themes): Clock, Alarm list, Alarm editor, Ring screen + challenge, Focus running, Focus stats, Audio Lab, Tools (interval green screen), Big display (landscape), Widgets on home screen. Use demo data, not personal data.
 - [ ] **Short demo** (GIF/MP4, < 30 s): set alarm → ring → challenge → wake-check. Use `adb shell screenrecord`.
 - [ ] **Social preview** image for GitHub (1280×640): logo + tagline + 2 phone screenshots.
 - [ ] **README banner** (logo + tagline).
 - [ ] Optional: feature graphic 1024×500 (if F-Droid / Play later).
-- [ ] Remove personal data from all images (alarm labels, calendar, notifications, status bar).
+- [x] Remove personal data from all images: demo data only, status bar cropped (2026-11-23). Re-check any new captures.
 
 ## 4. Repository docs
 
-- [ ] `README.md`: banner · one-line pitch · screenshots · features (Clock, Alarm + anti-snooze, Timer, Stopwatch, Focus, Audio Lab, Tools, Widgets) · **install from APK** (download, allow unknown sources, verify SHA-256) · first-run setup (permissions, Samsung battery steps) · privacy · build from source (Node, Android Studio JDK, `npm ci`, `npm test`, `npx cap sync`, Gradle) · project structure · licence · credits.
-- [ ] `LICENSE` (D-R2).
-- [ ] `THIRD_PARTY_NOTICES.md`: Capacitor (MIT), Vite/Vitest (MIT), qrcode-generator (MIT), keep-awake (MIT), ML Kit barcode plugin (Apache-2.0) + Google ML Kit terms, fonts Orbitron / Rajdhani / Share Tech Mono (SIL OFL 1.1 — licence text must ship).
-- [ ] `PRIVACY.md` (short: offline, no tracking, what permissions do).
-- [ ] `CONTRIBUTING.md` (optional: tests must pass, file size rule, phase rules) and issue templates (bug report asks phone model + Android version + Reliability screen).
-- [ ] `SECURITY.md`: how to report a problem privately.
-- [ ] Tidy `CHANGELOG.md` into release notes format (keep history, add a "0.6.0" summary at the top).
-- [ ] Decide on `CLAUDE.md` / `BLUEPRINT.md` / `RELEASE_PLAN.md` (D-R5).
+- [x] `README.md` (2026-11-23; banner still to make, the icon heads it for now): banner · one-line pitch · screenshots · features (Clock, Alarm + anti-snooze, Timer, Stopwatch, Focus, Audio Lab, Tools, Widgets) · **install from APK** (download, allow unknown sources, verify SHA-256) · first-run setup (permissions, Samsung battery steps) · privacy · build from source (Node, Android Studio JDK, `npm ci`, `npm test`, `npx cap sync`, Gradle) · project structure · licence · credits.
+- [x] `LICENSE` (D-R2): MIT, © 2026 1elevenop.
+- [x] `THIRD_PARTY_NOTICES.md`: Capacitor (MIT), Vite/Vitest (MIT), qrcode-generator (MIT), keep-awake (MIT), ML Kit barcode plugin (Apache-2.0) + Google ML Kit terms, fonts Orbitron / Rajdhani / Share Tech Mono (SIL OFL 1.1 — licence text must ship).
+- [x] `PRIVACY.md` (short: offline, no tracking, what permissions do).
+- [x] `CONTRIBUTING.md` (optional: tests must pass, file size rule, phase rules) and issue templates (bug report asks phone model + Android version + Reliability screen).
+- [x] `SECURITY.md`: how to report a problem privately.
+- [x] Tidy `CHANGELOG.md` into release notes format (keep history, add a "0.6.0" summary at the top).
+- [x] `BLUEPRINT.md` and `RELEASE_PLAN.md` moved to `docs/`, `CLAUDE.md` stays at the root (D-R5, 2026-11-23).
 
 ## 5. Build & release artefacts
 
@@ -104,7 +106,7 @@ Extra Android items:
 
 ## 6. Release day gate (must all be ✅)
 
-- [ ] Rewrite commit author email (D-R3) **before** the first push.
+- [x] Rewrite commit author email (D-R3) **before** the first push (done 2026-11-23).
 - [ ] `gitleaks detect` clean; `npm audit` clean; `npm test` 100 % pass; Kotlin unit tests pass.
 - [ ] Fresh install of the release APK on the phone: onboarding → all permissions → alarm rings on locked phone (T1) → widgets → backup export/import.
 - [ ] Device tests still open (T3, T8, T9, T10, T11, T14) listed as **known limitations** in the release notes if not done.

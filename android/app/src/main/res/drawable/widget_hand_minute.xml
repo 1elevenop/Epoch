@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- WAKE11 analog widget (minute hand + pivot). One 200x200 canvas, pivot at the centre, drawn pointing to 12. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp" android:height="200dp" android:viewportWidth="200" android:viewportHeight="200">
+    <path android:strokeColor="#F2F3F5" android:strokeWidth="4.5" android:strokeLineCap="round" android:pathData="M100,112 L100,24" />
+    <path android:fillColor="#F2F3F5" android:pathData="M100,94 a6,6 0 1,1 -0.01,0 z" />
+    <path android:fillColor="#101114" android:pathData="M100,97.5 a2.5,2.5 0 1,1 -0.01,0 z" />
+</vector>

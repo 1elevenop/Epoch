@@ -7,6 +7,7 @@ import { TRANSITIONS, createDigits } from '../bigdisplay/digits.js';
 import { pad2 } from '../../core/time.js';
 import { backupHtml, bindBackup } from './backup-ui.js';
 import { alarmDefaultsHtml, bindAlarmDefaults } from './alarm-defaults-ui.js';
+import { syncWidgets } from '../../core/widgets.js';
 
 const SCREENS = [
   ['timer', 'Timer'],
@@ -130,7 +131,10 @@ export function settingsScreen(el) {
   });
   section.addEventListener('change', (e) => {
     const k = e.target.dataset.set;
-    if (k === 'hour24') setSetting('hour12', !e.target.checked);
+    if (k === 'hour24') {
+      setSetting('hour12', !e.target.checked);
+      syncWidgets(); // widgets show times in the app's format
+    }
     if (k === 'haptics') setSetting('haptics', e.target.checked);
     if (k === 'weekStart') setSetting('weekStart', Number(e.target.value));
   });

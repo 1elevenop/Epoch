@@ -2,9 +2,11 @@
 
 import { AlarmPlugin } from '../../core/bridge.js';
 import { esc } from '../../core/dom.js';
-import { pad2 } from '../../core/time.js';
+import { pad2, formatHMS, ampm } from '../../core/time.js';
+import { getSettings } from '../../core/store.js';
 import { SOUNDS, WEEK, defaultAlarm, validateAlarm, errorText } from './model.js';
 import { ensureExtra, extraHtml, bindExtra, readExtra } from './editor-extra.js';
+import { ic } from '../../core/icons.js';
 
 const opt = (v, label, cur) => `<option value="${v}" ${String(v) === String(cur) ? 'selected' : ''}>${label}</option>`;
 
@@ -23,8 +25,11 @@ export function openEditor(existing, { onDelete } = {}) {
       <button class="btn" data-act="save" aria-label="Save alarm">Save</button>
     </div>
     <form class="form" novalidate>
-      <input class="time-input digits" type="time" name="time" required aria-label="Alarm time"
-             value="${pad2(a.hour)}:${pad2(a.minute)}" />
+      <div class="time-wrap">
+        <input class="time-input digits" type="time" name="time" required aria-label="Alarm time"
+               value="${pad2(a.hour)}:${pad2(a.minute)}" />
+        <span class="time-shown digits" aria-hidden="true"></span>
+      </div>
       <fieldset class="days" aria-label="Repeat days">
         ${WEEK.map(([v, n]) => `<button type="button" class="day-chip" data-day="${v}" aria-pressed="${a.days.includes(v)}">${n.slice(0, 2)}</button>`).join('')}
       </fieldset>
@@ -32,7 +37,7 @@ export function openEditor(existing, { onDelete } = {}) {
       <label class="field">Sound
         <span class="row"><select class="input" name="soundId">
           ${['Gentle', 'Hard'].map((g) => `<optgroup label="${g}">${SOUNDS.filter((s) => s.group === g).map((s) => opt(s.id, s.name, a.soundId)).join('')}</optgroup>`).join('')}
-        </select><button type="button" class="icon-btn" data-act="preview" aria-label="Preview sound">▶</button></span>
+        </select><button type="button" class="icon-btn" data-act="preview" aria-label="Preview sound">${ic('play')}</button></span>
       </label>
       <label class="field">Volume <output name="volOut">${Math.round(a.volume * 100)} %</output>
         <input type="range" name="volume" min="10" max="100" step="5" value="${Math.round(a.volume * 100)}" aria-label="Volume" /></label>
@@ -91,6 +96,15 @@ export function openEditor(existing, { onDelete } = {}) {
   }
 
   form.volume.addEventListener('input', () => (form.volOut.value = `${form.volume.value} %`));
+  // The WebView's time field follows the phone's 12/24 h locale; show it in the app's own format.
+  const shown = sheet.querySelector('.time-shown');
+  const showTime = () => {
+    const [h, m] = (form.time.value || '').split(':').map(Number);
+    const { hour12 } = getSettings();
+    shown.textContent = Number.isInteger(h) && Number.isInteger(m) ? formatHMS(h, m, 0, { hour12 }) + (hour12 ? ` ${ampm(h)}` : '') : '--:--';
+  };
+  form.time.addEventListener('input', showTime);
+  showTime();
   form.addEventListener('submit', (e) => e.preventDefault());
 
   sheet.addEventListener('click', async (e) => {
@@ -109,7 +123,7 @@ export function openEditor(existing, { onDelete } = {}) {
         if (previewing) await AlarmPlugin.stopPreview();
         else await AlarmPlugin.previewSound(form.soundId.value, Number(form.volume.value) / 100);
         previewing = !previewing;
-        e.target.closest('[data-act]').textContent = previewing ? '■' : '▶';
+        e.target.closest('[data-act]').innerHTML = ic(previewing ? 'stop' : 'play');
       } catch (err) {
         errEl.textContent = errorText(err);
       }

@@ -56,7 +56,7 @@ export function reviewScreen(el) {
     const tIdx = e.target.closest('[data-task]')?.dataset.task;
     if (tIdx != null) {
       await saveTask(newTask(s.parkingLot[Number(tIdx)].text, Date.now()));
-      e.target.closest('[data-task]').replaceWith(Object.assign(document.createElement('span'), { textContent: '✓ added', className: 'muted' }));
+      e.target.closest('[data-task]').replaceWith(Object.assign(document.createElement('span'), { textContent: 'Added', className: 'muted' }));
     }
     if (e.target.closest('[data-act=save]')) {
       const done = { ...s, review: rating ? { note: el.querySelector('#note').value.trim().slice(0, 200), rating } : null };

@@ -61,7 +61,7 @@ export function ringScreen(el) {
       el.innerHTML = `<section class="screen ring-screen wake-check" aria-labelledby="screen-title">
         <h1 id="screen-title" class="ring-q">Are you up?</h1>
         <p class="sub" id="wc-left"></p>
-        <button class="btn btn-huge" data-act="awake" aria-label="Yes, I am up">✓ I'm up</button></section>`;
+        <button class="btn btn-huge" data-act="awake" aria-label="Yes, I am up">I'm up</button></section>`;
       el.querySelector('[data-act=awake]').addEventListener('click', () => AlarmPlugin.confirmAwake(a.id).catch(() => {}));
       const left = el.querySelector('#wc-left');
       unsubClock = subscribe((t) => {

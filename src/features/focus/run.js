@@ -42,7 +42,7 @@ export function runScreen(el) {
       <div id="phase-box"></div>
       <ul class="focus-tasks" id="tasks"></ul>
       <div class="focus-actions">
-        <button class="btn btn-ghost" data-act="park" aria-label="Parking lot: note a stray thought">Parking lot ✎</button>
+        <button class="btn btn-ghost" data-act="park" aria-label="Parking lot: note a stray thought">Parking lot</button>
         <button class="btn btn-secondary" data-act="pause"></button>
         <button class="btn btn-ghost hold" data-act="end" aria-label="Hold for 2 seconds to end the session early"><span class="hold-fill"></span>End</button>
       </div>
@@ -89,7 +89,7 @@ export function runScreen(el) {
     const last = cur.index === st.run.seq.length - 1;
     if (cur.over) {
       $('#phase-box').innerHTML = `<div class="card phase-done" role="alert">
-        <strong>${cur.kind === 'focus' ? 'Focus block done ✓' : 'Break over'}</strong>
+        <strong>${cur.kind === 'focus' ? 'Focus block done' : 'Break over'}</strong>
         <button class="btn" data-act="next" aria-label="${last ? 'Finish session' : cur.kind === 'focus' ? 'Start break' : 'Start focus'}">${last ? 'Finish session' : cur.kind === 'focus' ? 'Start break' : 'Start focus'}</button></div>`;
     } else if (cur.kind !== 'focus') {
       skipArmed = false;
@@ -110,7 +110,7 @@ export function runScreen(el) {
       next = toggleSubtask(t, e.target.dataset.sub);
       focus.countSubtask(e.target.checked ? 1 : -1);
       navigator.vibrate?.(15);
-      if (next.done && !t.done) toast(`✓ ${t.title} complete`, { action: 'Undo', onAction: () => save({ ...next, done: false, completedAt: null }) });
+      if (next.done && !t.done) toast(`${t.title} complete`, { action: 'Undo', onAction: () => save({ ...next, done: false, completedAt: null }) });
     } else {
       next = toggleTask(t);
     }

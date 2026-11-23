@@ -20,12 +20,12 @@ export function extraHtml(a) {
     <div class="chain-pick" role="group" aria-label="Challenges, in order">
       ${Object.entries(CHALLENGE_INFO)
         .map(([id, c]) => `<button type="button" class="chain-chip" data-ch="${id}" aria-pressed="false">
-          <span class="chain-n" aria-hidden="true"></span>${c.icon} ${c.name}</button>`)
+          <span class="chain-n" aria-hidden="true"></span>${c.name}</button>`)
         .join('')}
     </div>
     <p class="muted" id="chain-text"></p>
     <label class="field">Difficulty
-      <select class="input" name="level">${[1, 2, 3, 4].map((l) => opt(l, `Level ${l}${l === 4 ? ' (hardest)' : ''}`, a.challenge.level)).join('')}</select></label>
+      <select class="input" name="level">${[1, 2, 3, 4].map((l) => opt(l, `Level ${l} · ${['', 'easy (4 + 7)', 'medium (34 + 7)', 'harder (27 + 38)', 'hardest (7 × 8)'][l]}`, a.challenge.level)).join('')}</select></label>
     <div class="qr-row" data-show="qr">
       <span id="qr-state"></span>
       <button type="button" class="btn btn-ghost" data-act="qr" aria-label="Set up QR code">Set up QR code</button>
@@ -56,7 +56,7 @@ export function bindExtra(sheet, a) {
     chainText.textContent = a.challenge.chain.map((id) => CHALLENGE_INFO[id].name).join(' → ') || 'Pick at least one';
     const hasQr = a.challenge.chain.includes('qr');
     sheet.querySelector('[data-show=qr]').hidden = !hasQr;
-    sheet.querySelector('#qr-state').textContent = a.challenge.qrPayload ? '✓ Code registered' : '⚠ No code registered yet';
+    sheet.querySelector('#qr-state').textContent = a.challenge.qrPayload ? 'Code registered' : 'No code registered yet';
     sheet.querySelector('[data-show=wc]').hidden = !sheet.querySelector('[name=wcOn]').checked;
   }
   sheet.addEventListener('click', async (e) => {

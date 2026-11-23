@@ -65,7 +65,7 @@ export function openQrSetup(current) {
         }
         if (act === 'test') {
           const v = await scanOnce();
-          errEl.textContent = v == null ? 'Cancelled.' : v === payload ? '✓ That code works.' : 'Different code — that one would be rejected.';
+          errEl.textContent = v == null ? 'Cancelled' : v === payload ? 'That code works' : 'Different code — that one would be rejected';
         }
       } catch (err) {
         errEl.textContent = err.message;

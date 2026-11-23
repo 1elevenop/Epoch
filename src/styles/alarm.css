@@ -26,7 +26,7 @@ body.no-tabbar #view { padding-bottom: calc(var(--safe-bottom) + var(--gap)); }
   border: 1px solid var(--border);
   animation: fade-in var(--dur) var(--ease);
 }
-.toast-action { min-height: 40px; border: 0; background: none; color: var(--accent); font-weight: 700; }
+.toast-action { min-height: 40px; border: 0; background: none; color: var(--accent); font-weight: 600; }
 
 /* ---------- Alarm list ---------- */
 .alarm-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
@@ -40,7 +40,7 @@ body.no-tabbar #view { padding-bottom: calc(var(--safe-bottom) + var(--gap)); }
   padding-right: 20px;
   background: var(--danger);
   color: #000;
-  font-weight: 700;
+  font-weight: 600;
 }
 .swipe-fg {
   position: relative;
@@ -57,7 +57,7 @@ body.no-tabbar #view { padding-bottom: calc(var(--safe-bottom) + var(--gap)); }
 .alarm-time { font-size: 40px; font-weight: 300; line-height: 1.1; }
 .alarm-time small { font-size: 16px; margin-left: 4px; color: var(--text-2); }
 .alarm-meta { color: var(--text-2); font-size: 14px; }
-.alarm-next { color: var(--accent); font-size: 13px; }
+.alarm-next { color: var(--text-2); font-size: 13px; }
 .alarm-row.off .alarm-time, .alarm-row.off .alarm-next { color: var(--text-2); }
 
 .toggle { position: relative; width: 56px; height: var(--touch); display: inline-flex; align-items: center; flex: none; }
@@ -73,9 +73,15 @@ body.no-tabbar #view { padding-bottom: calc(var(--safe-bottom) + var(--gap)); }
 .sheet-title { margin: 0; flex: 1; text-align: center; font-size: 17px; align-self: center; }
 .form { display: flex; flex-direction: column; gap: 16px; padding-bottom: 40px; }
 .time-input { font-size: 44px; width: 100%; font-weight: 300; text-align: center; background: none; border: 0; color: var(--text); color-scheme: dark; min-height: 80px; }
+/* The field stays tappable (opens the system picker); its text is hidden and drawn in the app's 12/24 h format. */
+.time-wrap { position: relative; }
+.time-wrap .time-input { color: transparent; }
+.time-shown { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 44px; font-weight: 300; color: var(--text); pointer-events: none; }
+.row-end { align-items: flex-end; }
+.row-end > .grow { flex: 1; }
 .days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; border: 0; padding: 0; margin: 0; }
 .day-chip { min-height: var(--touch); border-radius: 50%; border: 1px solid var(--border); background: var(--raised); color: var(--text-2); font-weight: 600; }
-.day-chip[aria-pressed='true'] { background: var(--accent); color: #000; border-color: var(--accent); }
+.day-chip[aria-pressed='true'] { background: var(--text); color: var(--bg); border-color: var(--text); }
 .field { display: flex; flex-direction: column; gap: 6px; color: var(--text-2); font-size: 14px; }
 .field output { color: var(--text); }
 .field input[type='range'] { accent-color: var(--accent); min-height: 32px; }
@@ -87,7 +93,7 @@ select.input { appearance: auto; color-scheme: dark; }
 /* ---------- Reliability & onboarding ---------- */
 .rel-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
 .rel-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
-.rel-icon { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; flex: none; }
+.rel-icon { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; flex: none; }
 .rel-item.ok .rel-icon { background: var(--success); color: #000; }
 .rel-item.bad .rel-icon { background: var(--danger); color: #000; }
 .rel-text { flex: 1; display: flex; flex-direction: column; }

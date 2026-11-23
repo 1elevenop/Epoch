@@ -92,7 +92,7 @@ export function stopwatchScreen(el) {
   });
   copyBtn.addEventListener('click', async () => {
     const ok = await copyText(SW.lapsText(sw.laps));
-    copyBtn.textContent = ok ? 'Copied ✓' : 'Copy failed';
+    copyBtn.textContent = ok ? 'Copied' : 'Copy failed';
     setTimeout(() => (copyBtn.textContent = 'Copy laps'), 1500);
   });
 

@@ -32,10 +32,10 @@ export function focusHome(el) {
       ? sessions
           .slice(0, 8)
           .map(
-            (s) => `<li class="log-item ${s.endReason === 'completed' ? '' : 'missed'}">
+            (s) => `<li class="log-item ${s.endReason === 'completed' ? '' : s.endReason === 'done_early' ? 'partial' : 'missed'}">
               <div><strong>${esc(s.goal)}</strong> · ${fmt.format(s.startedAt)}</div>
               <div class="muted">${E.focusMinutes(s.segments)} of ${E.plannedFocusMinutes(s.plan)} min · ${E.cyclesDone(s.segments)} cycles ·
-                ${s.leaves.length} leaves${s.review ? ` · ${'★'.repeat(s.review.rating)}` : ''}</div></li>`,
+                ${s.leaves.length} ${s.leaves.length === 1 ? 'leave' : 'leaves'}${s.review ? ` · rated ${s.review.rating}/5` : ''}</div></li>`,
           )
           .join('')
       : '<li class="empty">No sessions yet. Start your first one above.</li>';

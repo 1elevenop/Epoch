@@ -1,5 +1,99 @@
 # Changelog
 
+## 0.6.0 — first public release (summary)
+
+WAKE11 0.6.0 is the first release on GitHub. Everything below this summary is the detailed development log.
+
+- **Alarm:** native alarms that ring on a locked, silent or restarted phone; dismiss challenges (math, type, memory, shake, walk, QR) in chains; anti-snooze escalation with a weekly budget; "Are you up?" wake-up check; sunrise pre-alarm; nap and test alarms; alarm log; native fallback ring screen.
+- **Clock, Timer, Stopwatch:** world clocks, night mode, analog face, several timers, laps, big landscape display with nine digit styles.
+- **Focus:** Pomodoro sessions with tasks, parking lot, optional Do Not Disturb and noise, stats and streaks.
+- **Audio Lab and tools:** metronome, tone generator, noise, tuner, binaural beats, interval timer, breathing, event countdowns, chess clock, speech timer.
+- **Widgets:** clock, analog clock, next alarm with nap buttons, timer, world clocks, countdown.
+- **Privacy:** no internet permission, no account or analytics, excluded from cloud backup, JSON export / import.
+- **Known limitations:** device tests T3 (deep Doze overnight), T8 (three real nights), T9 (full snooze sequence), T10 (power off while ringing), T11 (wrong QR 3×) and T14 (15 min auto-silence) have not passed on a real phone yet.
+
+## Repository docs (2026-11-23)
+
+### Added
+- `README.md` (features, screenshots, install from APK with SHA-256 check, first run and Samsung steps, privacy, known limitations, build from source, structure), `LICENSE` (MIT, © 2026 1elevenop), `THIRD_PARTY_NOTICES.md` (Capacitor, ML Kit, qrcode-generator, keep-awake; Orbitron, Rajdhani, Share Tech Mono with the full SIL OFL 1.1 text), `PRIVACY.md` (every permission and why), `SECURITY.md` (private reporting via GitHub), `CONTRIBUTING.md`, issue templates (bug report asks for phone, Android version and Reliability).
+
+### Changed
+- `BLUEPRINT.md` and `RELEASE_PLAN.md` moved to `docs/` (D-R5); `CLAUDE.md` stays at the root and points there.
+
+## Widget fixes + last screenshots (2026-11-23)
+
+### Fixed
+- Timer widget and the ongoing timer notification showed a focus phase's end message ("Focus block done — time for a break") while the block was still running. Native timers now take an optional `title` shown while running (`Focus`, `Break`, `Long break`); the `label` is still what the ring says at the end. Plain timers fall back to their label.
+- Widgets ignored the app's 24-hour setting and used the phone's (`5:15 am` with 24 h on). The web now mirrors `hour12` with the widget data (`setWidgetData`, validated as a boolean) and re-syncs when the setting changes; the next-alarm text, digital clock and world clocks follow it. Until the app sends it, the phone's setting is used.
+- Digital clock widget: "⏰ Tomorrow …" → "Alarm Tomorrow …" (no emoji, unslop pass).
+- Analog clock widget: own dial and hands (`widget_dial`, `widget_hand_hour`, `widget_hand_minute` vectors) instead of Android 12+'s pale Material dial with teal hands. Near-black face like the other widgets, grey hour ticks, one orange tick at 12, off-white hands, no second hand.
+
+### Added
+- Screenshots: `dark/12-focus-running.png`, `light/12-focus-running.png`, `dark/13-big-display-landscape.png` (Nixie, running focus block), `dark/14-widgets.png` (home screen page with only WAKE11 widgets; status bar and dock cropped).
+
+### Checks
+- 115 JS + Kotlin unit tests pass; installed on the phone: widget shows "Focus 19:38", "Tomorrow 05:15", world clocks in 24 h. Focus session ended afterwards (no phase alarm left scheduled).
+
+
+## Unslop polish pass (2026-11-23)
+
+Method: [unslop](https://github.com/heydamir/unslop) by Damir Sokolovsky (@heydamir), CC BY 4.0. Audit rated the app light slop, so polish mode: fix only what the audit found, keep palette, fonts, layout and the user-chosen themes (Neon, Synthwave, Matrix, Holo, Aurora, Mars and their big-display styles keep their glows on purpose).
+
+Direction: an offline alarm clock that makes sure you actually get up · firm, awake, a little warm · bedside at dawn · moments: the big time digits and the ring challenge.
+
+### Changed
+- **Icons:** one line-icon set, `src/core/icons.js`, drawn like the tab bar (24 grid, 1.8 stroke, `currentColor`; own paths, no dependency). Replaces ☾ ▶ ■ ❚❚ ↺ ✕ ⌫ ✓ in Clock, editor, Settings, Timer, Chess, big display, world clocks, tasks, ring keypad and Reliability. Removed ⏰ 🎧 🎉 ✎ ⚠ and the challenge glyphs (∑ ⌨ ▦ ↯ ⌗ 👣) from labels and options.
+- **Color:** orange stays on the primary action, toggles and the one key line ("Next alarm in …"); selected weekdays are an off-white/ink step, list countdowns are secondary text, focus sessions ended early get a neutral stripe (red only for interrupted / gave up), no glow on the selected transition card.
+- **Copy:** "Last one!" → "Last round", "Done 🎉" → "Done", "⏰ Alarm in" → "Next alarm in", no ✓ in status text ("Restored", "Copied", "Added", "I'm up"), short QR status lines without trailing periods, ratings as "rated 4/5".
+- **Type:** weights 400–600 (ring problem 500 + tabular figures, was 700; chain badge 600, was 800; warnings and toasts 600); big display label and interval phase in sentence case, no wide tracking.
+- **Details:** radius by size — buttons, chips and inputs 10, challenge chips 10, keypad 12, ring button 16, tags and badges 6, segmented control 12 with 8 inside; round icon buttons, day chips and switches stay round.
+
+### Checks
+- 115 JS tests pass; built, installed, checked on the phone: Clock, Alarms, editor, Focus, Timer, Settings and ring keypad (backspace / check icons). Screenshots in `media/screenshots/` retaken with the new look (dark 11, light 8); the ring screen no longer has One UI's pop-up over the clock.
+
+
+## Icon check + screenshots (2026-11-23)
+
+### Added
+- `scripts/demo-backup.mjs`: writes a backup with neutral demo data (4 alarms, 10 log entries, 3 tasks, 7 focus sessions, 3 world clocks), checked with the app's own `parseBackup`. Import it in Settings → Backup for screenshots. No new dependency (Node's `registerHooks` stubs the CSS font imports).
+- `media/screenshots/dark/` (11) and `media/screenshots/light/` (8): Clock, Alarms, Alarm editor, Focus, Focus stats, Audio Lab, Tools, Timer; dark also Interval (work), Big display (portrait) and Ring + math challenge. Status bar cropped off; demo data only.
+
+### Checks
+- Launcher icon on the phone (fresh install of the debug build as `app.wake11`): renders correctly in the One UI drawer. Notification icon shows while ringing.
+- Backup import on the phone: demo file → "Restored ✓ 4 alarms (3 scheduled)". Test alarm rang, math challenge dismissed it.
+
+### Fixed (found while taking screenshots)
+- Onboarding page 1 no longer says snoozing gets harder "(coming next)" — it shipped; now mentions the wake-up check.
+- Scrolled content no longer shows under the status bar: an opaque strip in the theme background sits behind it (below sheets and the big display).
+- Settings → Timer sound: "Play" lines up with the select, and the select takes the free width.
+- Alarm editor shows the time in the app's 12/24 h setting ("06:00"), not the phone locale's; tapping still opens the system picker.
+- Focus session list says "1 leave" (was "1 leaves").
+
+### Security / privacy scan (2026-11-23, manual — gitleaks not installed)
+- Working tree and every commit: no API keys, tokens, private keys or passwords (only the signing config reading `keystore.properties` and the `CHANGE_ME` template).
+- No keystore, `.env`, `local.properties` or `.claude` files tracked; `keystore.properties` and builds are git-ignored.
+- Commit author/committer: GitHub noreply address only. No owner name, e-mail, local path, IP or device serial in files.
+- Image metadata: Affinity PNGs carry only software name, size and export time (+05:30); screenshots have none.
+- Release WebView debugging off (Capacitor default), no source maps shipped.
+- Left as is (low risk, owner's call): test phone model (S25 Ultra / SM-S938B) in BLUEPRINT and CHANGELOG.
+
+## Wake-up check you can't lose, easier math (2026-11-23)
+
+### Fixed
+- Swiping the "Are you up?" notification away no longer leaves you with no way to confirm: a delete intent re-posts it at once (Android 14+ lets users swipe even ongoing notifications).
+- Opening WAKE11 during a wake-up check (launcher, recents, notification) jumps straight to the in-app "Are you up? ✓ I'm up" screen.
+- A missed wake-up check now rings at the alarm's own level + 1 (was always level 4).
+
+### Changed
+- Math levels are solvable half-asleep: L1 `4 + 7`, L2 `34 + 7`, L3 `27 + 38`, L4 times table `7 × 8` (3 problems). Wrong answers add at most 2 extra problems. Native fallback uses `27 + 38`.
+- Editor difficulty picker shows an example for each level.
+
+### Tests
+- `EscalationTest.kt` and `phase3.test.js` updated (missed wake-check = alarm level + 1, capped at 4). 115 JS + Kotlin unit tests pass.
+
+### Device test results
+- 2026-11-23, phone locked: test alarm (L1, wake-check 1 min) rang over the lock screen with `8 + 7`, `4 + 6`; dismissed. "Are you up?" posted; swiping it away re-posted it at once with the remaining time ("within 50 s"); opening WAKE11 jumped to "Are you up? ✓ I'm up"; confirming cleared the ring state, removed the notification and logged `wakeCheck: passed`. ✅
+
 ## Package renamed to app.wake11 (2026-11-23)
 
 ### Changed

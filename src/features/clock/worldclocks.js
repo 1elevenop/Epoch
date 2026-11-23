@@ -6,6 +6,7 @@ import { zoneParts, relativeOffset, relativeDay, isDaytime, isValidZone } from '
 import { formatHMS, ampm } from '../../core/time.js';
 import { getSettings, setSetting } from '../../core/store.js';
 import { esc } from '../../core/dom.js';
+import { ic } from '../../core/icons.js';
 
 const saved = () => getSettings().worldClocks.filter((c) => c && isValidZone(c.zone));
 
@@ -29,7 +30,7 @@ export function mountWorldClocks(host) {
           <span class="wc-main"><span class="wc-name">${esc(c.name)}</span>
             <span class="wc-meta"></span></span>
           <span class="wc-time digits"></span>
-          <button class="icon-btn" data-remove="${i}" aria-label="Remove ${esc(c.name)}">✕</button>
+          <button class="icon-btn" data-remove="${i}" aria-label="Remove ${esc(c.name)}">${ic('close')}</button>
         </li>`,
           )
           .join('')

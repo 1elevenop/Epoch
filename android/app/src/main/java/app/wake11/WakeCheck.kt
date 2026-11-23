@@ -22,6 +22,7 @@ object WakeCheck {
     const val ACTION_PROMPT = "app.wake11.WAKE_CHECK_PROMPT"
     const val ACTION_TIMEOUT = "app.wake11.WAKE_CHECK_TIMEOUT"
     const val ACTION_CONFIRM = "app.wake11.WAKE_CHECK_CONFIRM"
+    const val ACTION_REPOST = "app.wake11.WAKE_CHECK_REPOST"
     private const val NOTIF_ID = 4712
 
     fun start(ctx: Context, rs: RingState, alarm: Alarm, now: Long) {
@@ -60,6 +61,14 @@ object WakeCheck {
         AlarmPlugin.emit("ringStarted", store.ringState()!!.toJson())
     }
 
+    /** Prompt notification swiped away (Android 14+ allows it even when ongoing): put it straight back. */
+    fun repost(ctx: Context, now: Long = System.currentTimeMillis()) {
+        val rs = AlarmStore(ctx).ringState() ?: return
+        if (rs.phase != RingState.WAKE_CHECK_PROMPT) return
+        val left = (((rs.wakeCheckAt ?: now) - now) / 1000).toInt().coerceAtLeast(1)
+        showPrompt(ctx, left)
+    }
+
     fun confirm(ctx: Context): Boolean {
         val store = AlarmStore(ctx)
         val rs = store.ringState() ?: return false
@@ -73,11 +82,13 @@ object WakeCheck {
         val store = AlarmStore(ctx)
         val rs = store.ringState() ?: return
         if (rs.phase != RingState.WAKE_CHECK_PROMPT) return
+        cancelAlarm(ctx, ACTION_REPOST)
         dismissPrompt(ctx)
         store.updateLog(rs.instanceId, JSONObject().put("wakeCheck", "failed"))
         RingController.startRinging(
             ctx,
-            rs.copy(phase = RingState.RINGING, escalated = true, wakeCheckAt = null, challengeLevel = 4, nextRingAt = null),
+            rs.copy(phase = RingState.RINGING, escalated = true, wakeCheckAt = null, nextRingAt = null,
+                challengeLevel = Escalation.challengeLevel(store.get(rs.alarmId)?.challengeLevel ?: 1, 0, true)),
         )
     }
 
@@ -86,6 +97,7 @@ object WakeCheck {
         val store = AlarmStore(ctx)
         cancelAlarm(ctx, ACTION_PROMPT)
         cancelAlarm(ctx, ACTION_TIMEOUT)
+        cancelAlarm(ctx, ACTION_REPOST)
         dismissPrompt(ctx)
         store.updateLog(rs.instanceId, JSONObject().put("wakeCheck", result))
         store.setRingState(null)
@@ -127,6 +139,7 @@ object WakeCheck {
             .setCategory(Notification.CATEGORY_ALARM)
             .setOngoing(true)
             .setContentIntent(open)
+            .setDeleteIntent(pending(ctx, ACTION_REPOST))
             .setFullScreenIntent(open, true)
             .addAction(Notification.Action.Builder(null, "✓ I'm up", confirm).build())
             .setVisibility(Notification.VISIBILITY_PUBLIC)
@@ -155,6 +168,7 @@ class WakeCheckReceiver : BroadcastReceiver() {
             WakeCheck.ACTION_PROMPT -> WakeCheck.prompt(context)
             WakeCheck.ACTION_TIMEOUT -> WakeCheck.timeout(context)
             WakeCheck.ACTION_CONFIRM -> WakeCheck.confirm(context)
+            WakeCheck.ACTION_REPOST -> WakeCheck.repost(context)
         }
     }
 }

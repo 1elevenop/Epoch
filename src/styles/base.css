@@ -28,6 +28,20 @@ body {
   flex-direction: column;
 }
 
+/* Opaque strip behind the status bar so scrolled content never shows under the clock and icons.
+   Below sheets (z 30+) and the big display (45), which draw their own background. */
+#app::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--safe-top);
+  background: var(--bg);
+  z-index: 20;
+  pointer-events: none;
+}
+
 #view {
   flex: 1;
   padding: calc(var(--safe-top) + var(--gap)) var(--gap)

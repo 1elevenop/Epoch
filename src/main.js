@@ -9,6 +9,7 @@ import { applyTheme } from './core/theme.js';
 import { installBigDisplay } from './features/bigdisplay/bigdisplay.js';
 import { syncTimerSound } from './features/settings/alarm-defaults-ui.js';
 import { syncWidgets } from './core/widgets.js';
+import { AlarmPlugin } from './core/bridge.js';
 
 applyTheme(getSettings().theme, getSettings().accent);
 
@@ -89,3 +90,14 @@ if (!ringMode && !focus.get()) setDnd(false);
 if (!ringMode) syncTimerSound();
 if (!ringMode) syncWidgets();
 if (!ringMode) installBigDisplay(() => current);
+
+// Wake-up check: if the notification was swiped away, opening the app still shows "Are you up?".
+async function showWakeCheck() {
+  const c = await AlarmPlugin.getRingContext().catch(() => null);
+  if (c?.state?.phase === 'WAKE_CHECK_PROMPT' && !location.hash.startsWith('#/ring')) location.hash = '#/ring';
+}
+if (!ringMode) {
+  showWakeCheck();
+  document.addEventListener('visibilitychange', () => document.visibilityState === 'visible' && showWakeCheck());
+  AlarmPlugin.addListener('ringStarted', showWakeCheck).catch(() => {});
+}

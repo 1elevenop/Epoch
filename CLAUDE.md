@@ -1,6 +1,6 @@
 # WAKE11 — project rules for Claude Code
 
-Source of truth: `BLUEPRINT.md`. If a decision changes, update BLUEPRINT.md and log it in `CHANGELOG.md`.
+Source of truth: `docs/BLUEPRINT.md`. If a decision changes, update it and log it in `CHANGELOG.md`. Release work: `docs/RELEASE_PLAN.md`.
 
 ## Key decisions (BLUEPRINT §2)
 - **D1 Hybrid:** Capacitor + vanilla HTML/CSS/JS web UI + a small native Kotlin layer. Native does only what the web cannot: schedule real alarms, wake a locked phone, keep ringing in the background.

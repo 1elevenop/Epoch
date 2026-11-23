@@ -21,7 +21,7 @@ export const SHRINK_CAP = 2;
 export const escalation = {
   snoozeCap: (max, shrink) => (shrink ? Math.min(max, SHRINK_CAP) : max),
   snoozeLengthMin: (base, index, shrink) => (shrink && index >= 2 ? Math.max(1, Math.round(base * 0.6)) : base),
-  challengeLevel: (base, snoozeCount, escalated) => (escalated ? 4 : Math.min(4, Math.max(1, base) + snoozeCount)),
+  challengeLevel: (base, snoozeCount, escalated) => Math.min(4, Math.max(1, base) + (escalated ? 1 : snoozeCount)),
   budgetLeft: (budget, used) => (budget == null ? null : Math.max(0, budget - used)),
   canSnooze(snoozeCount, max, shrink, escalated, budgetLeft) {
     const leftByCap = Math.max(0, this.snoozeCap(max, shrink) - snoozeCount);
@@ -47,10 +47,10 @@ export function shouldEscape({ id, fails = 0, startedAt, now = Date.now(), unava
 }
 
 export const CHALLENGE_INFO = {
-  math: { name: 'Math', icon: '∑' },
-  type: { name: 'Type a phrase', icon: '⌨' },
-  memory: { name: 'Memory', icon: '▦' },
-  shake: { name: 'Shake', icon: '↯' },
-  qr: { name: 'Scan QR code', icon: '⌗' },
-  steps: { name: 'Walk', icon: '👣' },
+  math: { name: 'Math' },
+  type: { name: 'Type a phrase' },
+  memory: { name: 'Memory' },
+  shake: { name: 'Shake' },
+  qr: { name: 'Scan QR code' },
+  steps: { name: 'Walk' },
 };

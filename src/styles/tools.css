@@ -6,7 +6,7 @@
 
 /* interval: big colour states — green work, red rest */
 .iv-live { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
-.iv-kind { font-size: 28px; font-weight: 700; margin: 4vh 0 0; letter-spacing: 0.04em; text-transform: uppercase; }
+.iv-kind { font-size: 28px; font-weight: 600; margin: 4vh 0 0; }
 .iv-time { font-size: clamp(88px, 30vw, 180px); margin: 0; line-height: 1; }
 .iv-meta { font-size: 20px; margin: 0; }
 .iv-next { margin: 0; }

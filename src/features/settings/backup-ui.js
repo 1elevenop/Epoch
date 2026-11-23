@@ -56,7 +56,7 @@ export function bindBackup(root) {
       if (act === 'confirm' && box._data) {
         const r = await applyBackup(box._data);
         box._data = null;
-        box.innerHTML = `<div class="card banner"><strong>Restored ✓</strong><span>${n(r.alarms, 'alarm')} (${r.scheduled} scheduled), ${n(r.alarmLogs, 'log entry').replace('entrys', 'entries')}, ${n(r.tasks, 'task')}, ${n(r.sessions, 'session')}.</span></div>`;
+        box.innerHTML = `<div class="card banner"><strong>Restored</strong><span>${n(r.alarms, 'alarm')} (${r.scheduled} scheduled), ${n(r.alarmLogs, 'log entry').replace('entrys', 'entries')}, ${n(r.tasks, 'task')}, ${n(r.sessions, 'session')}.</span></div>`;
         toast('Backup restored');
       }
     } catch (err) {

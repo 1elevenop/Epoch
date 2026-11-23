@@ -23,7 +23,7 @@ export function binauralScreen(el) {
   el.innerHTML = `
     <section class="screen lab" aria-labelledby="screen-title">
       ${header('Binaural beats', 'Experimental — evidence for effects is weak.')}
-      <p class="card lab-note" role="note">🎧 Headphones required: each ear gets a different tone.</p>
+      <p class="card lab-note" role="note">Headphones required: each ear gets a different tone.</p>
       <label class="field">Carrier <output id="c-out">${st.carrier} Hz</output>
         <input type="range" id="carrier" min="60" max="1000" step="1" value="${st.carrier}" aria-label="Carrier frequency in hertz" /></label>
       <label class="field">Beat <output id="b-out">${st.beat} Hz</output>

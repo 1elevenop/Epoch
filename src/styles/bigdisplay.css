@@ -10,7 +10,7 @@ body.bd-open #app { visibility: hidden; }
   color: var(--text);
   animation: fade-in var(--dur) var(--ease);
 }
-.bd-label { margin: 0; color: var(--accent); font-size: clamp(14px, 4.5vh, 28px); letter-spacing: 0.12em; text-transform: uppercase; font-family: var(--digit-font, inherit); }
+.bd-label { margin: 0; color: var(--accent); font-size: clamp(14px, 4.5vh, 28px); letter-spacing: 0.01em; font-family: var(--digit-font, inherit); }
 .bd-digits-host { font-family: var(--digit-font, inherit); font-weight: 500; font-size: min(56vh, 20vw); }
 .bd-overlay.over .bd-digits-host { color: var(--danger); --glow: var(--danger); }
 .bd-progress { width: min(70vw, 900px); height: 4px; border-radius: 2px; background: var(--raised); overflow: hidden; }
@@ -40,14 +40,14 @@ body.bd-open #app { visibility: hidden; }
 .tt-name { font-size: 12px; text-align: center; color: var(--text-2); }
 .swatches { display: flex; flex-wrap: wrap; gap: 10px; }
 .swatch { width: var(--touch); height: var(--touch); border-radius: 50%; border: 2px solid var(--border); background: var(--c); }
-.swatch.auto { background: var(--raised); color: var(--text); font-weight: 700; }
+.swatch.auto { background: var(--raised); color: var(--text); font-weight: 600; }
 .swatch.on { outline: 3px solid var(--text); outline-offset: 2px; }
-.seg { display: flex; background: var(--surface); border-radius: 999px; padding: 4px; gap: 4px; }
-.seg-btn { flex: 1; min-height: 40px; border: 0; border-radius: 999px; background: none; color: var(--text-2); font-weight: 600; }
+.seg { display: flex; background: var(--surface); border-radius: 12px; padding: 4px; gap: 4px; }
+.seg-btn { flex: 1; min-height: 40px; border: 0; border-radius: 8px; background: none; color: var(--text-2); font-weight: 600; }
 .seg-btn[aria-selected='true'] { background: var(--accent); color: var(--on-accent); }
 .tr-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .tr-card { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 4px; border-radius: 14px; border: 2px solid var(--border); background: var(--surface); color: var(--text); }
-.tr-card.selected { border-color: var(--accent); box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 40%, transparent); }
+.tr-card.selected { border-color: var(--accent); }
 .tr-preview { font-size: 40px; height: 52px; display: flex; color: var(--text); font-family: var(--digit-font, inherit); }
 .tr-name { font-size: 12px; font-weight: 600; }
 .tr-used { font-size: 10px; color: var(--accent); min-height: 12px; }

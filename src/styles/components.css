@@ -89,7 +89,7 @@
 .phase-badge {
   display: inline-block;
   padding: 2px 10px;
-  border-radius: 999px;
+  border-radius: 6px;
   background: var(--raised);
   color: var(--accent);
   font-size: 13px;

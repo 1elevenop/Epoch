@@ -26,7 +26,7 @@ object Escalation {
         if (shrink && index >= 2) max(1, (base * 0.6).roundToInt()) else base
 
     fun challengeLevel(base: Int, snoozeCount: Int, escalated: Boolean): Int =
-        if (escalated) 4 else min(4, max(1, base) + snoozeCount)
+        min(4, max(1, base) + if (escalated) 1 else snoozeCount)
 
     fun ringProfile(snoozeCount: Int, rampSec: Int, volume: Double, escalated: Boolean): Profile = when {
         escalated || snoozeCount >= 3 -> Profile(0, 1.0)

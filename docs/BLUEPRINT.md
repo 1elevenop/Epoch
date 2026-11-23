@@ -183,7 +183,7 @@ Extra rules:
 
 | ID | Challenge | Difficulty levels | Notes |
 |---|---|---|---|
-| `math` | Solve K problems | L1: 2-digit add · L2: 2-digit × 1-digit · L3: (a×b)+c · L4: 3 problems of L3 | Wrong answer adds one problem. Numeric keypad only |
+| `math` | Solve K problems | L1: 1-digit + 1-digit · L2: 2-digit + 1-digit · L3: 2-digit + 2-digit · L4: 3 times-table problems | Wrong answer adds one problem (max 2 extra). Numeric keypad only |
 | `type` | Type a random phrase exactly | 4 / 6 / 9 / 12 words | Paste blocked, autocorrect off |
 | `memory` | Repeat a tile pattern on a 3×3 / 4×4 grid | length 4 → 8 | |
 | `shake` | Shake N times | 20 / 40 / 60 / 90 | Accelerometer magnitude threshold, debounce 250 ms |
@@ -390,7 +390,7 @@ Storage:
 
 ```
 wake-app/
-├─ BLUEPRINT.md  CLAUDE.md  CHANGELOG.md
+├─ CLAUDE.md  CHANGELOG.md  README.md  docs/ (BLUEPRINT.md RELEASE_PLAN.md)
 ├─ package.json  vite.config.js  capacitor.config.json
 ├─ src/
 │  ├─ index.html

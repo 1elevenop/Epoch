@@ -7,6 +7,7 @@ import { getSettings, setSetting } from '../../core/store.js';
 import { AlarmPlugin } from '../../core/bridge.js';
 import { SOUNDS, DEFAULT_CHALLENGES, SNOOZE_CHOICES } from '../alarm/model.js';
 import { CHALLENGE_INFO } from '../challenges/rules.js';
+import { ic } from '../../core/icons.js';
 
 const opt = (v, label, cur) => `<option value="${esc(v)}" ${String(v) === String(cur) ? 'selected' : ''}>${esc(label)}</option>`;
 
@@ -16,10 +17,10 @@ export function alarmDefaultsHtml(s = getSettings()) {
       <label class="field">Default snooze length (new alarms)
         <select class="input" data-ad="snooze">${SNOOZE_CHOICES.map((m) => opt(m, `${m} min`, s.defaultSnoozeMin)).join('')}</select></label>
       <label class="field">Default challenge (new alarms)
-        <select class="input" data-ad="challenge">${DEFAULT_CHALLENGES.map((id) => opt(id, `${CHALLENGE_INFO[id].icon} ${CHALLENGE_INFO[id].name}`, s.defaultChallenge)).join('')}</select></label>
-      <div class="row"><label class="field grow">Timer sound
+        <select class="input" data-ad="challenge">${DEFAULT_CHALLENGES.map((id) => opt(id, CHALLENGE_INFO[id].name, s.defaultChallenge)).join('')}</select></label>
+      <div class="row row-end"><label class="field grow">Timer sound
         <select class="input" data-ad="timerSound">${SOUNDS.map((x) => opt(x.id, `${x.name} (${x.group.toLowerCase()})`, s.timerSound)).join('')}</select></label>
-        <button type="button" class="btn btn-ghost" data-ad-act="preview" aria-label="Play the timer sound">▶ Play</button></div>
+        <button type="button" class="btn btn-ghost" data-ad-act="preview" aria-label="Play the timer sound">${ic('play')}Play</button></div>
       <p class="muted" id="ad-msg" role="status"></p>`;
 }
 

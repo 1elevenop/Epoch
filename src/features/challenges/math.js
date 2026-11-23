@@ -1,21 +1,29 @@
-// Math challenge (BLUEPRINT §5.3). L1: 2-digit add · L2: 2-digit × 1-digit · L3: (a×b)+c · L4: 3 problems of L3.
-// Wrong answer adds one more problem. Numeric keypad only.
+import { ic } from '../../core/icons.js';
+// Math challenge (BLUEPRINT §5.3). Kept solvable half-asleep:
+// L1: 1-digit + 1-digit · L2: 2-digit + 1-digit · L3: 2-digit + 2-digit · L4: times table (3 problems).
+// Wrong answer adds one more problem, at most MAX_EXTRA in total. Numeric keypad only.
+
+export const MAX_EXTRA = 2;
 
 export function problem(level, r) {
   if (level <= 1) {
-    const a = r.int(10, 99);
-    const b = r.int(10, 99);
+    const a = r.int(2, 9);
+    const b = r.int(2, 9);
     return { text: `${a} + ${b}`, answer: a + b };
   }
   if (level === 2) {
-    const a = r.int(12, 99);
-    const b = r.int(3, 9);
-    return { text: `${a} × ${b}`, answer: a * b };
+    const a = r.int(11, 49);
+    const b = r.int(2, 9);
+    return { text: `${a} + ${b}`, answer: a + b };
   }
-  const a = r.int(3, 12);
-  const b = r.int(3, 9);
-  const c = r.int(10, 99);
-  return { text: `(${a} × ${b}) + ${c}`, answer: a * b + c };
+  if (level === 3) {
+    const a = r.int(10, 49);
+    const b = r.int(10, 49);
+    return { text: `${a} + ${b}`, answer: a + b };
+  }
+  const a = r.int(2, 9);
+  const b = r.int(2, 9);
+  return { text: `${a} × ${b}`, answer: a * b };
 }
 
 /** Compares the typed digits with the answer (pure, unit tested). */
@@ -27,6 +35,7 @@ const KEYS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '⌫', '0', '✓'];
 
 export function mount(host, { level, r, onDone, onFail }) {
   let remaining = problemCount(level);
+  let extra = 0;
   let current = problem(level, r);
   let typed = '';
   host.innerHTML = `
@@ -35,7 +44,7 @@ export function mount(host, { level, r, onDone, onFail }) {
     <p class="ch-answer digits" aria-live="polite"></p>
     <p class="ch-status" role="alert"></p>
     <div class="keypad" role="group" aria-label="Number keypad">
-      ${KEYS.map((k) => `<button class="key ${k === '✓' ? 'ok' : ''}" data-k="${k}" aria-label="${k === '⌫' ? 'Delete' : k === '✓' ? 'Check answer' : k}">${k}</button>`).join('')}
+      ${KEYS.map((k) => `<button class="key ${k === '✓' ? 'ok' : ''}" data-k="${k}" aria-label="${k === '⌫' ? 'Delete' : k === '✓' ? 'Check answer' : k}">${k === '⌫' ? ic('backspace') : k === '✓' ? ic('check') : k}</button>`).join('')}
     </div>`;
   const $ = (s) => host.querySelector(s);
 
@@ -58,11 +67,15 @@ export function mount(host, { level, r, onDone, onFail }) {
         remaining -= 1;
         if (remaining === 0) return onDone();
         status.classList.add('ok');
-        status.textContent = `✓ Correct — ${remaining} more`;
+        status.textContent = `Correct — ${remaining} more`;
       } else {
-        remaining += 1; // wrong answer adds a problem
+        const add = extra < MAX_EXTRA; // wrong answer adds a problem, capped so it never spirals
+        if (add) {
+          extra += 1;
+          remaining += 1;
+        }
         onFail();
-        status.textContent = `✗ ${typed} is wrong (${current.text} = ${current.answer}). One more added.`;
+        status.textContent = `${typed} is wrong (${current.text} = ${current.answer}).${add ? ' One more added.' : ' Try another.'}`;
       }
       current = problem(level, r);
       typed = '';
