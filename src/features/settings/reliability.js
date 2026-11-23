@@ -10,7 +10,7 @@ const OEM_STEPS = {
   samsung: [
     'Settings → Battery → Background usage limits → Never sleeping apps → add WAKE11.',
     'Settings → Apps → WAKE11 → Battery → Unrestricted.',
-    'Make sure WAKE11 is NOT in "Sleeping apps" or "Deep sleeping apps".',
+    'Settings → Battery → Background usage limits: WAKE11 must not be in Sleeping apps or Deep sleeping apps.',
     'Recent apps → tap the WAKE11 icon → Keep open (lock it).',
   ],
   xiaomi: ['Security app → Autostart → enable WAKE11.', 'App info → Battery saver → No restrictions.', 'Lock WAKE11 in recent apps.'],

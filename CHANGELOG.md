@@ -12,6 +12,17 @@ WAKE11 0.6.0 is the first release on GitHub. Everything below this summary is th
 - **Privacy:** no internet permission, no account or analytics, excluded from cloud backup, JSON export / import.
 - **Known limitations:** device tests T3 (deep Doze overnight), T8 (three real nights), T9 (full snooze sequence), T10 (power off while ringing), T11 (wrong QR 3×) and T14 (15 min auto-silence) have not passed on a real phone yet.
 
+## Unreleased
+
+### Changed
+- Reliability / setup guide, Samsung step 3: "Make sure WAKE11 is NOT in …" → "Settings → Battery → Background usage limits: WAKE11 must not be in Sleeping apps or Deep sleeping apps" (no shouting, says where to look).
+
+## Release checks 0.6.0 (2026-11-23)
+
+- gitleaks 8.30.1 (official release, checksum verified): 9 commits, no leaks.
+- Fresh install of `WAKE11-0.6.0.apk` after exporting a backup and uninstalling: setup guide (notifications allowed; exact alarms and full-screen OK by default; battery exemption granted), 10 s test alarm on a locked, dozing phone rang over the lock screen (T1 ✅), backup import restored everything (4 alarms, 15 log entries, 3 tasks, 8 sessions).
+- Noticed: Samsung's "Accidental touch protection" (proximity sensor covered) blocks taps on the ring screen until swiped away — a phone setting, not a WAKE11 bug; worth a line in the README's Samsung steps later.
+
 ## Release build 0.6.0 (2026-11-23)
 
 ### Added

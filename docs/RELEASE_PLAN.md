@@ -107,8 +107,8 @@ Extra Android items:
 ## 6. Release day gate (must all be ✅)
 
 - [x] Rewrite commit author email (D-R3) **before** the first push (done 2026-11-23).
-- [ ] `gitleaks detect` clean (**not run**: running the downloaded gitleaks binary was blocked; owner to run it); `npm audit` clean ✅ (0 vulnerabilities, 2026-11-23); `npm test` 100 % pass; Kotlin unit tests pass.
-- [ ] Fresh install of the release APK on the phone: onboarding → all permissions → alarm rings on locked phone (T1) → widgets → backup export/import.
+- [x] `gitleaks` 8.30.1 clean ✅ (9 commits, no leaks, 2026-11-23); `npm audit` clean ✅ (0 vulnerabilities); `npm test` 100 % pass; Kotlin unit tests pass.
+- [x] Fresh install of the release APK on the phone (2026-11-23, after exporting a backup): setup guide → notifications allowed, exact alarms and full-screen already OK, battery exemption granted → 10 s test alarm woke the locked, dozing phone and rang over the lock screen (T1) ✅ → backup import restored 4 alarms, 15 log entries, 3 tasks, 8 sessions ✅. Widgets were removed by the uninstall and not re-added.
 - [ ] Device tests still open (T3, T8, T9, T10, T11, T14) listed as **known limitations** in the release notes if not done.
 - [ ] README renders correctly on GitHub; all images load; no personal data in screenshots.
 - [ ] Keystore + password backed up privately (never in the repo).
