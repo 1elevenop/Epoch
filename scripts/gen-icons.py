@@ -1,153 +1,79 @@
-"""Generates the WAKE11 logo (design D2) as master SVGs and Android vector drawables.
+"""Generates the Epoch mark as master SVGs and Android vector drawables.
 
-One source of geometry, so the README/GitHub artwork and the app icon always match.
+The mark (drawn in Affinity, 24 grid): a dial ring and one lume hand pointing at zero, the epoch.
+One source of geometry, so the README artwork and the app icon always match.
 Run from the repo root:  python scripts/gen-icons.py
 """
-import math
 import os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RES = os.path.join(ROOT, 'android', 'app', 'src', 'main', 'res')
 MEDIA = os.path.join(ROOT, 'media', 'logo')
 
-BLACK = '#0B0B0D'
-GRID = '#1E2026'
-ORANGE = '#FF8A3D'
-BLUE_A, BLUE_B = '#2F7BFF', '#6CC0FF'
+BLACK = '#000000'
+INK = '#EDEDED'
+INK_DARK = '#171717'
+LUME = '#F5A524'
 
-# ---------- geometry in the 512 design space ----------
-ONE = [(-22, 0), (22, 0), (22, -150), (-10, -150), (-62, -114), (-50, -92), (-22, -110)]
-SKEW = math.tan(math.radians(-12))
-
-
-def one_at(tx, ty, s=1.35):
-    out = []
-    for x, y in ONE:
-        px, py = x * s, y * s
-        out.append((px + SKEW * py + tx, py + ty))
-    return out
+# 24-unit design grid
+RING = (12, 12, 9)      # cx, cy, r
+HAND = ((12, 12), (12, 5.5))
+HUB_R = 1.35            # filled centre dot
 
 
-ONES = [one_at(206, 396), one_at(318, 396)]
+def circle_d(cx, cy, r):
+    return f'M{cx - r:g},{cy:g} a{r:g},{r:g} 0 1,0 {2 * r:g},0 a{r:g},{r:g} 0 1,0 {-2 * r:g},0'
 
 
-def capsule(cx, cy, length, thick, deg, steps=40):
-    """Rounded bar as a polygon (arcs sampled), rotated by deg."""
-    a = math.radians(deg)
-    ux, uy = math.cos(a), math.sin(a)
-    nx, ny = -uy, ux
-    r, h = thick / 2, length / 2 - thick / 2
-    pts = []
-    for end, sign in ((h, 1), (-h, -1)):
-        ex, ey = cx + ux * end, cy + uy * end
-        for i in range(steps + 1):
-            t = -math.pi / 2 + math.pi * i / steps
-            ox = math.cos(t) * sign
-            oy = math.sin(t) * sign
-            pts.append((ex + ux * r * ox + nx * r * oy, ey + uy * r * ox + ny * r * oy))
-    return pts
+def scaled(k, ox, oy):
+    """Mark geometry scaled by k and moved so the 24 grid starts at (ox, oy)."""
+    cx, cy, r = RING
+    (x1, y1), (x2, y2) = HAND
+    s = lambda x, y: (round(ox + x * k, 3), round(oy + y * k, 3))
+    rc = s(cx, cy)
+    h1, h2 = s(x1, y1), s(x2, y2)
+    return {
+        'ring': circle_d(rc[0], rc[1], round(r * k, 3)),
+        'hand': f'M{h1[0]:g},{h1[1]:g} L{h2[0]:g},{h2[1]:g}',
+        'hub': circle_d(rc[0], rc[1], round(HUB_R * k, 3)),
+    }
 
 
-BAR = capsule(256, 300, 300, 52, -35)
-
-ALL = [p for poly in ONES + [BAR] for p in poly]
-MINX, MAXX = min(p[0] for p in ALL), max(p[0] for p in ALL)
-MINY, MAXY = min(p[1] for p in ALL), max(p[1] for p in ALL)
-CX, CY = (MINX + MAXX) / 2, (MINY + MAXY) / 2
-SPAN = max(MAXX - MINX, MAXY - MINY)
-
-
-def path(poly, k=1.0, ox=0.0, oy=0.0, cx=0.0, cy=0.0):
-    pts = [((x - cx) * k + ox, (y - cy) * k + oy) for x, y in poly]
-    return 'M ' + ' L '.join(f'{x:.2f} {y:.2f}' for x, y in pts) + ' Z'
-
-
-def fit(size, content):
-    """Map the mark so its larger side is `content` units, centred in a size×size box."""
-    k = content / SPAN
-    return dict(k=k, ox=size / 2, oy=size / 2, cx=CX, cy=CY)
-
-
-def grid_lines(size, step, inset=0.0):
-    lines = []
-    n = int(2 * size / step) + 2
-    for i in range(-n, n + 1):
-        o = i * step
-        lines.append(f'M {o:.2f} 0 L {o + size:.2f} {size:.2f}')
-        lines.append(f'M {o + size:.2f} 0 L {o:.2f} {size:.2f}')
-    return ' '.join(lines)
-
-
-# ---------- master SVGs ----------
-def svg_tile(size=1024):
-    m = fit(size, size * 0.56)
-    step = 128 * m['k']
-    rx = size * 0.22
+def svg_mark(size=1024, ring=INK_DARK, hand=LUME, bg=None, stroke=1.5, pad=0.12):
+    k = size * (1 - 2 * pad) / 24
+    g = scaled(k, size * pad, size * pad)
+    w = stroke * k
+    back = f'<rect width="{size}" height="{size}" fill="{bg}"/>' if bg else ''
     return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{size}" height="{size}" viewBox="0 0 {size} {size}">
-  <defs>
-    <linearGradient id="blue" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="{BLUE_A}"/><stop offset="1" stop-color="{BLUE_B}"/></linearGradient>
-    <clipPath id="tile"><rect width="{size}" height="{size}" rx="{rx:.1f}"/></clipPath>
-  </defs>
-  <g clip-path="url(#tile)">
-    <rect width="{size}" height="{size}" fill="{BLACK}"/>
-    <path d="{grid_lines(size, step)}" stroke="{GRID}" stroke-width="{3 * m['k']:.2f}" fill="none"/>
-  </g>
-  <path d="{path(BAR, **m)}" fill="{ORANGE}"/>
-  <path d="{path(ONES[0], **m)} {path(ONES[1], **m)}" fill="url(#blue)"/>
+  {back}
+  <path d="{g['ring']}" fill="none" stroke="{ring}" stroke-width="{w:g}"/>
+  <path d="{g['hand']}" fill="none" stroke="{hand}" stroke-width="{w:g}" stroke-linecap="round"/>
+  <path d="{g['hub']}" fill="{hand}"/>
 </svg>
 '''
 
 
-def svg_mark(size=1024, mono=None):
-    m = fit(size, size * 0.9)
-    fill1 = mono or 'url(#blue)'
-    fill2 = mono or ORANGE
-    bar = '' if mono else f'<path d="{path(BAR, **m)}" fill="{fill2}"/>'
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{size}" height="{size}" viewBox="0 0 {size} {size}">
-  <defs><linearGradient id="blue" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="{BLUE_A}"/><stop offset="1" stop-color="{BLUE_B}"/></linearGradient></defs>
-  {bar}
-  <path d="{path(ONES[0], **m)} {path(ONES[1], **m)}" fill="{fill1}"/>
-</svg>
+VEC_HEAD = '<?xml version="1.0" encoding="utf-8"?>\n<!-- Generated by scripts/gen-icons.py (Epoch mark). Do not edit by hand. -->\n'
+
+
+def vec(size_dp, content_dp, ring, hand, stroke):
+    k = content_dp / 24
+    o = (size_dp - content_dp) / 2
+    g = scaled(k, o, o)
+    w = round(stroke * k, 3)
+    return VEC_HEAD + f'''<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="{size_dp}dp" android:height="{size_dp}dp" android:viewportWidth="{size_dp}" android:viewportHeight="{size_dp}">
+    <path android:strokeColor="{ring}" android:strokeWidth="{w:g}" android:pathData="{g['ring']}"/>
+    <path android:strokeColor="{hand}" android:strokeWidth="{w:g}" android:strokeLineCap="round" android:pathData="{g['hand']}"/>
+    <path android:fillColor="{hand}" android:pathData="{g['hub']}"/>
+</vector>
 '''
-
-
-# ---------- Android vector drawables (108dp adaptive icon) ----------
-VEC_HEAD = '<?xml version="1.0" encoding="utf-8"?>\n<!-- Generated by scripts/gen-icons.py (WAKE11 logo D2). Do not edit by hand. -->\n'
 
 
 def vec_background():
-    k = 60 / SPAN
     return VEC_HEAD + f'''<vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
     <path android:fillColor="{BLACK}" android:pathData="M0,0h108v108h-108z"/>
-    <path android:strokeColor="{GRID}" android:strokeWidth="0.8" android:pathData="{grid_lines(108, 128 * k)}"/>
-</vector>
-'''
-
-
-def vec_foreground():
-    m = fit(108, 60)
-    return VEC_HEAD + f'''<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:aapt="http://schemas.android.com/aapt"
-    android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
-    <path android:fillColor="{ORANGE}" android:pathData="{path(BAR, **m)}"/>
-    <path android:pathData="{path(ONES[0], **m)} {path(ONES[1], **m)}">
-        <aapt:attr name="android:fillColor">
-            <gradient android:type="linear" android:startX="30" android:startY="80" android:endX="80" android:endY="30">
-                <item android:offset="0" android:color="{BLUE_A}"/>
-                <item android:offset="1" android:color="{BLUE_B}"/>
-            </gradient>
-        </aapt:attr>
-    </path>
-</vector>
-'''
-
-
-def vec_mono(size_dp=108, content=60, color='#FFFFFFFF'):
-    m = fit(size_dp, content)
-    return VEC_HEAD + f'''<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="{size_dp}dp" android:height="{size_dp}dp" android:viewportWidth="{size_dp}" android:viewportHeight="{size_dp}">
-    <path android:fillColor="{color}" android:pathData="{path(ONES[0], **m)} {path(ONES[1], **m)}"/>
 </vector>
 '''
 
@@ -168,7 +94,7 @@ ADAPTIVE = '''<?xml version="1.0" encoding="utf-8"?>
 '''
 
 SPLASH = '''<?xml version="1.0" encoding="utf-8"?>
-<!-- Launch screen before the WebView is ready (pre-Android 12): black + WAKE11 mark. -->
+<!-- Launch screen before the WebView is ready (pre-Android 12): black + Epoch mark. -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@drawable/ic_launcher_background"/>
     <item android:drawable="@drawable/ic_launcher_foreground" android:width="216dp" android:height="216dp" android:gravity="center"/>
@@ -176,15 +102,15 @@ SPLASH = '''<?xml version="1.0" encoding="utf-8"?>
 '''
 
 if __name__ == '__main__':
-    write(os.path.join(MEDIA, 'wake11-icon.svg'), svg_tile())
-    write(os.path.join(MEDIA, 'wake11-mark.svg'), svg_mark())
-    write(os.path.join(MEDIA, 'wake11-mark-white.svg'), svg_mark(mono='#FFFFFF'))
-    write(os.path.join(MEDIA, 'wake11-mark-black.svg'), svg_mark(mono=BLACK))
+    write(os.path.join(MEDIA, 'epoch-icon.svg'), svg_mark(ring=INK, bg=BLACK, stroke=2, pad=0.24))
+    write(os.path.join(MEDIA, 'epoch-mark.svg'), svg_mark())
+    write(os.path.join(MEDIA, 'epoch-mark-white.svg'), svg_mark(ring='#FFFFFF', hand='#FFFFFF'))
+    write(os.path.join(MEDIA, 'epoch-mark-black.svg'), svg_mark(ring=INK_DARK, hand=INK_DARK))
     write(os.path.join(RES, 'drawable', 'ic_launcher_background.xml'), vec_background())
-    write(os.path.join(RES, 'drawable-v24', 'ic_launcher_foreground.xml'), vec_foreground())
-    write(os.path.join(RES, 'drawable', 'ic_launcher_monochrome.xml'), vec_mono())
-    write(os.path.join(RES, 'drawable', 'ic_stat_wake11.xml'), vec_mono(24, 20))
+    # Adaptive icon: 108 dp canvas, 66 dp safe zone; the ring fills ~52 dp of it.
+    write(os.path.join(RES, 'drawable-v24', 'ic_launcher_foreground.xml'), vec(108, 54, INK, LUME, 2))
+    write(os.path.join(RES, 'drawable', 'ic_launcher_monochrome.xml'), vec(108, 54, '#FFFFFFFF', '#FFFFFFFF', 2))
+    write(os.path.join(RES, 'drawable', 'ic_stat_epoch.xml'), vec(24, 22, '#FFFFFFFF', '#FFFFFFFF', 2))
     write(os.path.join(RES, 'mipmap-anydpi-v26', 'ic_launcher.xml'), ADAPTIVE)
     write(os.path.join(RES, 'mipmap-anydpi-v26', 'ic_launcher_round.xml'), ADAPTIVE)
     write(os.path.join(RES, 'drawable', 'splash.xml'), SPLASH)
-    print(f'mark bounds {MINX:.0f}..{MAXX:.0f} x {MINY:.0f}..{MAXY:.0f}, span {SPAN:.0f}')

@@ -28,16 +28,9 @@ import { countdownsScreen } from './tools/countdowns.js';
 import { chessScreen } from './tools/chess.js';
 import { speechScreen } from './tools/speech.js';
 
-const icon = (paths) => `<svg viewBox="0 0 24 24" aria-hidden="true">${paths}</svg>`;
+import { tabIcon } from '../core/icons.js';
 
-const ICONS = {
-  alarm: icon('<circle cx="12" cy="13" r="7"/><path d="M12 10v3l2 1.5M5 4 2.5 6.5M19 4l2.5 2.5"/>'),
-  timer: icon('<circle cx="12" cy="14" r="7"/><path d="M12 14V10M10 3h4"/>'),
-  stopwatch: icon('<circle cx="12" cy="14" r="7"/><path d="M12 14l3-3M12 3v4M17.5 6.5l1.5-1.5"/>'),
-  focus: icon('<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.8"/>'),
-  tools: icon('<rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/>'),
-  audio: icon('<path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/>'),
-};
+const ICONS = Object.fromEntries(['alarm', 'timer', 'stopwatch', 'focus', 'tools', 'audio'].map((n) => [n, tabIcon(n)]));
 
 export const TABS = [
   { id: 'alarm', label: 'Alarm', icon: ICONS.alarm, render: alarmScreen },
