@@ -2,7 +2,7 @@
 
 import { AlarmPlugin } from '../../core/bridge.js';
 import { db, getSettings, replaceSettings } from '../../core/store.js';
-import { applyTheme } from '../../core/theme.js';
+import { applyTheme, normalizeThemeId } from '../../core/theme.js';
 import { buildBackup } from './backup.js';
 import { syncWidgets } from '../../core/widgets.js';
 
@@ -25,7 +25,8 @@ export async function applyBackup(data) {
   await db.clear('sessions');
   for (const s of data.sessions) await db.put('sessions', s);
   if (data.settings) {
-    const s = replaceSettings({ ...data.settings, onboardingSeen: true });
+    const theme = normalizeThemeId(data.settings.theme) ?? 'black';
+    const s = replaceSettings({ ...data.settings, theme, onboardingSeen: true });
     applyTheme(s.theme, s.accent);
     await AlarmPlugin.setTimerSound(s.timerSound).catch(() => {}); // native rings timers with the app closed
     await syncWidgets();

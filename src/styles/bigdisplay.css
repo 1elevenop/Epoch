@@ -10,11 +10,11 @@ body.bd-open #app { visibility: hidden; }
   color: var(--text);
   animation: fade-in var(--dur) var(--ease);
 }
-.bd-label { margin: 0; color: var(--accent); font-size: clamp(14px, 4.5vh, 28px); letter-spacing: 0.01em; font-family: var(--digit-font, inherit); }
+.bd-label { margin: 0; color: var(--text-2); font-size: clamp(14px, 4.5vh, 28px); }
 .bd-digits-host { font-family: var(--digit-font, inherit); font-weight: 500; font-size: min(56vh, 20vw); }
-.bd-overlay.over .bd-digits-host { color: var(--danger); --glow: var(--danger); }
-.bd-progress { width: min(70vw, 900px); height: 4px; border-radius: 2px; background: var(--raised); overflow: hidden; }
-.bd-progress-fill { height: 100%; background: var(--accent); transform-origin: left; transform: scaleX(0); transition: transform 300ms linear; box-shadow: 0 0 10px var(--accent); }
+.bd-overlay.over .bd-digits-host { color: var(--danger); }
+.bd-progress { width: min(70vw, 900px); height: 2px; background: var(--border); overflow: hidden; }
+.bd-progress-fill { height: 100%; background: var(--accent); transform-origin: left; transform: scaleX(0); transition: transform 300ms linear; }
 .bd-close { position: absolute; top: max(var(--safe-top), 12px); right: 16px; opacity: 0.6; }
 
 @media (orientation: portrait) {
@@ -25,19 +25,7 @@ body.bd-open #app { visibility: hidden; }
 .bd-open-btn { font-size: 20px; }
 .screen-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 
-/* ---------- Settings galleries ---------- */
-.theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-.theme-tile { display: flex; flex-direction: column; gap: 6px; padding: 0; border: 2px solid transparent; border-radius: 14px; background: none; color: var(--text); }
-.theme-tile.selected { border-color: var(--accent); }
-.tt-preview { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; height: 72px;
-  border-radius: 12px; background: var(--bg); border: 1px solid color-mix(in srgb, var(--text) 18%, transparent); overflow: hidden; }
-.tt-digits { color: var(--text); font-family: var(--digit-font, inherit); font-size: 22px; text-shadow: 0 0 8px var(--glow); }
-.tt-bar { width: 60%; height: 4px; border-radius: 2px; background: var(--accent); box-shadow: 0 0 8px var(--accent); }
-.tt-preview[data-tt='synthwave'] { background: linear-gradient(180deg, #1a0b2e, #5b1460 80%, #a8326e); }
-.tt-preview[data-tt='neon'], .tt-preview[data-tt='blueprint'] { background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px); background-size: 12px 12px; }
-.tt-preview[data-tt='matrix'] { background-image: repeating-linear-gradient(0deg, rgba(57,255,20,.08) 0 1px, transparent 1px 3px); }
-.tt-preview[data-tt='aurora'], .tt-preview[data-tt='holo'] { background-image: radial-gradient(circle at 25% 30%, rgba(93,255,176,.35), transparent 50%), radial-gradient(circle at 80% 70%, rgba(179,136,255,.35), transparent 50%); }
-.tt-name { font-size: 12px; text-align: center; color: var(--text-2); }
+/* ---------- Settings: accent swatches, transition gallery ---------- */
 .swatches { display: flex; flex-wrap: wrap; gap: 10px; }
 .swatch { width: var(--touch); height: var(--touch); border-radius: 50%; border: 2px solid var(--border); background: var(--c); }
 .swatch.auto { background: var(--raised); color: var(--text); font-weight: 600; }

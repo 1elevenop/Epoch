@@ -5,7 +5,7 @@ import { validateAlarm, SOUNDS, DEFAULT_CHALLENGES } from '../alarm/model.js';
 import { validatePlan } from '../focus/engine.js';
 import { DEFAULT_SETTINGS } from '../../core/store.js';
 import { sanitizeCountdowns } from '../tools/models.js';
-import { THEMES } from '../../core/theme.js';
+import { normalizeThemeId } from '../../core/theme.js';
 import { TRANSITIONS } from '../bigdisplay/transitions/index.js';
 
 export const BACKUP_VERSION = 1;
@@ -59,7 +59,6 @@ function checkSession(s, i, err) {
   if (!isNum(s.startedAt) || !isNumOrNull(s.endedAt ?? null)) err(`session ${i}: times`);
 }
 
-const THEME_IDS = new Set(THEMES.map((t) => t.id));
 const TR_IDS = new Set(TRANSITIONS.map((t) => t.id));
 /** Keeps only known settings with the right type; unknown keys are an error (rule 6). */
 function checkSettings(s, err) {
@@ -73,7 +72,7 @@ function checkSettings(s, err) {
     if (k === 'accent') {
       if (v !== null && !/^#[0-9a-f]{6}$/i.test(v)) err('settings: accent');
     } else if (k === 'theme') {
-      if (!THEME_IDS.has(v)) err('settings: theme');
+      if (!normalizeThemeId(v)) err('settings: theme'); // WAKE11 theme ids map to Black / Light
     } else if (k === 'bigTransition') {
       if (!v || typeof v !== 'object' || Object.entries(v).some(([kk, vv]) => !['timer', 'stopwatch', 'focus'].includes(kk) || !TR_IDS.has(vv))) err('settings: bigTransition');
     } else if (k === 'worldClocks') {

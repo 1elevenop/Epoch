@@ -1,5 +1,25 @@
 # Changelog
 
+## 2.0.0 — Epoch (unreleased)
+
+WAKE11 is now **Epoch**, with a new package id (`app.epoch`), so it installs as a new app: export a backup in WAKE11 and import it in Epoch.
+
+### Changed
+
+- Name and package id: WAKE11 / `app.wake11` → Epoch / `app.epoch`. New backups and alarm QR codes say Epoch; WAKE11 backups and QR codes still work.
+- Tabs: Alarm, Timer, Stopwatch, Focus, Tools, Audio Lab. The Clock tab moved to Tools → Clock (world clocks, night clock, pinned countdowns; clock widgets open it). Settings, Reliability, Alarm log and Setup guide open from the gear at the top right.
+- Themes: Black and Light only. The ten other themes are gone; a WAKE11 backup that names one loads as Black. Accent colours and all nine big-display transitions stay (without glows).
+- Type: Geist for words, Geist Mono for every time and number.
+
+### Fixed
+
+- Stopwatch (and Audio Lab, interval, breathing, speech): Reset / Resume no longer start mid-screen and jump to the bottom when the tab opens.
+
+### Dependencies
+
+- Added `@fontsource/geist-sans` and `@fontsource/geist-mono`: the bundled offline interface and number fonts (SIL OFL 1.1).
+- Removed `@fontsource/orbitron`, `@fontsource/rajdhani`, `@fontsource/share-tech-mono`: their themes are gone.
+
 ## 1.0.1 — alarm fix (2026-11-25)
 
 ### Fixed

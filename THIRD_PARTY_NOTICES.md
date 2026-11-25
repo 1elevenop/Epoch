@@ -1,10 +1,10 @@
 # Third-party notices
 
-WAKE11 is MIT licensed (see `LICENSE`). The APK also contains the software and fonts below, each under its own licence.
+Epoch (formerly WAKE11) is MIT licensed (see `LICENSE`). The APK also contains the software and fonts below, each under its own licence.
 
 ## Shipped in the app
 
-| Component | Use in WAKE11 | Licence | Copyright |
+| Component | Use in Epoch | Licence | Copyright |
 | --- | --- | --- | --- |
 | [Capacitor](https://capacitorjs.com) (`@capacitor/core`, `@capacitor/android`) | Native shell and bridge | MIT | © 2017-present Drifty Co. |
 | [@capacitor/app](https://github.com/ionic-team/capacitor-plugins) | App lifecycle, back button | MIT | © 2020-present Ionic |
@@ -12,9 +12,8 @@ WAKE11 is MIT licensed (see `LICENSE`). The APK also contains the software and f
 | [@capacitor-mlkit/barcode-scanning](https://github.com/capawesome-team/capacitor-mlkit) | QR code challenge | Apache-2.0 | © 2023 Robin Genz |
 | Google ML Kit Barcode Scanning, Google Play services code scanner | QR scanning on the phone (runs offline) | [ML Kit Terms of Service](https://developers.google.com/ml-kit/terms) | © Google LLC |
 | [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator) | Printable QR code for the QR challenge | MIT | © Kazuhiko Arase |
-| [Orbitron](https://github.com/theleagueof/orbitron) font (via `@fontsource/orbitron`) | Neon / Synthwave themes, big display | SIL OFL 1.1 | © 2018 The Orbitron Project Authors |
-| [Rajdhani](https://fonts.google.com/specimen/Rajdhani) font (via `@fontsource/rajdhani`) | Holo / Aurora / Mars themes | SIL OFL 1.1 | © 2014 Indian Type Foundry |
-| [Share Tech Mono](https://fonts.google.com/specimen/Share+Tech+Mono) font (via `@fontsource/share-tech-mono`) | Matrix / Nixie themes, big display | SIL OFL 1.1 | © 2012 Carrois Type Design, Ralph du Carrois, Reserved Font Name "Share" |
+| [Geist](https://github.com/vercel/geist-font) font (via `@fontsource/geist-sans`) | All interface text | SIL OFL 1.1 | © 2023 Vercel, in collaboration with basement.studio |
+| [Geist Mono](https://github.com/vercel/geist-font) font (via `@fontsource/geist-mono`) | Every time and number, big display | SIL OFL 1.1 | © 2023 Vercel, in collaboration with basement.studio |
 
 The MIT and Apache-2.0 licence texts are in each package's `LICENSE` file (`node_modules/<package>/LICENSE`); the Apache-2.0 text is also at https://www.apache.org/licenses/LICENSE-2.0.
 
@@ -26,7 +25,7 @@ Vite and Vitest (MIT, © VoidZero Inc. and contributors), Capacitor CLI (MIT), G
 
 The 2026-11-23 interface polish followed [unslop](https://github.com/heydamir/unslop) by Damir Sokolovsky (CC BY 4.0). No unslop files are included.
 
-## SIL Open Font License 1.1 (Orbitron, Rajdhani, Share Tech Mono)
+## SIL Open Font License 1.1 (Geist, Geist Mono)
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:

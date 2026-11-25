@@ -61,8 +61,8 @@ button {
 }
 
 .digits {
+  font-family: var(--mono);
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.02em;
 }
 
 .sr-only {

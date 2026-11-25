@@ -64,7 +64,7 @@ export const DEFAULT_SETTINGS = Object.freeze({
   worldClocks: [], // [{ name, zone }]
   onboarded: false,
   onboardingSeen: false,
-  theme: 'oled',
+  theme: 'black',
   accent: null, // null = the theme's own accent
   weekStart: 1, // 1 = Monday, 0 = Sunday
   bigTransition: { timer: 'flip', stopwatch: 'odometer', focus: 'nixie' },

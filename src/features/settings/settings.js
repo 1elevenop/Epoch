@@ -1,4 +1,4 @@
-// Settings (BLUEPRINT §6.8): theme gallery, accent, big-display transitions (live previews), general.
+// Settings (BLUEPRINT §6.8): Black / Light, accent, big-display transitions (live previews), general.
 
 import { esc } from '../../core/dom.js';
 import { getSettings, setSetting } from '../../core/store.js';
@@ -16,15 +16,6 @@ const SCREENS = [
 ];
 const APP_VERSION = '1.0.0';
 
-function themeTile(t, selected) {
-  const v = t.t;
-  const style = `--bg:${v.bg};--surface:${v.solidSurface ?? v.surface};--text:${v.text};--text-2:${v.text2};--accent:${v.accent};--glow:${v.glow};--digit-font:${t.font.replace(/"/g, "'")}`;
-  return `<button class="theme-tile ${selected ? 'selected' : ''}" data-theme-id="${t.id}"
-      aria-pressed="${selected}" aria-label="Theme ${esc(t.name)}">
-    <span class="tt-preview" data-tt="${t.id}" style="${esc(style)}"><span class="tt-digits digits">12:34</span><span class="tt-bar"></span></span>
-    <span class="tt-name">${esc(t.name)}</span></button>`;
-}
-
 export function settingsScreen(el) {
   const s = getSettings();
   let target = 'timer';
@@ -34,7 +25,9 @@ export function settingsScreen(el) {
       <h1 id="screen-title">Settings</h1>
 
       <h2 class="section-title">Theme</h2>
-      <div class="theme-grid" id="themes">${THEMES.map((t) => themeTile(t, t.id === s.theme)).join('')}</div>
+      <div class="seg" role="radiogroup" aria-label="Theme">
+        ${THEMES.map((t) => `<button class="seg-btn" role="radio" data-theme-id="${t.id}" aria-checked="${t.id === themeById(s.theme).id}">${t.name}</button>`).join('')}
+      </div>
 
       <h2 class="section-title">Accent colour</h2>
       <div class="swatches" role="radiogroup" aria-label="Accent colour">
@@ -104,10 +97,7 @@ export function settingsScreen(el) {
     if (th) {
       setSetting('theme', th.dataset.themeId);
       applyTheme(th.dataset.themeId, getSettings().accent);
-      el.querySelectorAll('[data-theme-id]').forEach((b) => {
-        b.classList.toggle('selected', b === th);
-        b.setAttribute('aria-pressed', String(b === th));
-      });
+      el.querySelectorAll('[data-theme-id]').forEach((b) => b.setAttribute('aria-checked', String(b === th)));
     }
     const ac = e.target.closest('[data-accent]');
     if (ac) {
