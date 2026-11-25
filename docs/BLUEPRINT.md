@@ -299,7 +299,7 @@ Theme (Black default, Light), accent colour, 12/24 h, week start, default snooze
 
 **Added in Phase 5a (owner request, 2026-11-22):**
 - ~~9 extra futuristic themes~~ (removed in Epoch 2.0, §11 phase 7; old ids load as Black). Were: Neon Cyber, Synthwave, Matrix Terminal, Holo Glass, Nixie Lab, Aurora, Mars HUD, Blueprint, Deep Sea (12 total). Every theme keeps text contrast ≥ 4.5:1; animated backgrounds stop under reduced motion and never run on the ring screen. Fonts bundled offline (Orbitron, Share Tech Mono, Rajdhani).
-- **Backgrounds (2.0)**: app and big display separately: theme, plain colour, or image (JPEG/PNG/WebP/GIF/AVIF/BMP ≤ 100 MB, decoded before saving) with dim 0–80 %. Images in IndexedDB `media`, not in backups; settings `bgApp` / `bgBig` validated on import.
+- **Backgrounds (2.0)**: app and big display separately: theme, plain colour, or image (JPEG/PNG/WebP/GIF/AVIF/BMP ≤ 50 MB, decoded before saving) with dim 0–80 %. Images in IndexedDB `media`, not in backups; settings `bgApp` / `bgBig` validated on import.
 - **Big display**: turning the phone to landscape on Timer, Stopwatch or Focus (or tapping the expand button) shows full-screen digits; rotating back closes it. Screen kept on, immersive.
 - 9 digit transitions with live previews, chosen per screen: Flip clock, Glitch, Odometer roll, Matrix scramble, Nixie tube, Hologram scan, Particle burst, Liquid morph, 7-segment LED. Only changed digits animate; stopwatch hundredths use a light swap; reduced motion → plain swap.
 

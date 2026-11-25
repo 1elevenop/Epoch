@@ -6,7 +6,7 @@ import { db, getSettings } from './store.js';
 export const BG_SLOTS = ['app', 'big'];
 export const BG_MODES = ['theme', 'color', 'image'];
 export const BG_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif', 'image/bmp'];
-export const BG_MAX_BYTES = 100 * 1024 * 1024;
+export const BG_MAX_BYTES = 50 * 1024 * 1024;
 const KEY = { app: 'bgApp', big: 'bgBig' };
 
 /** A clean background setting from anything (unknown → theme). Pure; unit tested. */
@@ -30,7 +30,7 @@ export const isValidBg = (v) => {
 export function checkImageFile(file) {
   if (!file) return 'No file chosen';
   if (!BG_TYPES.includes(file.type)) return 'Use a JPEG, PNG, WebP, GIF, AVIF or BMP image';
-  if (file.size > BG_MAX_BYTES) return 'Image is larger than 100 MB';
+  if (file.size > BG_MAX_BYTES) return 'Image is larger than 50 MB';
   return null;
 }
 
