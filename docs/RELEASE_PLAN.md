@@ -103,6 +103,7 @@ Extra Android items:
 - [x] Publish signing-certificate fingerprint in README so users can verify updates. ✅ `9E:B4:…:CB:3D`, cert DN `CN=WAKE11`.
 - [ ] Optional CI (GitHub Actions): `npm ci && npm test` on every push (no signing secrets in CI; releases stay signed locally).
 - [x] Tag `v1.0.0` and GitHub Release with notes, APK and checksums (2026-11-23). The owner chose 1.0.0 for the first public release (versionName 1.0.0, versionCode 7); the v0.6.0 draft and tag were removed unpublished. `WAKE11-1.0.0.apk` SHA-256 `06e7b25594f6550999514c423f00ba7136e98a78eb58b06cb9cf6d00e1969c73`, same signing certificate.
+- [x] Tag `v1.0.1` and GitHub Release (2026-11-25): ghost-ring fix (alarms silently queued after deleting an alarm during its wake-up check). versionName 1.0.1, versionCode 8. `WAKE11-1.0.1.apk` SHA-256 `4ebc321038853895ac9e98c9107e5f6391c4882d5ae37fb31a544e732ad8c3d6`, same signing certificate. Verified on the S25 Ultra: planted ghost state was cleared and the next alarm rang.
 
 ## 6. Release day gate (must all be ✅)
 
