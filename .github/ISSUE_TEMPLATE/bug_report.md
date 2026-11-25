@@ -17,7 +17,7 @@ labels: bug
 **Phone**
 - Model:
 - Android version:
-- WAKE11 version (Settings, bottom of the page):
+- Epoch version (Settings, bottom of the page):
 
 **More → Reliability**
 Which items are OK, which are not (a screenshot is fine; hide personal notifications):

@@ -14,7 +14,7 @@ const SCREENS = [
   ['stopwatch', 'Stopwatch'],
   ['focus', 'Focus'],
 ];
-const APP_VERSION = '1.0.0';
+const APP_VERSION = '2.0.0';
 
 export function settingsScreen(el) {
   const s = getSettings();

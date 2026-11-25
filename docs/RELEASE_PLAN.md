@@ -118,3 +118,17 @@ Extra Android items:
 
 ### Suggested order
 1. Decisions D-R1…D-R6 → 2. security fixes (§1 tasks: CSP, allowBackup, INTERNET test, XSS audit, template cleanup) → 3. logo + icons → 4. screenshots & media → 5. README, LICENSE, notices → 6. build, checksums, tag, GitHub Release.
+
+---
+
+## 7. Epoch 2.0.0 (rebrand + redesign)
+
+Epoch has a new package id (`app.epoch`), so it installs **beside** WAKE11; users move data with Export (WAKE11) → Import (Epoch).
+
+- [x] Rename, Black + Light, six tabs + gear, Geist, unslop passes, Affinity icons and mark (branch `claude/epoch-rebrand-redesign-92271a`).
+- [x] Checked on the phone (debug): every tab, Settings, Tools → Clock, Black and Light, status-bar icons, Stopwatch buttons at the bottom from the first frame.
+- [ ] On the phone: alarm (2 min out, locked) and timer ring under `app.epoch`; notification icon; widgets open Tools → Clock; Reliability permissions granted for the new app.
+- [ ] Export a backup in WAKE11, import it in Epoch; alarms, tasks, sessions, settings arrive. Uninstall WAKE11 only after that, with the owner's OK.
+- [ ] New screenshots (`media/screenshots/`), demo GIF and banners (`scripts/gen-banners.py` → `epoch-banner.png`, `epoch-social.png`); README image links follow.
+- [ ] Decide whether to rename the GitHub repo `1elevenop/WAKE11` (GitHub redirects the old URL).
+- [ ] Release notes say clearly: new app, move data with Export / Import. APK `Epoch-2.0.0.apk` + SHA-256.

@@ -1,4 +1,4 @@
-# WAKE11 — Clock, Focus & Audio App · Build Blueprint
+# Epoch (formerly WAKE11) — Alarm, Focus & Audio App · Build Blueprint
 
 > Owner: 1elevenop · Target: personal Android phone · Version 1.0 (2026-11-22)
 > Purpose of this file: the single source of truth for Claude Code. Put it in the project root. Build phase by phase. Do not start a phase before the previous phase passes its acceptance tests.
@@ -295,11 +295,11 @@ Hearing safety: high-frequency and high-volume combos show a warning; default vo
 | Speech timer | green → yellow → red at set times |
 
 ### 6.8 Settings
-Theme (OLED black default, dark, light), accent colour, 12/24 h, week start, default snooze length, default challenge, timer sound, haptics on/off, export/import JSON, Reliability screen, about/version.
+Theme (Black default, Light), accent colour, 12/24 h, week start, default snooze length, default challenge, timer sound, haptics on/off, export/import JSON, Reliability screen, about/version.
 
 **Added in Phase 5a (owner request, 2026-11-22):**
-- 9 extra futuristic themes with live preview tiles: Neon Cyber, Synthwave, Matrix Terminal, Holo Glass, Nixie Lab, Aurora, Mars HUD, Blueprint, Deep Sea (12 total). Every theme keeps text contrast ≥ 4.5:1; animated backgrounds stop under reduced motion and never run on the ring screen. Fonts bundled offline (Orbitron, Share Tech Mono, Rajdhani).
-- **Big display**: turning the phone to landscape on Timer, Stopwatch or Focus (or tapping ⤢) shows full-screen digits; rotating back closes it. Screen kept on, immersive.
+- ~~9 extra futuristic themes~~ (removed in Epoch 2.0, §11 phase 7; old ids load as Black). Were: Neon Cyber, Synthwave, Matrix Terminal, Holo Glass, Nixie Lab, Aurora, Mars HUD, Blueprint, Deep Sea (12 total). Every theme keeps text contrast ≥ 4.5:1; animated backgrounds stop under reduced motion and never run on the ring screen. Fonts bundled offline (Orbitron, Share Tech Mono, Rajdhani).
+- **Big display**: turning the phone to landscape on Timer, Stopwatch or Focus (or tapping the expand button) shows full-screen digits; rotating back closes it. Screen kept on, immersive.
 - 9 digit transitions with live previews, chosen per screen: Flip clock, Glitch, Odometer roll, Matrix scramble, Nixie tube, Hologram scan, Particle burst, Liquid morph, 7-segment LED. Only changed digits animate; stopwatch hundredths use a light swap; reduced motion → plain swap.
 
 ### 6.10 Home-screen widgets (Phase 6, owner request 2026-11-23)
@@ -421,7 +421,7 @@ wake-app/
 └─ tests/  (vitest unit tests; tests/support/fake-alarm-plugin.js = test double)  android/app/src/test (JUnit)
 ```
 
-**No browser build (decision 2026-11-22).** WAKE11 is developed and tested on the Android phone only. `bridge.js` talks to the native plugins; off-device every call rejects with `NOT_ANDROID`. A setTimeout-based fake of the native plugin lives in `tests/support/` for unit tests only and is never shipped.
+**No browser build (decision 2026-11-22).** Epoch is developed and tested on the Android phone only. `bridge.js` talks to the native plugins; off-device every call rejects with `NOT_ANDROID`. A setTimeout-based fake of the native plugin lives in `tests/support/` for unit tests only and is never shipped.
 
 ---
 
@@ -483,15 +483,23 @@ Library choices (use latest stable at build time; check the docs):
 
 | Token | Value |
 |---|---|
-| Background | `#000000` (OLED) / surface `#111214` / raised `#1A1C20` |
-| Text | primary `#F2F3F5`, secondary `#9AA0A6` |
-| Accent | default `#FF8A3D` (warm, wake-up), user-selectable |
-| States | success `#3DDC84`, danger `#FF5A5F`, focus-mode blue `#5B8CFF`, break green `#3DDC84` |
-| Digits font | system font with `font-variant-numeric: tabular-nums` (no layout jump) |
-| Sizes | clock 22vw, timer 18vw, body 16 px, min touch target 48 px |
-| Motion | 150–250 ms ease-out; respect `prefers-reduced-motion` |
+Epoch 2.0 (unslop method: audit → direction → nine passes). Tokens live in `src/styles/tokens.css`; theme colours in `src/core/theme.js`.
 
-Layout: bottom tab bar — Clock · Alarm · Timer · Stopwatch · Focus · More (Audio Lab, Tools, Stats, Settings). One-hand use: primary buttons in bottom third.
+**Direction.** Product: an offline Android alarm, timer and focus app that wakes you reliably and keeps exact time. Character: exact, quiet, unhurried. World: a watch dial at night (matte black face, printed numerals, one lume hand). Moments: the live numerals; the ringing-alarm screen. Signature: one 1-px accent hairline that tracks live time (active tab, running progress), nowhere else.
+
+| Token | Value |
+|---|---|
+| Themes | **Black**: page `#000000`, surface `#111112`, raised `#1C1C1E`, hairline white 9 %. **Light**: page `#FAFAFA`, surface `#FFFFFF`, raised `#F0F0F1`, hairline black 9 % |
+| Text | Black `#EDEDED` / `#A1A1A6` / `#85858B`; Light `#171717` / `#525252` / `#6B6B6B` (all ≥ 4.5:1) |
+| Accent | lume amber `#F5A524` (Black) / `#B45309` (Light); 8 user swatches. Used for the primary action, live progress and the signature hairline only |
+| States | toned per theme: success, danger, focus blue, break green |
+| Type | Geist (words) + Geist Mono (every time and number, tabular). Sizes 12/14/16/20/28 px + display digits. Weights 400/500 |
+| Spacing | 4 px grid: 4, 8, 12, 16, 20, 24, 32, 40, 48 |
+| Radius | controls 8, cards 12, sheets 16 |
+| Icons | one set, 24 grid, 1.5 stroke, round caps, text colour (tab icons and mark drawn in Affinity) |
+| Motion | one curve `cubic-bezier(0.22,1,0.36,1)`; presses 150 ms (scale 0.97); screen entrance 200 ms opacity only; no loops; respect `prefers-reduced-motion` |
+
+Layout: bottom tab bar — Alarm · Timer · Stopwatch · Focus · Tools · Audio Lab. Settings (with Reliability, Alarm log, Setup guide) opens from the gear at the top right. Clock (world clocks, night clock) is Tools → Clock. One-hand use: primary buttons in bottom third.
 
 ---
 
@@ -506,6 +514,7 @@ Layout: bottom tab bar — Clock · Alarm · Timer · Stopwatch · Focus · More
 | **4. Focus mode** | Tasks, setup, running screen, Pomodoro engine, parking lot, leave detection, exit friction, review, stats, native timers when app closed | 5 real sessions logged; app closed during focus → phase-end alert still rings |
 | **6. Home-screen widgets** (owner request) | 6 widgets (§6.10) | All widgets draw on the phone; nap button sets an alarm; taps open the right screen |
 | **5. Audio Lab + Tools + polish** | metronome, tone, noise, tuner, binaural; interval, breathing, countdowns, chess, speech timer; sunrise pre-alarm; DND in focus; export/import; themes | Metronome jitter < 2 ms (measure with audio recording); export → wipe → import restores everything |
+| **7. Epoch 2.0** (owner request 2026-11-25) | Rename to Epoch / `app.epoch`; Black + Light only; tabs Alarm, Timer, Stopwatch, Focus, Tools, Audio Lab + settings gear; Clock → Tools; Geist / Geist Mono; unslop design passes (§10); Affinity icons + mark | Every tab and Settings checked in Black and Light on the phone; Stopwatch buttons never start mid-screen; alarm and timer ring under `app.epoch`; Epoch backup imports into Epoch |
 
 ---
 
@@ -580,7 +589,7 @@ Device tests (by hand, record results in `CHANGELOG.md`):
 
 | Question | Needed by | Default if not answered |
 |---|---|---|
-| App name | Phase 0 | "WAKE" → **decided: WAKE11** |
+| App name | Phase 0 | "WAKE" → WAKE11 → **renamed Epoch (2.0, package `app.epoch`)** |
 | Bundled alarm sounds — which style? | Phase 2 | 6 royalty-free tones generated or CC0 → **decided: 6 generated tones (3 gentle, 3 hard)** |
 | Default challenge chain | Phase 3 | `qr → math L2` → **decided: `math L2` for new alarms; QR added in the editor once a code is registered** |
 | Weekly snooze budget on/off | Phase 3 | off (per-alarm setting in the editor) |
@@ -607,6 +616,7 @@ Test phone: Samsung Galaxy S25 Ultra (SM-S938B), Android 17.
 | 5d. Tools (interval/HIIT, breathing, countdowns, chess clock, speech timer) | ✅ | Built and checked on the phone; beeps/voice by ear still open |
 | 5e. Sunrise pre-alarm + DND during focus | ✅ | Built and checked on the phone; real-morning sunrise still open |
 | 6. Home-screen widgets | ✅ | 6 widgets; checked on the home screen (analog not placed yet) |
+| 7. Epoch 2.0 rebrand + redesign | 🔄 | Name/package, Black + Light, six tabs + gear, Geist, unslop passes, Affinity icons. Checked on the phone: tabs, Stopwatch bar fix, Light bars. Open: alarm/timer ring under the new package, Epoch → Epoch backup import, widgets, screenshots/banners |
 
 ### 17.2 Acceptance checklists (§11)
 | Phase | Check | Status |

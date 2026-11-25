@@ -1,6 +1,6 @@
 # Privacy
 
-WAKE11 works entirely offline. No data leaves your phone.
+Epoch works entirely offline. No data leaves your phone.
 
 - **No internet.** The app does not have the Android `INTERNET` permission, so it cannot send or receive anything over the network.
 - **No account, no analytics, no ads, no tracking.**
@@ -8,7 +8,7 @@ WAKE11 works entirely offline. No data leaves your phone.
 - **Backups are yours.** Settings → Backup → Export writes one JSON file to a place you choose. Import reads it back and checks every field before it changes anything.
 - **Uninstalling deletes everything.** Export a backup first if you want to keep your alarms.
 
-## Permissions and why WAKE11 asks for them
+## Permissions and why Epoch asks for them
 
 | Permission | What it is for |
 | --- | --- |
@@ -25,7 +25,7 @@ WAKE11 works entirely offline. No data leaves your phone.
 | Microphone (`RECORD_AUDIO`), only in Audio Lab → Tuner | Detect the note you play. Sound is analysed live and never recorded or stored |
 | Do Not Disturb access (`ACCESS_NOTIFICATION_POLICY`), optional | Turn on Do Not Disturb during a focus session and turn it off afterwards |
 
-Optional permissions are only requested when you use the feature that needs them, and WAKE11 keeps working without them.
+Optional permissions are only requested when you use the feature that needs them, and Epoch keeps working without them.
 
 ## Questions
 

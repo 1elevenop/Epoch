@@ -1,4 +1,4 @@
-<p align="center"><img src="media/banner/wake11-banner.png" alt="WAKE11 — the alarm clock that makes sure you actually get up"></p>
+<p align="center"><img src="media/banner/wake11-banner.png" alt="Epoch — the alarm clock that makes sure you actually get up"></p>
 
 <p align="center">An alarm clock for Android that makes sure you actually get up, with timers, a stopwatch, focus sessions and small audio tools. Offline, no account, no ads.</p>
 
@@ -17,19 +17,18 @@
 - Rings on time with the phone locked, silent, on battery saver or after a restart (native Android alarms, not a web timer)
 - Dismiss challenges: math, typing a phrase, memory, shaking, walking a number of steps or scanning a QR code you placed in another room. Chain up to four
 - Snoozing gets harder: shorter snoozes, a harder challenge each time, a weekly snooze budget
-- Wake-up check: a few minutes after you dismiss, WAKE11 asks "Are you up?". Miss it and the alarm rings again
+- Wake-up check: a few minutes after you dismiss, Epoch asks "Are you up?". Miss it and the alarm rings again
 - Gentle sunrise pre-alarm, volume ramp, nap and test alarms, an alarm log with your snoozes
 
-**Clock, timers and focus**
-- Clock with world clocks, night mode and an analog face
+**Timers and focus**
 - Several timers at once and a stopwatch with laps. Turn the phone sideways for a big display with nine digit styles (flip clock, Nixie tubes, 7-segment and more)
 - Focus sessions: Pomodoro-style blocks, a task list with subtasks, a parking lot for stray thoughts, optional Do Not Disturb and background noise, stats with streaks and a 12-week chart
 
 **Audio Lab and tools**
 - Metronome, tone generator, white/pink/brown noise, tuner, binaural beats
-- Interval (HIIT/Tabata) timer, breathing guide, event countdowns, chess clock, speech timer
+- Tools: clock with world clocks, night mode and an analog face; interval (HIIT/Tabata) timer, breathing guide, event countdowns, chess clock, speech timer
 - Home-screen widgets: clock, analog clock, next alarm with nap buttons, timer, world clocks, countdown
-- Themes: OLED black, dark, light and nine playful ones (Neon, Synthwave, Matrix, Holo, Nixie, Aurora, Mars, Blueprint, Deep Sea)
+- Black and Light themes with eight accent colours; Geist and Geist Mono type
 
 <p align="center">
   <img src="media/screenshots/dark/13-big-display-landscape.png" width="520" alt="Big display, Nixie tubes, landscape">
@@ -45,12 +44,12 @@
 
 ## Install
 
-WAKE11 is not on the Play Store. Install the APK from GitHub:
+Epoch is not on the Play Store. Install the APK from GitHub:
 
-1. Open the latest release on the [Releases page](../../releases) and download `WAKE11-<version>.apk`.
+1. Open the latest release on the [Releases page](../../releases) and download `Epoch-<version>.apk`.
 2. Optional but recommended: check the file. The release notes list its SHA-256 checksum.
-   - Windows: `certutil -hashfile WAKE11-<version>.apk SHA256`
-   - macOS / Linux: `shasum -a 256 WAKE11-<version>.apk`
+   - Windows: `certutil -hashfile Epoch-<version>.apk SHA256`
+   - macOS / Linux: `shasum -a 256 Epoch-<version>.apk`
 3. Open the APK on your phone. Android asks to allow installs from your browser or file manager once; allow it, install, then you can turn that permission off again.
 
 Updates install over the old version and keep your data, because every release is signed with the same key. Signing certificate SHA-256 fingerprint:
@@ -59,7 +58,7 @@ Updates install over the old version and keep your data, because every release i
 9E:B4:F1:85:CC:72:35:3E:2A:E5:A6:6E:7F:52:1C:AB:BC:2A:27:B9:F1:6E:80:42:09:6B:32:03:89:AC:CB:3D
 ```
 
-To check it: `apksigner verify --print-certs WAKE11-<version>.apk` (Android SDK build-tools).
+To check it: `apksigner verify --print-certs Epoch-<version>.apk` (Android SDK build-tools).
 
 Requires Android 8.0 or newer. Tested on a Samsung Galaxy S25 Ultra with Android 17.
 
@@ -69,8 +68,8 @@ The setup guide takes about two minutes and ends with a real 10-second test alar
 
 Some phone makers stop background apps more aggressively than Android itself. On Samsung, also do this once:
 
-- Settings → Battery → Background usage limits → Never sleeping apps → add WAKE11
-- Settings → Apps → WAKE11 → Battery → Unrestricted
+- Settings → Battery → Background usage limits → Never sleeping apps → add Epoch
+- Settings → Apps → Epoch → Battery → Unrestricted
 
 Reliability shows similar steps for other phone makers.
 
@@ -115,7 +114,7 @@ There is no browser version: the app needs the native alarm plugin and is develo
 
 ```
 src/          web UI: core/ (bridge, store, time, icons), features/<tab>/, ring/, styles/
-android/      Capacitor project; Kotlin in app/src/main/java/app/wake11/
+android/      Capacitor project; Kotlin in app/src/main/java/app/epoch/
 tests/        Vitest unit tests (with a fake native plugin)
 scripts/      icon generation, demo backup for screenshots
 docs/         BLUEPRINT.md (design and decisions), RELEASE_PLAN.md
@@ -124,6 +123,6 @@ media/        logo and screenshots
 
 ## Licence and credits
 
-WAKE11 is released under the [MIT licence](LICENSE). It includes Capacitor, Google ML Kit, qrcode-generator and the Orbitron, Rajdhani and Share Tech Mono fonts under their own licences; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Epoch is released under the [MIT licence](LICENSE). It includes Capacitor, Google ML Kit, qrcode-generator and the Geist and Geist Mono fonts under their own licences; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 Changes are listed in [CHANGELOG.md](CHANGELOG.md). Security problems: [SECURITY.md](SECURITY.md).

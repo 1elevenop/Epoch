@@ -1,6 +1,6 @@
 {
   "name": "epoch-app",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "description": "Epoch — alarm, timer, focus and audio app (Capacitor + vanilla JS)",
