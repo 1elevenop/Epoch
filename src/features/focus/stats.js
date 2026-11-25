@@ -7,7 +7,7 @@ const level = (m) => (m == null ? 'future' : m === 0 ? 'l0' : m < 25 ? 'l1' : m 
 export function statsScreen(el) {
   el.innerHTML = `
     <section class="screen" aria-labelledby="screen-title">
-      <a class="back-link" href="#/focus" aria-label="Back to Focus">‹ Focus</a>
+      <a class="back-link" href="#/focus" aria-label="Back to Focus">Focus</a>
       <h1 id="screen-title">Focus stats</h1>
       <div class="stats two" id="cards"></div>
       <h2 class="section-title">Last 12 weeks</h2>

@@ -14,7 +14,7 @@ export function toolsScreen(el) {
     <section class="screen" aria-labelledby="screen-title">
       <h1 id="screen-title">Tools</h1>
       <ul class="list">
-        ${TOOLS.map(([id, name, sub]) => `<li><a class="list-item link" href="#/tool-${id}"><span>${name}</span><span>${sub} ›</span></a></li>`).join('')}
+        ${TOOLS.map(([id, name, sub]) => `<li><a class="list-item link" href="#/tool-${id}"><span>${name}</span><span>${sub}</span></a></li>`).join('')}
       </ul>
     </section>`;
 }

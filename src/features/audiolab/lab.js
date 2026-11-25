@@ -13,7 +13,7 @@ export function labScreen(el) {
     <section class="screen" aria-labelledby="screen-title">
       <h1 id="screen-title">Audio Lab</h1>
       <ul class="list">
-        ${TOOLS.map(([id, name, sub]) => `<li><a class="list-item link" href="#/audio-${id}"><span>${name}</span><span>${sub} ›</span></a></li>`).join('')}
+        ${TOOLS.map(([id, name, sub]) => `<li><a class="list-item link" href="#/audio-${id}"><span>${name}</span><span>${sub}</span></a></li>`).join('')}
       </ul>
       <p class="muted">Default volume is 30 %. Sound stops when you leave a tool.</p>
     </section>`;

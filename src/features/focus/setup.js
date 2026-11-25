@@ -26,7 +26,7 @@ export function setupScreen(el) {
   const noise = getSettings();
   el.innerHTML = `
     <section class="screen" aria-labelledby="screen-title">
-      <a class="back-link" href="#/focus" aria-label="Back to Focus">‹ Focus</a>
+      <a class="back-link" href="#/focus" aria-label="Back to Focus">Focus</a>
       <h1 id="screen-title">New focus session</h1>
       <form class="form" id="f" novalidate>
         <label class="field">Session goal (required)

@@ -13,7 +13,7 @@ import { ic } from '../../core/icons.js';
 export function clockScreen(el) {
   el.innerHTML = `
     <section class="screen" aria-labelledby="screen-title">
-      <a class="back-link" href="#/tools" aria-label="Back to Tools">‹ Tools</a>
+      <a class="back-link" href="#/tools" aria-label="Back to Tools">Tools</a>
       <h1 id="screen-title" class="sr-only">Clock</h1>
       <div class="toolbar">
         <button class="btn btn-ghost" id="face-toggle"></button>

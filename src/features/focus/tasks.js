@@ -9,7 +9,7 @@ export function taskRow(t, { open = false } = {}) {
   const p = progressOf(t);
   return `<li class="task ${t.done ? 'done' : ''}" data-id="${esc(t.id)}">
     <div class="task-head">
-      <button class="drag" aria-label="Drag to reorder ${esc(t.title)}">⋮⋮</button>
+      <button class="drag" aria-label="Drag to reorder ${esc(t.title)}">${ic('grip')}</button>
       <label class="check"><input type="checkbox" data-act="task" ${t.done ? 'checked' : ''} aria-label="${esc(t.title)} done" /></label>
       <button class="task-title" data-act="open" aria-expanded="${open}">${esc(t.title)}${p.total ? ` <span class="muted">${p.done}/${p.total}</span>` : ''}</button>
       <button class="icon-btn" data-act="del" aria-label="Delete ${esc(t.title)}">${ic('close')}</button>
@@ -27,7 +27,7 @@ export function tasksScreen(el) {
   const open = new Set();
   el.innerHTML = `
     <section class="screen" aria-labelledby="screen-title">
-      <a class="back-link" href="#/focus" aria-label="Back to Focus">‹ Focus</a>
+      <a class="back-link" href="#/focus" aria-label="Back to Focus">Focus</a>
       <h1 id="screen-title">Tasks</h1>
       <form class="row" id="add"><input class="input" name="title" maxlength="120" placeholder="New task" aria-label="New task" />
         <button class="btn" aria-label="Add task">Add</button></form>

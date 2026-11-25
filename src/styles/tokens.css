@@ -18,6 +18,7 @@
   --danger: #e5484d;
   --focus: #6e8fd8;
   --break: #4cc38a;
+  --on-danger: #000000;
 
   /* Spacing: 4 px grid. */
   --s1: 4px;
@@ -66,6 +67,7 @@
   --danger: #dc2626;
   --focus: #3b5fc0;
   --break: #16a34a;
+  --on-danger: #ffffff;
 }
 
 @media (prefers-reduced-motion: reduce) {

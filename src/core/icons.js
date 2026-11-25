@@ -1,4 +1,4 @@
-// One line-icon set for buttons and status, drawn like the tab bar icons (24 grid, 1.8 stroke, currentColor).
+// One line-icon set for buttons, status and tabs (24 grid, 1.5 stroke, round caps, currentColor).
 // Replaces the emoji and unicode glyphs that were used as icons.
 
 const PATHS = {
@@ -10,6 +10,9 @@ const PATHS = {
   moon: '<path d="M19.5 14.5A8 8 0 0 1 9.5 4.5a8 8 0 1 0 10 10z"/>',
   check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
   alert: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.5"/>',
+  expand: '<path d="M14 4.5h5.5V10M10 19.5H4.5V14M19.5 4.5l-6 6M4.5 19.5l6-6"/>',
+  grip: '<path d="M9 6.5v.01M15 6.5v.01M9 12v.01M15 12v.01M9 17.5v.01M15 17.5v.01"/>',
+  back: '<path d="M14.5 5.5L8 12l6.5 6.5"/>',
   backspace: '<path d="M9 5.5h10.5a1.5 1.5 0 0 1 1.5 1.5v10a1.5 1.5 0 0 1-1.5 1.5H9L3 12z"/><path d="M12.5 9.5l5 5M17.5 9.5l-5 5"/>',
 };
 

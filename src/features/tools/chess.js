@@ -38,7 +38,7 @@ export function chessScreen(el) {
     <section class="chess" aria-label="Chess clock">
       <button class="chess-side top" data-side="1" aria-label="Player 2 clock: tap after your move"><span class="chess-time digits"></span><span class="chess-moves"></span></button>
       <div class="chess-bar">
-        <a class="icon-btn" href="#/tools" aria-label="Back to Tools">‹</a>
+        <a class="icon-btn" href="#/tools" aria-label="Back to Tools">${ic('back')}</a>
         <select class="input" id="preset" aria-label="Time control">
           ${PRESETS.map(([b, i]) => `<option value="${b}|${i}" ${b === cfg.base && i === cfg.inc ? 'selected' : ''}>${b}+${i}</option>`).join('')}
         </select>

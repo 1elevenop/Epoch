@@ -4,7 +4,7 @@ import { esc } from '../../core/dom.js';
 import { DEFAULT_VOLUME } from './dsp.js';
 
 export const header = (title, sub = '') => `
-  <a class="back-link" href="#/audio" aria-label="Back to Audio Lab">‹ Audio Lab</a>
+  <a class="back-link" href="#/audio" aria-label="Back to Audio Lab">Audio Lab</a>
   <h1 id="screen-title">${esc(title)}</h1>${sub ? `<p class="muted">${sub}</p>` : ''}`;
 
 export const volumeField = (id = 'vol', value = DEFAULT_VOLUME, label = 'Volume') => `

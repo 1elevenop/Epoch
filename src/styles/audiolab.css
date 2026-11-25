@@ -1,7 +1,7 @@
 /* Audio Lab (BLUEPRINT §6.6) */
-.lab { display: flex; flex-direction: column; gap: 14px; padding-bottom: 120px; }
+.lab { display: flex; flex-direction: column; gap: var(--s4); padding-bottom: 120px; }
 .lab .seg { flex-wrap: wrap; }
-.lab .seg-btn { min-height: var(--touch); padding: 0 10px; }
+.lab .seg-btn { min-height: var(--touch); padding: 0 var(--s3); }
 .lab-row { justify-content: space-between; }
 .lab-row input[type='range'] { flex: 1; accent-color: var(--accent); min-height: var(--touch); }
 .lab-row .input { flex: 1; text-align: center; }
@@ -9,25 +9,25 @@
 .lab .grow { flex: 1; }
 .lab .center { text-align: center; }
 .lab .icon-btn { min-width: var(--touch); min-height: var(--touch); }
-.lab-warn { color: var(--danger); min-height: 1.2em; margin: 0; font-size: 14px; }
+.lab-warn { color: var(--danger); min-height: 1.2em; margin: 0; font-size: var(--t-sm); }
 .lab-warn:empty { display: none; }
 .lab-note { margin: 0; }
-.lab-sweep summary { min-height: var(--touch); display: flex; align-items: center; cursor: pointer; font-weight: 600; }
-.lab-sweep { display: flex; flex-direction: column; gap: 10px; }
-.lab-sweep[open] > *:not(summary) { margin-top: 10px; }
+.lab-sweep summary { min-height: var(--touch); display: flex; align-items: center; cursor: pointer; }
+.lab-sweep { display: flex; flex-direction: column; gap: var(--s3); }
+.lab-sweep[open] > *:not(summary) { margin-top: var(--s3); }
 
-.met-bpm { font-size: clamp(48px, 16vw, 88px); text-align: center; margin: 0; line-height: 1.1; }
-.met-bpm .muted { font-size: 18px; }
-.met-bpm.small { font-size: 18px; color: var(--text-2); min-height: 1.2em; }
-.met-dots { display: flex; justify-content: center; gap: 12px; margin-top: 12px; }
-.met-dot { width: 22px; height: 22px; border-radius: 50%; background: var(--raised); border: 1px solid var(--border); transition: transform 60ms, background 60ms; }
+.met-bpm { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: clamp(48px, 16vw, 88px); text-align: center; margin: 0; line-height: 1.1; }
+.met-bpm .muted { font-family: var(--font); font-size: var(--t-md); }
+.met-bpm.small { font-size: var(--t-md); color: var(--text-2); min-height: 1.2em; }
+.met-dots { display: flex; justify-content: center; gap: var(--s3); margin-top: var(--s3); }
+.met-dot { width: 22px; height: 22px; border-radius: 50%; background: var(--raised); border: 1px solid var(--border); transition: transform 60ms var(--ease), background-color 60ms var(--ease); }
 .met-dot.on { background: var(--text-2); transform: scale(1.25); }
 .met-dot.on.accent { background: var(--accent); }
 .met-dot.on.mid { background: color-mix(in srgb, var(--accent) 60%, var(--text-2)); }
 
-.tuner { display: flex; flex-direction: column; align-items: center; gap: 16px; margin: 24px 0; }
+.tuner { display: flex; flex-direction: column; align-items: center; gap: var(--s4); margin: var(--s6) 0; }
 .tuner-note { font-size: clamp(64px, 24vw, 120px); margin: 0; line-height: 1; }
-.tuner-meter { position: relative; width: 100%; max-width: 360px; height: 40px; border-radius: 20px; background: var(--surface); border: 1px solid var(--border); overflow: hidden; }
+.tuner-meter { position: relative; width: 100%; max-width: 360px; height: 40px; border-radius: var(--r-lg); background: var(--surface); border: 1px solid var(--border); overflow: hidden; }
 .tuner-zero { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: var(--text-2); }
 .tuner-needle { position: absolute; left: calc(50% - 4px); top: 4px; bottom: 4px; width: 8px; border-radius: 4px; background: var(--text-2); transition: left 80ms linear; }
 .tuner-needle.in-tune { background: var(--accent); }

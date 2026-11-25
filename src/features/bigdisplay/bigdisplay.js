@@ -22,7 +22,7 @@ export function setBigSource(src) {
 }
 
 export const bigButton = (label = 'Big display') =>
-  `<button class="icon-btn bd-open-btn" data-big aria-label="${esc(label)}" title="${esc(label)}">⤢</button>`;
+  `<button class="icon-btn bd-open-btn" data-big aria-label="${esc(label)}" title="${esc(label)}">${ic('expand')}</button>`;
 
 export function openBig(reason = 'button') {
   if (!source || open) return;

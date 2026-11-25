@@ -48,7 +48,7 @@ export function intervalScreen(el) {
 
   el.innerHTML = `
     <section class="screen tool" aria-labelledby="screen-title">
-      <a class="back-link" href="#/tools" aria-label="Back to Tools">‹ Tools</a>
+      <a class="back-link" href="#/tools" aria-label="Back to Tools">Tools</a>
       <h1 id="screen-title">Interval timer</h1>
       <div id="setup">
         <div class="chips" id="presets" role="group" aria-label="Presets"></div>

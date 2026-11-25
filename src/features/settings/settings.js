@@ -21,7 +21,7 @@ export function settingsScreen(el) {
   let target = 'timer';
   el.innerHTML = `
     <section class="screen settings" aria-labelledby="screen-title">
-      <a class="back-link" href="#/${s.lastTab}" aria-label="Back">‹ Back</a>
+      <a class="back-link" href="#/${s.lastTab}" aria-label="Back">Back</a>
       <h1 id="screen-title">Settings</h1>
 
       <h2 class="section-title">Theme</h2>
@@ -36,7 +36,7 @@ export function settingsScreen(el) {
       </div>
 
       <h2 class="section-title">Big display transitions</h2>
-      <p class="muted">Turn the phone sideways on Timer, Stopwatch or Focus (or tap ⤢). Choose a screen, then tap a style.</p>
+      <p class="muted">Turn the phone sideways on Timer, Stopwatch or Focus (or tap the expand button). Choose a screen, then tap a style.</p>
       <div class="seg" role="tablist" aria-label="Screen">
         ${SCREENS.map(([id, l]) => `<button class="seg-btn" role="tab" data-target="${id}" aria-selected="${id === target}">${l}</button>`).join('')}
       </div>
@@ -55,9 +55,9 @@ export function settingsScreen(el) {
       ${alarmDefaultsHtml(s)}
       ${backupHtml()}
       <h2 class="section-title">Help</h2>
-      <a class="list-item link" href="#/reliability"><span>Reliability</span><span>›</span></a>
-      <a class="list-item link" href="#/log"><span>Alarm log</span><span>›</span></a>
-      <a class="list-item link" href="#/onboarding"><span>Setup guide</span><span>›</span></a>
+      <a class="list-item link" href="#/reliability"><span>Reliability</span></a>
+      <a class="list-item link" href="#/log"><span>Alarm log</span></a>
+      <a class="list-item link" href="#/onboarding"><span>Setup guide</span></a>
       <p class="muted">Epoch ${APP_VERSION} · offline, no account.</p>
     </section>`;
 

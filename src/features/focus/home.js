@@ -19,8 +19,8 @@ export function focusHome(el) {
           : `<a class="btn btn-round focus-start" href="#/focus-setup" aria-label="Start a focus session">Start focus session</a>`
       }
       <div class="row-links">
-        <a class="list-item link" href="#/tasks"><span>Tasks</span><span>›</span></a>
-        <a class="list-item link" href="#/focus-stats"><span>Stats</span><span>›</span></a>
+        <a class="list-item link" href="#/tasks"><span>Tasks</span></a>
+        <a class="list-item link" href="#/focus-stats"><span>Stats</span></a>
       </div>
       <h2 class="section-title">Recent sessions</h2>
       <ul class="log-list" id="recent"><li class="empty">Loading…</li></ul>
