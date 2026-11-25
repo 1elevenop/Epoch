@@ -9,6 +9,7 @@ import { AlarmPlugin } from '../../core/bridge.js';
 import { esc } from '../../core/dom.js';
 import { createDigits } from './digits.js';
 import { ic } from '../../core/icons.js';
+import { bgCss } from '../../core/background.js';
 
 let source = null; // { kind, read(now) → { text, label, progress, over, fastFrom } }
 let open = null;
@@ -38,6 +39,7 @@ export function openBig(reason = 'button') {
     <div class="bd-progress"><div class="bd-progress-fill"></div></div>
     <button class="icon-btn bd-close" aria-label="Close big display">${ic('close')}</button>`;
   document.body.append(el);
+  bgCss('big').then((css) => { if (css) el.style.background = css; }).catch(() => {});
   document.body.classList.add('bd-open');
   const digits = createDigits(el.querySelector('.bd-digits-host'), transition);
   const label = el.querySelector('.bd-label');

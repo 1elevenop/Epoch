@@ -1,20 +1,19 @@
-// Audio Lab hub (BLUEPRINT §6.6). Every tool plays only while its screen is open (foreground, v1).
+// Audio Lab (BLUEPRINT §6.6): an index-card drawer. A tool plays only while its card is open.
+
+import { mountDrawer } from '../shared/drawer.js';
+import { metronomeScreen } from './metronome.js';
+import { toneScreen } from './tone.js';
+import { noiseScreen } from './noise.js';
+import { tunerScreen } from './tuner.js';
+import { binauralScreen } from './binaural.js';
 
 const TOOLS = [
-  ['metronome', 'Metronome', '20–300 BPM, tap tempo, accents'],
-  ['tone', 'Tone generator', 'Sine to sawtooth, 20 Hz – 20 kHz, sweep'],
-  ['noise', 'Noise', 'White, pink, brown, sleep fade-out'],
-  ['tuner', 'Tuner', 'Microphone → note and cents'],
-  ['binaural', 'Binaural beats', 'Experimental · headphones'],
+  { id: 'metronome', name: 'Metronome', sub: '20–300 BPM, tap tempo', render: metronomeScreen },
+  { id: 'tone', name: 'Tone', sub: '20 Hz – 20 kHz, sweep', render: toneScreen },
+  { id: 'noise', name: 'Noise', sub: 'White, pink, brown', render: noiseScreen },
+  { id: 'tuner', name: 'Tuner', sub: 'Note and cents', render: tunerScreen },
+  { id: 'binaural', name: 'Binaural beats', sub: 'Headphones', render: binauralScreen },
 ];
 
-export function labScreen(el) {
-  el.innerHTML = `
-    <section class="screen" aria-labelledby="screen-title">
-      <h1 id="screen-title">Audio Lab</h1>
-      <ul class="list">
-        ${TOOLS.map(([id, name, sub]) => `<li><a class="list-item link" href="#/audio-${id}"><span>${name}</span><span>${sub}</span></a></li>`).join('')}
-      </ul>
-      <p class="muted">Default volume is 30 %. Sound stops when you leave a tool.</p>
-    </section>`;
-}
+export const labScreen = (el) =>
+  mountDrawer(el, { title: 'Audio Lab', items: TOOLS, note: 'Default volume is 30 %. Sound stops when you close a card.' });

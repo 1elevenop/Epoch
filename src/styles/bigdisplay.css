@@ -8,6 +8,7 @@ body.bd-open #app { visibility: hidden; }
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2vh;
   padding: max(var(--safe-top), 12px) max(var(--safe-bottom), 16px);
   color: var(--text);
+  background: var(--bg);
   animation: fade-in var(--dur) var(--ease);
 }
 .bd-label { margin: 0; color: var(--text-2); font-size: clamp(14px, 4.5vh, 28px); }
@@ -39,3 +40,14 @@ body.bd-open #app { visibility: hidden; }
 .tr-preview { font-size: 40px; height: 52px; display: flex; color: var(--text); font-family: var(--digit-font, inherit); }
 .tr-name { font-size: var(--t-xs); }
 .tr-used { font-size: var(--t-xs); color: var(--text-2); min-height: 12px; }
+/* Settings → Background */
+.bg-block { display: flex; flex-direction: column; gap: var(--s3); padding: var(--s4); background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); }
+.bg-top { display: flex; gap: var(--s3); align-items: flex-start; justify-content: space-between; }
+.bg-title { margin: 0; font-weight: 500; }
+.bg-top .muted { margin: 0; }
+.bg-preview { flex: none; width: 56px; height: 56px; border-radius: var(--r-sm); border: 1px solid var(--border); background: var(--bg); }
+.bg-block[data-big] .bg-preview, .bg-block[data-bg='big'] .bg-preview { width: 84px; height: 40px; }
+.bg-block .bg-when-color, .bg-block .bg-when-image { display: none; }
+.bg-block[data-mode='color'] .bg-when-color, .bg-block[data-mode='image'] .bg-when-image { display: flex; }
+.bg-color { padding: var(--s1); height: var(--touch); }
+.bg-error:empty { display: none; }

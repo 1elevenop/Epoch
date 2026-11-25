@@ -2,22 +2,22 @@
    the values here are the Black defaults used before it runs. */
 :root {
   --bg: #000000;
-  --surface: #111112;
-  --raised: #1c1c1e;
-  --border: rgba(255, 255, 255, 0.09);
+  --surface: #0f0f0e;
+  --raised: #1b1b19;
+  --border: rgba(204, 200, 185, 0.14);
 
-  --text: #ededed;
-  --text-2: #a1a1a6;
-  --text-3: #85858b;
+  --text: #e8e5da;
+  --text-2: #a8a597;
+  --text-3: #8a877b;
 
-  --accent: #f5a524;
+  --accent: #f5332c;
   --on-accent: #000000;
 
   /* Semantic colours carry meaning only (done, overtime, focus / break phases). */
-  --success: #4cc38a;
-  --danger: #e5484d;
-  --focus: #6e8fd8;
-  --break: #4cc38a;
+  --success: #7fae84;
+  --danger: #f5332c;
+  --focus: #8296d0;
+  --break: #7fae84;
   --on-danger: #000000;
 
   /* Spacing: 4 px grid. */
@@ -63,10 +63,10 @@
 }
 
 :root[data-theme='light'] {
-  --success: #16a34a;
-  --danger: #dc2626;
-  --focus: #3b5fc0;
-  --break: #16a34a;
+  --success: #2f6e45;
+  --danger: #b01c16;
+  --focus: #2f4a9e;
+  --break: #2f6e45;
   --on-danger: #ffffff;
 }
 

@@ -10,6 +10,12 @@ WAKE11 is now **Epoch**, with a new package id (`app.epoch`), so it installs as 
 - Tabs: Alarm, Timer, Stopwatch, Focus, Tools, Audio Lab. The Clock tab moved to Tools → Clock (world clocks, night clock, pinned countdowns; clock widgets open it). Settings, Reliability, Alarm log and Setup guide open from the gear at the top right.
 - Themes: Black and Light only. The ten other themes are gone; a WAKE11 backup that names one loads as Black. Accent colours and all nine big-display transitions stay (without glows).
 - Type: Geist for words, Geist Mono for every time and number.
+- Palette: scarlet, black and creme. Black has creme text and a scarlet accent; Light is a creme page with black ink. New accent swatches: scarlet, orange, ochre, sage, cobalt, slate, creme, ink.
+- Tools and Audio Lab are index-card drawers: each card has its own icon and a numbered file tab, and tapping it opens the tool inside the card (one at a time; closing it stops the tool). Chess clock still opens full screen.
+
+### Added
+
+- Backgrounds: Settings → Background has separate choices for the app (upright screens) and the big display (sideways): theme, a plain colour, or an image (JPEG, PNG, WebP, GIF, AVIF, BMP, up to 20 MB) with a dim slider. Images are stored on the phone only (IndexedDB) and are not in backups; the background choices are, and are validated on import.
 
 ### Fixed
 

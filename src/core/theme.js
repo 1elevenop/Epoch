@@ -8,10 +8,10 @@ import '@fontsource/geist-mono/latin-500.css';
 
 const DIGIT_FONT = "'Geist Mono', ui-monospace, monospace";
 
-/** text2 = secondary text, text3 = muted text. Borders are hairlines. Accent = lume amber. */
+/** text2 = secondary text, text3 = muted text. Borders are hairlines. Palette: scarlet, black, creme. */
 export const THEMES = [
-  { id: 'black', name: 'Black', t: { bg: '#000000', surface: '#111112', raised: '#1c1c1e', border: 'rgba(255,255,255,0.09)', text: '#ededed', text2: '#a1a1a6', text3: '#85858b', accent: '#f5a524' } },
-  { id: 'light', name: 'Light', t: { bg: '#fafafa', surface: '#ffffff', raised: '#f0f0f1', border: 'rgba(0,0,0,0.09)', text: '#171717', text2: '#525252', text3: '#6b6b6b', accent: '#b45309' } },
+  { id: 'black', name: 'Black', t: { bg: '#000000', surface: '#0f0f0e', raised: '#1b1b19', border: 'rgba(204,200,185,0.14)', text: '#e8e5da', text2: '#a8a597', text3: '#8a877b', accent: '#f5332c' } },
+  { id: 'light', name: 'Light', t: { bg: '#e2dfd6', surface: '#ebe8e1', raised: '#d5d1c5', border: 'rgba(17,17,16,0.12)', text: '#111110', text2: '#45433d', text3: '#57554e', accent: '#b01c16' } },
 ];
 
 /** Themes removed in Epoch 2.0, kept so old settings and WAKE11 backups still load. */
@@ -20,7 +20,7 @@ const LEGACY = { oled: 'black', dark: 'black', neon: 'black', synthwave: 'black'
 /** A current theme id for any current or legacy id, or null if unknown. */
 export const normalizeThemeId = (id) => (THEMES.some((t) => t.id === id) ? id : (LEGACY[id] ?? null));
 
-export const ACCENTS = ['#ff8a3d', '#00f0ff', '#ff3ea5', '#39ff14', '#ffd23f', '#7cc4ff', '#b388ff', '#ff5a5f'];
+export const ACCENTS = ['#f5332c', '#ff6a1a', '#c9a227', '#7f9468', '#2f55d4', '#8b8fa3', '#ccc8b9', '#111110'];
 
 export const themeById = (id) => THEMES.find((t) => t.id === normalizeThemeId(id)) ?? THEMES[0];
 

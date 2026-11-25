@@ -6,14 +6,19 @@ import { timerService } from './features/timer/service.js';
 import { showDone } from './features/timer/done.js';
 import { installLeaveDetection, focus, setDnd } from './features/focus/session.js';
 import { applyTheme } from './core/theme.js';
+import { applyAppBg } from './core/background.js';
 import { installBigDisplay } from './features/bigdisplay/bigdisplay.js';
 import { syncTimerSound } from './features/settings/alarm-defaults-ui.js';
 import { syncWidgets } from './core/widgets.js';
 import { AlarmPlugin } from './core/bridge.js';
 
 // Native status / navigation bar icons follow the theme.
-document.addEventListener('themechange', (e) => AlarmPlugin.setBarStyle?.(e.detail === 'light').catch(() => {}));
+document.addEventListener('themechange', (e) => {
+  AlarmPlugin.setBarStyle?.(e.detail === 'light').catch(() => {});
+  applyAppBg().catch(() => {}); // the dim veil follows the theme
+});
 applyTheme(getSettings().theme, getSettings().accent);
+applyAppBg().catch(() => {});
 
 const view = document.getElementById('view');
 const tabbar = document.getElementById('tabbar');

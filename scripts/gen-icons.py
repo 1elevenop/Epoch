@@ -1,6 +1,6 @@
 """Generates the Epoch mark as master SVGs and Android vector drawables.
 
-The mark (drawn in Affinity, 24 grid): a dial ring and one lume hand pointing at zero, the epoch.
+The mark (drawn in Affinity, 24 grid): a dial ring and one scarlet hand pointing at zero, the epoch.
 One source of geometry, so the README artwork and the app icon always match.
 Run from the repo root:  python scripts/gen-icons.py
 """
@@ -11,9 +11,9 @@ RES = os.path.join(ROOT, 'android', 'app', 'src', 'main', 'res')
 MEDIA = os.path.join(ROOT, 'media', 'logo')
 
 BLACK = '#000000'
-INK = '#EDEDED'
-INK_DARK = '#171717'
-LUME = '#F5A524'
+INK = '#E8E5DA'
+INK_DARK = '#111110'
+LUME = '#F5332C'  # scarlet hand
 
 # 24-unit design grid
 RING = (12, 12, 9)      # cx, cy, r

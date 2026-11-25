@@ -2,8 +2,8 @@
 // Native SharedPreferences owns alarms (rule D2) — nothing alarm-related is stored here.
 
 const DB_NAME = 'epoch';
-const DB_VERSION = 1;
-const STORES = ['tasks', 'sessions', 'stats'];
+const DB_VERSION = 2;
+const STORES = ['tasks', 'sessions', 'stats', 'media']; // media: background images (Blob)
 
 let dbPromise = null;
 
@@ -76,6 +76,9 @@ export const DEFAULT_SETTINGS = Object.freeze({
   timerSound: 'hard_classic', // finished timers; mirrored to native
   focusDnd: false, // Do Not Disturb during focus sessions
   countdowns: [], // [{ id, title, date: 'YYYY-MM-DD', onClock }]
+  // Backgrounds: app (portrait screens) and big display (landscape), each theme / colour / image.
+  bgApp: { mode: 'theme', color: '#000000', dim: 0.4 },
+  bgBig: { mode: 'theme', color: '#000000', dim: 0.4 },
 });
 
 let memory = null;

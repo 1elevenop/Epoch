@@ -6,6 +6,7 @@ import { validatePlan } from '../focus/engine.js';
 import { DEFAULT_SETTINGS } from '../../core/store.js';
 import { sanitizeCountdowns } from '../tools/models.js';
 import { normalizeThemeId } from '../../core/theme.js';
+import { isValidBg } from '../../core/background.js';
 import { TRANSITIONS } from '../bigdisplay/transitions/index.js';
 
 export const BACKUP_VERSION = 1;
@@ -73,6 +74,8 @@ function checkSettings(s, err) {
       if (v !== null && !/^#[0-9a-f]{6}$/i.test(v)) err('settings: accent');
     } else if (k === 'theme') {
       if (!normalizeThemeId(v)) err('settings: theme'); // WAKE11 theme ids map to Black / Light
+    } else if (k === 'bgApp' || k === 'bgBig') {
+      if (!isValidBg(v)) err(`settings: ${k}`);
     } else if (k === 'bigTransition') {
       if (!v || typeof v !== 'object' || Object.entries(v).some(([kk, vv]) => !['timer', 'stopwatch', 'focus'].includes(kk) || !TR_IDS.has(vv))) err('settings: bigTransition');
     } else if (k === 'worldClocks') {

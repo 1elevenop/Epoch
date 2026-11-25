@@ -6,6 +6,7 @@ import { THEMES, ACCENTS, applyTheme, themeById } from '../../core/theme.js';
 import { TRANSITIONS, createDigits } from '../bigdisplay/digits.js';
 import { pad2 } from '../../core/time.js';
 import { backupHtml, bindBackup } from './backup-ui.js';
+import { backgroundHtml, bindBackground } from './background-ui.js';
 import { alarmDefaultsHtml, bindAlarmDefaults } from './alarm-defaults-ui.js';
 import { syncWidgets } from '../../core/widgets.js';
 
@@ -34,6 +35,8 @@ export function settingsScreen(el) {
         <button class="swatch auto ${s.accent ? '' : 'on'}" data-accent="" role="radio" aria-checked="${!s.accent}" aria-label="Accent: theme default"></button>
         ${ACCENTS.map((c) => `<button class="swatch ${s.accent === c ? 'on' : ''}" data-accent="${c}" style="--c:${c}" role="radio" aria-checked="${s.accent === c}" aria-label="Accent ${c}"></button>`).join('')}
       </div>
+
+      ${backgroundHtml()}
 
       <h2 class="section-title">Big display transitions</h2>
       <p class="muted">Turn the phone sideways on Timer, Stopwatch or Focus (or tap the expand button). Choose a screen, then tap a style.</p>
@@ -92,6 +95,7 @@ export function settingsScreen(el) {
 
   const section = el.querySelector('.settings');
   bindBackup(section);
+  bindBackground(section);
   section.addEventListener('click', (e) => {
     const th = e.target.closest('[data-theme-id]');
     if (th) {
