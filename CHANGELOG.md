@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.0.1 — alarm fix (2026-11-25)
 
 ### Fixed
 
