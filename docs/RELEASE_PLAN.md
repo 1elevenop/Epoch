@@ -1,6 +1,6 @@
 # WAKE11 — GitHub release plan (released as v1.0.0)
 
-Status: **released as v1.0.0 on 2026-11-23, repository public.** §1 security fixes done 2026-11-23 (see CHANGELOG); everything else still to do. Tick items as they land; log decisions in `CHANGELOG.md`.
+Status: **released as v1.0.0 on 2026-11-23, repository public. Epoch 2.0.0 released 2026-11-26 (§7).** §1 security fixes done 2026-11-23 (see CHANGELOG); everything else still to do. Tick items as they land; log decisions in `CHANGELOG.md`.
 Findings below come from checks run on 2026-11-23 (git history scan, `npm audit`, `npm outdated`, manifest, repo files).
 
 ---
@@ -111,7 +111,7 @@ Extra Android items:
 - [x] `gitleaks` 8.30.1 clean ✅ (9 commits, no leaks, 2026-11-23); `npm audit` clean ✅ (0 vulnerabilities); `npm test` 100 % pass; Kotlin unit tests pass.
 - [x] Fresh install of the release APK on the phone (2026-11-23, after exporting a backup): setup guide → notifications allowed, exact alarms and full-screen already OK, battery exemption granted → 10 s test alarm woke the locked, dozing phone and rang over the lock screen (T1) ✅ → backup import restored 4 alarms, 15 log entries, 3 tasks, 8 sessions ✅. Widgets were removed by the uninstall and not re-added.
 - [ ] Device tests still open (T3, T8, T9, T10, T11, T14) listed as **known limitations** in the release notes if not done.
-- [ ] README renders correctly on GitHub; all images load; no personal data in screenshots.
+- [x] README renders correctly on GitHub; all images load; no personal data in screenshots. ✅ Epoch README 2026-11-26: all 12 images return 200 from `main`; screenshots use demo data, status bar cropped.
 - [ ] Keystore + password backed up privately (never in the repo).
 
 ---
@@ -159,10 +159,10 @@ Signing stays the same key (fingerprint `9E:B4:…:CB:3D`), so future Epoch upda
 - [ ] Import check on the release build.
 
 ### 7.5 Publish
-- [ ] Tag `v2.0.0` on `main`; push the tag.
-- [ ] `gh release create v2.0.0 Epoch-2.0.0.apk SHA256SUMS.txt --title "Epoch 2.0.0" --notes-file release-notes.md` (notes below).
-- [ ] Mark WAKE11 1.0.1's release notes with one line: "WAKE11 is now Epoch — see 2.0.0" (edit, don't delete).
-- [ ] Check the release page as a logged-out visitor: APK downloads, checksum matches, README images load.
+- [x] Tag `v2.0.0` on `main` (merge commit `7b57250`); pushed (2026-11-26).
+- [x] `gh release create v2.0.0 Epoch-2.0.0.apk SHA256SUMS.txt --title "Epoch 2.0.0" --notes-file release-notes.md` (notes below). ✅ Published as latest, 2026-11-26.
+- [x] Mark WAKE11 1.0.1's release notes with one line: "WAKE11 is now Epoch — see 2.0.0" (edit, don't delete). ✅ 2026-11-26, with a reminder to export before installing Epoch.
+- [x] Check the release page as a logged-out visitor: APK downloads, checksum matches, README images load. ✅ 2026-11-26: anonymous download SHA-256 `9098197d…b5f823` matches, `/releases/latest` → v2.0.0, README images 200.
 
 ### 7.6 Release notes outline
 1. **WAKE11 is now Epoch.** New name, new look. It installs as a new app: export a backup in WAKE11 first (Settings → Backup), install Epoch, import it, then uninstall WAKE11.
