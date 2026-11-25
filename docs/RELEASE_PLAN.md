@@ -121,14 +121,55 @@ Extra Android items:
 
 ---
 
-## 7. Epoch 2.0.0 (rebrand + redesign)
+## 7. Epoch 2.0.0 release plan (rebrand + redesign)
 
-Epoch has a new package id (`app.epoch`), so it installs **beside** WAKE11; users move data with Export (WAKE11) → Import (Epoch).
+**Why this release is different:** the package id changed (`app.wake11` → `app.epoch`), so Epoch installs **beside** WAKE11 instead of over it. Every user must move data with Export (WAKE11) → Import (Epoch). The release notes lead with that.
 
-- [x] Rename, Black + Light, six tabs + gear, Geist, unslop passes, Affinity icons and mark (branch `claude/epoch-rebrand-redesign-92271a`).
-- [x] Checked on the phone (debug): every tab, Settings, Tools → Clock, Black and Light, status-bar icons, Stopwatch buttons at the bottom from the first frame.
-- [ ] On the phone: alarm (2 min out, locked) and timer ring under `app.epoch`; notification icon; widgets open Tools → Clock; Reliability permissions granted for the new app.
-- [ ] Export a backup in WAKE11, import it in Epoch; alarms, tasks, sessions, settings arrive. Uninstall WAKE11 only after that, with the owner's OK.
-- [ ] New screenshots (`media/screenshots/`), demo GIF and banners (`scripts/gen-banners.py` → `epoch-banner.png`, `epoch-social.png`); README image links follow.
-- [ ] Decide whether to rename the GitHub repo `1elevenop/WAKE11` (GitHub redirects the old URL).
-- [ ] Release notes say clearly: new app, move data with Export / Import. APK `Epoch-2.0.0.apk` + SHA-256.
+Signing stays the same key (fingerprint `9E:B4:…:CB:3D`), so future Epoch updates install over Epoch.
+
+### 7.1 Decisions (owner)
+- [ ] **Repo name:** rename `1elevenop/WAKE11` → `1elevenop/Epoch` before the release (GitHub redirects old URLs, clones and release links), or keep the name. Recommended: rename, then `git remote set-url origin` locally.
+- [ ] **Release type:** full release `v2.0.0` (recommended) or a pre-release `v2.0.0-beta.1` for a few days first.
+
+### 7.2 Finish on the phone (debug build, then release build)
+- [ ] Grant Epoch's permissions through the setup guide (notifications, alarms & reminders, full-screen, battery unrestricted, Samsung never-sleeping list).
+- [ ] Alarm 2 min out, screen locked: sound first, ring screen, challenge, dismiss, wake-up check. Snooze once.
+- [ ] Timer in the background rings; focus session phase-end rings with the app closed.
+- [ ] Notification icon (new mark) shows; launcher icon and splash show the new mark.
+- [ ] Widgets: add all six again (new app), clock widgets open Tools → Clock, nap button sets an alarm.
+- [ ] Backup move: Export in WAKE11 1.0.1 → Import in Epoch. Alarms, logs, tasks, sessions, countdowns, world clocks arrive; an old theme loads as Black.
+- [ ] Backgrounds: pick a real photo through Android's file picker for the app and for the big display; a file over 50 MB is refused with a message.
+- [ ] Tools / Audio Lab cards: open and close each; sound stops when a card closes or the tab changes.
+- [ ] Only after the import is confirmed, and with the owner's OK: uninstall WAKE11 on the test phone.
+
+### 7.3 Repo content
+- [ ] New screenshots in `media/screenshots/` (Black and Light; no personal data): Alarm, Timer, Stopwatch, Focus, Tools with an open card, Audio Lab, Settings → Background, big display landscape, ring screen, widgets.
+- [ ] Update `scripts/gen-banners.py` to the new name, palette and mark → `media/banner/epoch-banner.png`, `epoch-social.png`; delete `wake11-*` banners; record a new demo GIF (`media/demo/epoch-demo.gif`).
+- [ ] README: image links, "What's new in 2.0", and a **Moving from WAKE11** section (Export → install Epoch → Import → uninstall WAKE11). Fix the line "Updates install over the old version" to say it applies from Epoch 2.0 on.
+- [ ] GitHub social preview image (repo Settings → Social preview) → `epoch-social.png`.
+- [ ] CHANGELOG `2.0.0 — Epoch` gets the date; BLUEPRINT §17 phase 7 → ✅ with what is still open.
+
+### 7.4 Merge and gate
+- [ ] Open a PR `claude/epoch-rebrand-redesign-92271a` → `main`; review the diff; merge (squash not needed, history is clean).
+- [ ] `npm ci && npm test` (all pass), `npm audit` (0), Kotlin unit tests (`gradlew testDebugUnitTest`), `gitleaks detect` on the whole history (no keystore, no passwords).
+- [ ] `npm run build && npx cap sync android && cd android && gradlew assembleRelease` with versionName 2.0.0 / versionCode 9.
+- [ ] `apksigner verify --print-certs` shows `9E:B4:…:CB:3D`; rename to `Epoch-2.0.0.apk`; write `SHA256SUMS.txt`.
+- [ ] Install the release APK on the phone (`adb install -r`) and repeat one alarm and one import check.
+
+### 7.5 Publish
+- [ ] Tag `v2.0.0` on `main`; push the tag.
+- [ ] `gh release create v2.0.0 Epoch-2.0.0.apk SHA256SUMS.txt --title "Epoch 2.0.0" --notes-file release-notes.md` (notes below).
+- [ ] Mark WAKE11 1.0.1's release notes with one line: "WAKE11 is now Epoch — see 2.0.0" (edit, don't delete).
+- [ ] Check the release page as a logged-out visitor: APK downloads, checksum matches, README images load.
+
+### 7.6 Release notes outline
+1. **WAKE11 is now Epoch.** New name, new look. It installs as a new app: export a backup in WAKE11 first (Settings → Backup), install Epoch, import it, then uninstall WAKE11.
+2. What's new: six tabs (Clock moved to Tools); settings gear; Tools and Audio Lab as cards that open in place; scarlet / black / creme palette with Black and Light themes; Geist type; backgrounds for the app and the big display (colour or image up to 50 MB); new icons.
+3. Fixed: Stopwatch (and other tools) buttons no longer jump from the middle to the bottom.
+4. Removed: the ten decorative themes (a WAKE11 backup that used one loads as Black).
+5. Install / verify: SHA-256, signing fingerprint, Android 8+ (minSdk as before), permissions to grant again.
+6. Known limitations: open device tests (T3, T8, T9–T14), images are not in backups, widgets must be added again.
+
+### 7.7 After release
+- [ ] Watch issues for a week (import problems, Samsung battery killing the new package).
+- [ ] Keep WAKE11 1.0.1 on the releases page for people who need to export from it.
