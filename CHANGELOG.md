@@ -15,7 +15,7 @@ WAKE11 is now **Epoch**, with a new package id (`app.epoch`), so it installs as 
 
 ### Added
 
-- Backgrounds: Settings → Background has separate choices for the app (upright screens) and the big display (sideways): theme, a plain colour, or an image (JPEG, PNG, WebP, GIF, AVIF, BMP, up to 20 MB) with a dim slider. Images are stored on the phone only (IndexedDB) and are not in backups; the background choices are, and are validated on import.
+- Backgrounds: Settings → Background has separate choices for the app (upright screens) and the big display (sideways): theme, a plain colour, or an image (JPEG, PNG, WebP, GIF, AVIF, BMP, up to 100 MB) with a dim slider. Images are stored on the phone only (IndexedDB) and are not in backups; the background choices are, and are validated on import.
 
 ### Fixed
 

@@ -19,7 +19,7 @@ describe('backgrounds', () => {
     expect(checkImageFile({ type: 'image/jpeg', size: 1000 })).toBeNull();
     expect(checkImageFile({ type: 'image/png', size: 1000 })).toBeNull();
     expect(checkImageFile({ type: 'image/svg+xml', size: 10 })).toMatch(/JPEG/);
-    expect(checkImageFile({ type: 'image/png', size: BG_MAX_BYTES + 1 })).toMatch(/20 MB/);
+    expect(checkImageFile({ type: 'image/png', size: BG_MAX_BYTES + 1 })).toMatch(/100 MB/);
     expect(checkImageFile(null)).toMatch(/No file/);
   });
   it('backups carry both background settings and reject bad ones', () => {
