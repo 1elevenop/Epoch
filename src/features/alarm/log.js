@@ -3,6 +3,7 @@
 import { AlarmPlugin } from '../../core/bridge.js';
 import { esc } from '../../core/dom.js';
 import { formatClock } from '../../core/time.js';
+import { emptyRow } from '../../core/mascot.js';
 
 const OUTCOME = {
   dismissed: 'Dismissed',
@@ -54,6 +55,6 @@ export function logScreen(el) {
                 ${l.challengeFails ? ` · ${l.challengeFails} wrong answers` : ''}</div></li>`;
           })
           .join('')
-      : '<li class="empty">No alarms have rung yet.</li>';
+      : emptyRow('No alarms have rung yet.', 'bored');
   })();
 }

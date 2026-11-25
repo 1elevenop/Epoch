@@ -497,7 +497,8 @@ Epoch 2.0 (unslop method: audit → direction → nine passes). Tokens live in `
 | Type | Geist (words) + Geist Mono (every time and number, tabular). Sizes 12/14/16/20/28 px + display digits. Weights 400/500 |
 | Spacing | 4 px grid: 4, 8, 12, 16, 20, 24, 32, 40, 48 |
 | Radius | controls 8, cards 12, sheets 16 |
-| Icons | one set, 24 grid, 1.5 stroke, round caps, text colour (tab icons and mark drawn in Affinity) |
+| Icons | one set, 24 grid, 1.5 stroke, round caps, text colour (tab icons drawn in Affinity) |
+| Mascot | the launcher icon and splash are the 3D sleepy mascot bust on black (`scripts/gen-launcher.py` from `src/public/mascot/sleepy.webp`); the themed icon, status-bar icon and white/black marks are a flat head silhouette with sleepy eyes cut out (`scripts/gen-icons.py`, Affinity source `epoch-mascot-v5.af`). In the app: 3D mood renders (`src/public/mascot/*.webp`, recoloured from orange to scarlet) via `src/core/mascot.js`, decorative, at most one per screen: empty lists (snooze, bored, focused, happy, confused), Settings About (wave), ring screen (alarmed, one short shake) and wake-check (sleepy) |
 | Motion | one curve `cubic-bezier(0.22,1,0.36,1)`; presses 150 ms (scale 0.97); screen entrance 200 ms opacity only; no loops; respect `prefers-reduced-motion` |
 
 Palette (2.0, owner references): scarlet `#F5332C`, black `#000000`, creme `#CCC8B9` family. Tools and Audio Lab are index-card drawers (numbered file tab per card, tool opens inside the card). Backgrounds: app and big display each theme / colour / image (§6.8).

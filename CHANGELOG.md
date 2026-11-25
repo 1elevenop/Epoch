@@ -15,6 +15,7 @@ WAKE11 is now **Epoch**, with a new package id (`app.epoch`), so it installs as 
 
 ### Added
 
+- Mascot: the Epoch icon is now the 3D mascot (launcher icon, splash, README logo); the themed and notification icons are its head silhouette. Both replace the dial and hand. A 3D mascot shows its mood on empty lists, in Settings, on the ring screen and on the wake-up check.
 - Backgrounds: Settings → Background has separate choices for the app (upright screens) and the big display (sideways): theme, a plain colour, or an image (JPEG, PNG, WebP, GIF, AVIF, BMP, up to 50 MB) with a dim slider. Images are stored on the phone only (IndexedDB) and are not in backups; the background choices are, and are validated on import.
 
 ### Fixed
@@ -24,6 +25,7 @@ WAKE11 is now **Epoch**, with a new package id (`app.epoch`), so it installs as 
 ### Dependencies
 
 - Added `@fontsource/geist-sans` and `@fontsource/geist-mono`: the bundled offline interface and number fonts (SIL OFL 1.1).
+- Dev tool only, not in the app: Pillow + numpy for `scripts/gen-launcher.py`, which crops the 3D mascot into launcher icon PNGs.
 - Removed `@fontsource/orbitron`, `@fontsource/rajdhani`, `@fontsource/share-tech-mono`: their themes are gone.
 
 ## 1.0.1 — alarm fix (2026-11-25)

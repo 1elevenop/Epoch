@@ -135,7 +135,7 @@ Signing stays the same key (fingerprint `9E:B4:…:CB:3D`), so future Epoch upda
 - [ ] Grant Epoch's permissions through the setup guide (notifications, alarms & reminders, full-screen, battery unrestricted, Samsung never-sleeping list).
 - [ ] Alarm 2 min out, screen locked: sound first, ring screen, challenge, dismiss, wake-up check. Snooze once.
 - [ ] Timer in the background rings; focus session phase-end rings with the app closed.
-- [ ] Notification icon (new mark) shows; launcher icon and splash show the new mark.
+- [x] Notification icon (mascot silhouette) shows in the status bar while ringing; launcher icon is the 3D mascot (2026-11-26, debug + release). Ring screen shows the alarmed mascot; test alarm rang, math challenge dismissed it. Still to see by eye: wake-up check screen (test alarms skip it), Samsung themed-icon silhouette.
 - [ ] Widgets: add all six again (new app), clock widgets open Tools → Clock, nap button sets an alarm.
 - [ ] Backup move: Export in WAKE11 1.0.1 → Import in Epoch. Alarms, logs, tasks, sessions, countdowns, world clocks arrive; an old theme loads as Black.
 - [ ] Backgrounds: pick a real photo through Android's file picker for the app and for the big display; a file over 50 MB is refused with a message.
@@ -151,10 +151,12 @@ Signing stays the same key (fingerprint `9E:B4:…:CB:3D`), so future Epoch upda
 
 ### 7.4 Merge and gate
 - [ ] Open a PR `claude/epoch-rebrand-redesign-92271a` → `main`; review the diff; merge (squash not needed, history is clean).
-- [ ] `npm ci && npm test` (all pass), `npm audit` (0), Kotlin unit tests (`gradlew testDebugUnitTest`), `gitleaks detect` on the whole history (no keystore, no passwords).
-- [ ] `npm run build && npx cap sync android && cd android && gradlew assembleRelease` with versionName 2.0.0 / versionCode 9.
-- [ ] `apksigner verify --print-certs` shows `9E:B4:…:CB:3D`; rename to `Epoch-2.0.0.apk`; write `SHA256SUMS.txt`.
-- [ ] Install the release APK on the phone (`adb install -r`) and repeat one alarm and one import check.
+- [x] `npm test` 125/125, `npm audit` 0, Kotlin unit tests pass, `npm outdated`: only vitest 5.1.1 → 5.1.2 (dev, patch) (2026-11-26). Manual secret scan clean (no keystore or real passwords tracked; `keystore.properties` git-ignored; new images carry no metadata).
+- [ ] `gitleaks detect` on the whole history (not installed on this PC yet).
+- [x] `npm run build && npx cap sync android && cd android && gradlew assembleRelease` with versionName 2.0.0 / versionCode 9 (2026-11-26).
+- [x] `apksigner verify --print-certs` shows `9E:B4:…:CB:3D`; `Epoch-2.0.0.apk` (27.5 MB) SHA-256 `9098197d64409b9da0b01560a01fd7e8206df0cb5416d6e0c87f1ba943b5f823` in `SHA256SUMS.txt` (2026-11-26; rebuild if anything changes before the tag).
+- [x] Release APK installed over debug with `adb install -r` (data kept); test alarm rang and dismissed (2026-11-26).
+- [ ] Import check on the release build.
 
 ### 7.5 Publish
 - [ ] Tag `v2.0.0` on `main`; push the tag.

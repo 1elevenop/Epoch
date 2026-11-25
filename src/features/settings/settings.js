@@ -9,6 +9,7 @@ import { backupHtml, bindBackup } from './backup-ui.js';
 import { backgroundHtml, bindBackground } from './background-ui.js';
 import { alarmDefaultsHtml, bindAlarmDefaults } from './alarm-defaults-ui.js';
 import { syncWidgets } from '../../core/widgets.js';
+import { mascot } from '../../core/mascot.js';
 
 const SCREENS = [
   ['timer', 'Timer'],
@@ -61,7 +62,7 @@ export function settingsScreen(el) {
       <a class="list-item link" href="#/reliability"><span>Reliability</span></a>
       <a class="list-item link" href="#/log"><span>Alarm log</span></a>
       <a class="list-item link" href="#/onboarding"><span>Setup guide</span></a>
-      <p class="muted">Epoch ${APP_VERSION} · offline, no account.</p>
+      <div class="about">${mascot('wave', { size: 72 })}<p class="muted">Epoch ${APP_VERSION} · offline, no account.</p></div>
     </section>`;
 
   // ---- live previews ----

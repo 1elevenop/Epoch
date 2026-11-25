@@ -5,6 +5,7 @@ import { loadState, saveState } from '../../core/store.js';
 import { formatDuration } from '../../core/time.js';
 import * as E from './engine.js';
 import { saveSession, saveTask, newTask } from './data.js';
+import { emptyRow } from '../../core/mascot.js';
 
 const REASON = { completed: 'Completed', done_early: 'Done early', interrupted: 'Interrupted', gave_up: 'Gave up' };
 
@@ -31,7 +32,7 @@ export function reviewScreen(el) {
       <ul class="list" id="park">${
         s.parkingLot.length
           ? s.parkingLot.map((p, i) => `<li class="list-item"><span>${esc(p.text)}</span><button class="btn btn-ghost" data-task="${i}" aria-label="Make a task from ${esc(p.text)}">→ Task</button></li>`).join('')
-          : '<li class="empty">Nothing parked.</li>'
+          : emptyRow('Nothing parked.', 'happy')
       }</ul>
       <label class="field">One-line note<input class="input" id="note" maxlength="200" value="${esc(s.review?.note ?? '')}" /></label>
       <div class="stars" role="radiogroup" aria-label="Rating">

@@ -57,3 +57,9 @@
 .log-item.missed, .log-item.auto_silenced, .log-item.killed { border-left-color: var(--danger); }
 .log-item.partial { border-left-color: var(--border); }
 .ch-status.ok { color: var(--success); }
+.ring-mascot { margin: 0 auto; }
+.wake-check .ring-mascot { margin-top: 14vh; }
+.wake-check .ring-q { margin-top: var(--s2); }
+.ring-mascot.wobble { animation: mascot-wobble 0.45s var(--ease) 4 alternate; transform-origin: 50% 90%; }
+@keyframes mascot-wobble { from { transform: rotate(-5deg); } to { transform: rotate(5deg); } }
+@media (prefers-reduced-motion: reduce) { .ring-mascot.wobble { animation: none; } }

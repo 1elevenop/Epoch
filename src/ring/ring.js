@@ -7,6 +7,7 @@ import { formatClock } from '../core/time.js';
 import { getSettings } from '../core/store.js';
 import { esc } from '../core/dom.js';
 import { runChain } from '../features/challenges/runner.js';
+import { mascot } from '../core/mascot.js';
 
 /** Debug switch for device test T13: makes the web screen "fail" so the native fallback appears. */
 const BREAK_KEY = 'epoch.debug.breakRing';
@@ -59,6 +60,7 @@ export function ringScreen(el) {
     const a = c.alarm;
     if (phase === 'WAKE_CHECK_PROMPT') {
       el.innerHTML = `<section class="screen ring-screen wake-check" aria-labelledby="screen-title">
+        ${mascot('sleepy', { size: 140, cls: 'ring-mascot' })}
         <h1 id="screen-title" class="ring-q">Are you up?</h1>
         <p class="sub" id="wc-left"></p>
         <button class="btn btn-huge" data-act="awake" aria-label="Yes, I am up">I'm up</button></section>`;
@@ -73,6 +75,7 @@ export function ringScreen(el) {
     }
 
     el.innerHTML = `<section class="screen ring-screen ${c.state.escalated ? 'escalated' : ''}" aria-labelledby="screen-title">
+      ${mascot('alarmed', { size: 112, cls: 'ring-mascot wobble' })}
       <p class="ring-time digits" id="ring-time"></p>
       <h1 id="screen-title" class="ring-label">${esc(a.label || 'Alarm')}</h1>
       ${c.state.escalated ? '<p class="ring-warn" role="alert">You missed the wake-up check. Snooze is locked.</p>' : ''}
