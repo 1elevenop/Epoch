@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- **Alarms stopped ringing after deleting an alarm during its wake-up check.** The check kept running for the deleted alarm, its timeout set a `RINGING` state that `RingService` could never play, and every later alarm was silently queued behind it (seen for ~2.5 days on the test phone). Deleting an alarm now ends its ring in any phase, and `RingController.fire` treats a busy ring whose alarm is gone or that began over an hour ago as stale (logged as `killed`) instead of queueing behind it. Unit test: `StaleRingTest`.
+
 ## 1.0.0 — first public release (2026-11-23)
 
 WAKE11 1.0.0 is the first release on GitHub (released as 1.0.0 instead of the planned 0.6.0; the 0.6.0 build was never published). Everything below this summary is the detailed development log.

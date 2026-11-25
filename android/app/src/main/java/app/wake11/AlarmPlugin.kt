@@ -86,7 +86,16 @@ class AlarmPlugin : Plugin() {
     @PluginMethod
     fun deleteAlarm(call: PluginCall) = guard(call) {
         val id = call.getString("id") ?: throw IllegalArgumentException("id is required")
-        store.ringState()?.takeIf { it.alarmId == id }?.let { RingController.dismiss(context, id) }
+        // End this alarm's ring in any phase; a wake-check left running for a deleted alarm used to
+        // turn into a RINGING state that never ended and silently queued every later alarm.
+        store.ringState()?.takeIf { it.alarmId == id }?.let { rs ->
+            if (rs.phase == RingState.WAKE_CHECK_PENDING || rs.phase == RingState.WAKE_CHECK_PROMPT) {
+                WakeCheck.cancel(context, rs, "off")
+            } else {
+                RingController.dismiss(context, id, allowWakeCheck = false)
+            }
+        }
+        store.setQueue(store.queue() - id)
         store.delete(id)
         AlarmScheduler.cancel(context, id)
         AlarmScheduler.cancelResume(context, id)

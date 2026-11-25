@@ -13,6 +13,7 @@ object RingController {
     var onRingStopped: ((alarmId: String, reason: String) -> Unit)? = null
 
     private const val WEEK_MS = 7 * 24 * 3600_000L
+    private const val STALE_MS = 60 * 60_000L
     private val BUSY = setOf(RingState.RINGING, RingState.WAKE_CHECK_PROMPT)
 
     /** An alarm fired (or resumed). Decide whether it rings now or waits in the queue. */
@@ -22,7 +23,17 @@ object RingController {
             store.setQueue(store.queue() - alarmId) // deleted while waiting in the queue
             return
         }
-        val current = store.ringState()
+        var current = store.ringState()
+        if (current != null && current.phase in BUSY && current.alarmId != alarmId &&
+            isStale(current, store.get(current.alarmId) != null, now)
+        ) {
+            // A ring that can never end (its alarm is gone, or it is far past auto-silence) must not
+            // hold every later alarm in the queue. End it and let this alarm ring.
+            logOutcome(ctx, current, "killed", now)
+            store.setRingState(null)
+            RingService.running?.shutdown()
+            current = null
+        }
         // The real alarm takes over from the sunrise glow.
         Sunrise.clearNotification(ctx)
         SunriseActivity.current?.let { it.runOnUiThread { it.finish() } }
@@ -54,6 +65,10 @@ object RingController {
         }
         startRinging(ctx, state)
     }
+
+    /** Busy state that cannot be a live ring: its alarm was deleted, or it began over an hour ago. */
+    fun isStale(rs: RingState, alarmExists: Boolean, now: Long): Boolean =
+        !alarmExists || now - rs.firstRangAt > STALE_MS
 
     fun startRinging(ctx: Context, state: RingState) {
         AlarmStore(ctx).setRingState(state)
@@ -125,14 +140,17 @@ object RingController {
     }
 
     /** Challenge solved. Starts the wake-check if the alarm has one, otherwise finishes. */
-    fun dismiss(ctx: Context, alarmId: String, outcome: String = "dismissed", fails: Int = 0, now: Long = System.currentTimeMillis()) {
+    fun dismiss(
+        ctx: Context, alarmId: String, outcome: String = "dismissed", fails: Int = 0,
+        now: Long = System.currentTimeMillis(), allowWakeCheck: Boolean = true,
+    ) {
         val store = AlarmStore(ctx)
         val rs = store.ringState()
         if (rs == null || rs.alarmId != alarmId || rs.phase !in setOf(RingState.RINGING, RingState.SNOOZED)) return
         val alarm = store.get(alarmId)
         val withFails = rs.copy(challengeFails = rs.challengeFails + fails)
         AlarmScheduler.cancelResume(ctx, alarmId)
-        val wakeCheck = outcome == "dismissed" && alarm != null && alarm.wakeCheckEnabled && !rs.escalated
+        val wakeCheck = allowWakeCheck && outcome == "dismissed" && alarm != null && alarm.wakeCheckEnabled && !rs.escalated
 
         if (rs.escalated) {
             store.updateLog(
