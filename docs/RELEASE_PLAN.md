@@ -118,3 +118,60 @@ Extra Android items:
 
 ### Suggested order
 1. Decisions D-R1…D-R6 → 2. security fixes (§1 tasks: CSP, allowBackup, INTERNET test, XSS audit, template cleanup) → 3. logo + icons → 4. screenshots & media → 5. README, LICENSE, notices → 6. build, checksums, tag, GitHub Release.
+
+---
+
+## 7. Epoch 2.0.0 release plan (rebrand + redesign)
+
+**Why this release is different:** the package id changed (`app.wake11` → `app.epoch`), so Epoch installs **beside** WAKE11 instead of over it. Every user must move data with Export (WAKE11) → Import (Epoch). The release notes lead with that.
+
+Signing stays the same key (fingerprint `9E:B4:…:CB:3D`), so future Epoch updates install over Epoch.
+
+### 7.1 Decisions (owner)
+- [x] **Repo name:** renamed `1elevenop/WAKE11` → `1elevenop/Epoch` (2026-11-25); GitHub redirects old URLs, clones and release links; local `origin` updated.
+- [x] **Release type:** full release `v2.0.0` (owner, 2026-11-26).
+
+### 7.2 Finish on the phone (debug build, then release build)
+- [ ] Grant Epoch's permissions through the setup guide (notifications, alarms & reminders, full-screen, battery unrestricted, Samsung never-sleeping list).
+- [ ] Alarm 2 min out, screen locked: sound first, ring screen, challenge, dismiss, wake-up check. Snooze once.
+- [ ] Timer in the background rings; focus session phase-end rings with the app closed.
+- [x] Notification icon (mascot silhouette) shows in the status bar while ringing; launcher icon is the 3D mascot (2026-11-26, debug + release). Ring screen shows the alarmed mascot; test alarm rang, math challenge dismissed it. Still to see by eye: wake-up check screen (test alarms skip it), Samsung themed-icon silhouette.
+- [ ] Widgets: add all six again (new app), clock widgets open Tools → Clock, nap button sets an alarm.
+- [ ] Backup move: Export in WAKE11 1.0.1 → Import in Epoch. Alarms, logs, tasks, sessions, countdowns, world clocks arrive; an old theme loads as Black.
+- [ ] Backgrounds: pick a real photo through Android's file picker for the app and for the big display; a file over 50 MB is refused with a message.
+- [ ] Tools / Audio Lab cards: open and close each; sound stops when a card closes or the tab changes.
+- [ ] Only after the import is confirmed, and with the owner's OK: uninstall WAKE11 on the test phone.
+
+### 7.3 Repo content
+- [x] New screenshots (2026-11-26) in `media/screenshots/black/` (10) and `light/` (8), demo data from `scripts/demo-backup.mjs`, status bar cropped, ring screen without One UI's pop-up; the phone's own data was restored afterwards. Old WAKE11 `dark/` and `light/` sets removed. Widgets not re-shot (add them on the phone, then capture `11-widgets.png`).
+- [x] `scripts/gen-banners.py` → `media/banner/epoch-banner.png`, `epoch-social.png` (3D mascot, creme text) and `media/demo/epoch-demo.gif` (screen loop from the Black set); `wake11-*` banners and GIF deleted (2026-11-26).
+- [x] README: new image links (all checked), "What's new in 2.0", **Moving from WAKE11**, updates line fixed, Settings paths instead of "More" (2026-11-26). Check it renders on GitHub after the push.
+- [ ] GitHub social preview image (repo Settings → Social preview) → `epoch-social.png`.
+- [x] CHANGELOG `2.0.0 — Epoch` dated 2026-11-26; BLUEPRINT §17 phase 7 → ✅ with what is still open.
+
+### 7.4 Merge and gate
+- [x] PR 1elevenop/Epoch#1 `claude/epoch-rebrand-redesign-92271a` → `main`, merged 2026-11-26; review the diff; merge (squash not needed, history is clean).
+- [x] `npm test` 125/125, `npm audit` 0, Kotlin unit tests pass, `npm outdated`: only vitest 5.1.1 → 5.1.2 (dev, patch) (2026-11-26). Manual secret scan clean (no keystore or real passwords tracked; `keystore.properties` git-ignored; new images carry no metadata).
+- [ ] `gitleaks detect` on the whole history (not installed on this PC yet).
+- [x] `npm run build && npx cap sync android && cd android && gradlew assembleRelease` with versionName 2.0.0 / versionCode 9 (2026-11-26).
+- [x] `apksigner verify --print-certs` shows `9E:B4:…:CB:3D`; `Epoch-2.0.0.apk` (27.5 MB) SHA-256 `9098197d64409b9da0b01560a01fd7e8206df0cb5416d6e0c87f1ba943b5f823` in `SHA256SUMS.txt` (2026-11-26; rebuild if anything changes before the tag).
+- [x] Release APK installed over debug with `adb install -r` (data kept); test alarm rang and dismissed (2026-11-26).
+- [ ] Import check on the release build.
+
+### 7.5 Publish
+- [ ] Tag `v2.0.0` on `main`; push the tag.
+- [ ] `gh release create v2.0.0 Epoch-2.0.0.apk SHA256SUMS.txt --title "Epoch 2.0.0" --notes-file release-notes.md` (notes below).
+- [ ] Mark WAKE11 1.0.1's release notes with one line: "WAKE11 is now Epoch — see 2.0.0" (edit, don't delete).
+- [ ] Check the release page as a logged-out visitor: APK downloads, checksum matches, README images load.
+
+### 7.6 Release notes outline
+1. **WAKE11 is now Epoch.** New name, new look. It installs as a new app: export a backup in WAKE11 first (Settings → Backup), install Epoch, import it, then uninstall WAKE11.
+2. What's new: six tabs (Clock moved to Tools); settings gear; Tools and Audio Lab as cards that open in place; scarlet / black / creme palette with Black and Light themes; Geist type; backgrounds for the app and the big display (colour or image up to 50 MB); new icons.
+3. Fixed: Stopwatch (and other tools) buttons no longer jump from the middle to the bottom.
+4. Removed: the ten decorative themes (a WAKE11 backup that used one loads as Black).
+5. Install / verify: SHA-256, signing fingerprint, Android 8+ (minSdk as before), permissions to grant again.
+6. Known limitations: open device tests (T3, T8, T9–T14), images are not in backups, widgets must be added again.
+
+### 7.7 After release
+- [ ] Watch issues for a week (import problems, Samsung battery killing the new package).
+- [ ] Keep WAKE11 1.0.1 on the releases page for people who need to export from it.

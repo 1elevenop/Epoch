@@ -1,41 +1,78 @@
-/* Design tokens — BLUEPRINT §10. Themes (dark / light) arrive in Phase 5. */
+/* Design tokens — BLUEPRINT §10. Colour roles are set per theme (Black / Light) by core/theme.js;
+   the values here are the Black defaults used before it runs. */
 :root {
   --bg: #000000;
-  --surface: #111214;
-  --raised: #1a1c20;
-  --border: #2a2d33;
+  --surface: #0f0f0e;
+  --raised: #1b1b19;
+  --border: rgba(204, 200, 185, 0.14);
 
-  --text: #f2f3f5;
-  --text-2: #9aa0a6;
+  --text: #e8e5da;
+  --text-2: #a8a597;
+  --text-3: #8a877b;
 
-  --accent: #ff8a3d;
+  --accent: #f5332c;
   --on-accent: #000000;
 
-  --success: #3ddc84;
-  --danger: #ff5a5f;
-  --focus: #5b8cff;
-  --break: #3ddc84;
+  /* Semantic colours carry meaning only (done, overtime, focus / break phases). */
+  --success: #7fae84;
+  --danger: #f5332c;
+  --focus: #8296d0;
+  --break: #7fae84;
+  --on-danger: #000000;
 
+  /* Spacing: 4 px grid. */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 20px;
+  --s6: 24px;
+  --s8: 32px;
+  --s10: 40px;
+  --s12: 48px;
+  --gap: var(--s4);
+
+  /* Type: Geist for words, Geist Mono for every time and number. Weights 400 and 500 only. */
+  --font: 'Geist Sans', system-ui, sans-serif;
+  --mono: 'Geist Mono', ui-monospace, monospace;
+  --t-xs: 12px; /* line 16 */
+  --t-sm: 14px; /* line 20 */
+  --t-md: 16px; /* line 22 */
+  --t-lg: 20px; /* line 28 */
+  --t-xl: 28px; /* line 34 */
+  --size-body: var(--t-md);
   --size-clock: 22vw;
   --size-timer: 18vw;
-  --size-body: 16px;
+
+  /* Shape: controls 8, cards 12, sheets 16. */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --radius: var(--r-md);
+
   --touch: 48px;
 
-  --radius: 14px;
-  --gap: 16px;
-
+  /* Motion: one curve. Presses and toggles 150 ms, entrances 200 ms. */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 150ms;
   --dur: 200ms;
-  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 
   --tabbar-h: 64px;
   --safe-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
   --safe-top: var(--safe-area-inset-top, env(safe-area-inset-top, 0px));
+}
 
-  --font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+:root[data-theme='light'] {
+  --success: #2f6e45;
+  --danger: #b01c16;
+  --focus: #2f4a9e;
+  --break: #2f6e45;
+  --on-danger: #ffffff;
 }
 
 @media (prefers-reduced-motion: reduce) {
   :root {
     --dur: 0ms;
+    --dur-fast: 0ms;
   }
 }

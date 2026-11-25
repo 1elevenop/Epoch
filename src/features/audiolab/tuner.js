@@ -7,7 +7,7 @@ import { detectPitch, noteFromFreq, smoothPitch } from './dsp.js';
 import { header } from './ui.js';
 
 const ERRORS = {
-  NotAllowedError: 'Microphone permission denied. Allow it in Android Settings → Apps → WAKE11 → Permissions.',
+  NotAllowedError: 'Microphone permission denied. Allow it in Android Settings → Apps → Epoch → Permissions.',
   NotFoundError: 'No microphone found.',
   NotReadableError: 'The microphone is busy in another app.',
 };

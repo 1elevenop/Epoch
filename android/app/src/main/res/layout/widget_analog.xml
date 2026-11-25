@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/w_root" android:layout_width="match_parent" android:layout_height="match_parent"
-    android:padding="8dp" android:contentDescription="Analog clock. Opens WAKE11.">
+    android:padding="8dp" android:contentDescription="Analog clock. Opens Epoch.">
     <!-- Own dial and hands so Android 12+ does not draw its Material dial (off-brand next to the other widgets). -->
     <AnalogClock android:layout_width="match_parent" android:layout_height="match_parent"
         android:dial="@drawable/widget_dial"

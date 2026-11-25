@@ -23,8 +23,9 @@
   background: none;
   border: 0;
   color: var(--text-2);
-  font-size: 11px;
-  transition: color var(--dur) var(--ease);
+  font-size: var(--t-xs);
+  position: relative;
+  transition: color var(--dur-fast) var(--ease);
 }
 
 .tab svg {
@@ -32,13 +33,23 @@
   height: 24px;
   stroke: currentColor;
   fill: none;
-  stroke-width: 1.8;
+  stroke-width: 1.5;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
 .tab[aria-selected='true'] {
-  color: var(--accent);
+  color: var(--text);
+}
+/* Signature: the one accent hairline marks the live tab (and live progress elsewhere). */
+.tab[aria-selected='true']::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 30%;
+  right: 30%;
+  height: 1px;
+  background: var(--accent);
 }
 
 /* ---------- Screens ---------- */
@@ -51,13 +62,14 @@
 
 .screen h1 {
   margin: 0;
-  font-size: 28px;
-  font-weight: 650;
+  font-size: var(--t-xl);
+  font-weight: 500;
+  line-height: 1.2;
 }
 
 .big-time {
   font-size: var(--size-clock);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1;
   text-align: center;
   margin: 8vh 0 0;
@@ -77,8 +89,8 @@
 }
 
 .card h2 {
-  margin: 0 0 4px;
-  font-size: 17px;
+  margin: 0 0 var(--s1);
+  font-size: var(--t-md);
 }
 
 .card p {
@@ -88,12 +100,12 @@
 
 .phase-badge {
   display: inline-block;
-  padding: 2px 10px;
+  padding: 2px var(--s3);
   border-radius: 6px;
   background: var(--raised);
   color: var(--accent);
-  font-size: 13px;
-  font-weight: 600;
+  font-size: var(--t-sm);
+  font-weight: 500;
 }
 
 .list {
@@ -102,7 +114,7 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--s2);
 }
 
 .list-item {
@@ -111,24 +123,55 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--gap);
-  padding: 12px var(--gap);
+  padding: var(--s3) var(--gap);
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
 }
 
-.list-item span:last-child {
+.list-item span:last-child:not(:first-child) {
   color: var(--text-2);
-  font-size: 14px;
+  font-size: var(--t-sm);
 }
 
+/* Link rows end in a drawn chevron (no text glyphs). */
+a.list-item.link::after {
+  content: '';
+  flex: none;
+  width: 7px;
+  height: 7px;
+  margin-left: calc(-1 * var(--s2));
+  border-top: 1.5px solid var(--text-3);
+  border-right: 1.5px solid var(--text-3);
+  transform: rotate(45deg);
+}
+
+/* Opacity only: animating transform would make .screen the containing block
+   for its position:fixed .bottom-actions, so they would start mid-screen. */
 @keyframes fade-in {
   from {
     opacity: 0;
-    transform: translateY(4px);
   }
   to {
     opacity: 1;
-    transform: none;
   }
 }
+
+/* ---------- Settings gear (top right of every tabbed screen) ---------- */
+#app { position: relative; }
+.gear {
+  position: absolute;
+  top: calc(var(--safe-top) + var(--gap) - 8px);
+  right: calc(var(--gap) - 8px);
+  width: var(--touch);
+  height: var(--touch);
+  display: grid;
+  place-items: center;
+  color: var(--text-2);
+  z-index: 10;
+}
+.gear svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; }
+body.no-tabbar .gear, body.ring-mode .gear, body[data-screen='settings'] .gear { display: none; }
+body:not(.no-tabbar) .screen > :is(.screen-head, .section-head):first-child { margin-right: var(--s10); }
+.screen > p { margin: 0; }
+.list-item span:last-child:not(:first-child) { margin-left: auto; text-align: right; }

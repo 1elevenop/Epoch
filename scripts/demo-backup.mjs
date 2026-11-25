@@ -1,4 +1,4 @@
-// Builds a WAKE11 backup filled with neutral demo data for screenshots (RELEASE_PLAN §3).
+// Builds an Epoch backup filled with neutral demo data for screenshots (RELEASE_PLAN §3).
 // Validated with the app's own parseBackup before it is written.
 // Usage: node scripts/demo-backup.mjs [out.json]   → import it in Settings → Backup.
 
@@ -72,7 +72,7 @@ for (let d = 0; d < 7; d++) {
 }
 
 const settings = {
-  onboarded: true, onboardingSeen: true, theme: 'oled',
+  onboarded: true, onboardingSeen: true, theme: 'black',
   worldClocks: [{ name: 'London', zone: 'Europe/London' }, { name: 'New York', zone: 'America/New_York' }, { name: 'Tokyo', zone: 'Asia/Tokyo' }],
 };
 
@@ -82,6 +82,6 @@ if (!parsed.ok) {
   console.error('Demo backup is invalid:\n' + parsed.errors.join('\n'));
   process.exit(1);
 }
-const out = process.argv[2] ?? 'wake11-demo-backup.json';
+const out = process.argv[2] ?? 'epoch-demo-backup.json';
 writeFileSync(out, JSON.stringify(data, null, 1));
 console.log(`Wrote ${out}:`, parsed.counts);

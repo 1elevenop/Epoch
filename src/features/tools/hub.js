@@ -1,20 +1,19 @@
-// Tools hub (BLUEPRINT §6.7).
+// Tools (BLUEPRINT §6.7): an index-card drawer; each tool opens inside its card.
+
+import { mountDrawer } from '../shared/drawer.js';
+import { clockScreen } from '../clock/clock.js';
+import { intervalScreen } from './interval.js';
+import { breathingScreen } from './breathing.js';
+import { countdownsScreen } from './countdowns.js';
+import { speechScreen } from './speech.js';
 
 const TOOLS = [
-  ['interval', 'Interval / HIIT', 'Work, rest, rounds, Tabata'],
-  ['breathing', 'Breathing', 'Box, 4-7-8, custom'],
-  ['countdowns', 'Event countdowns', '"47 days" cards on Clock'],
-  ['chess', 'Chess clock', 'Two sides, increment'],
-  ['speech', 'Speech timer', 'Green → yellow → red'],
+  { id: 'clock', name: 'Clock', sub: 'World clocks, night clock', render: clockScreen },
+  { id: 'interval', name: 'Interval', sub: 'Work, rest, rounds', render: intervalScreen },
+  { id: 'breathing', name: 'Breathing', sub: 'Box, 4-7-8, custom', render: breathingScreen },
+  { id: 'countdowns', name: 'Countdowns', sub: 'Days until events', render: countdownsScreen },
+  { id: 'chess', name: 'Chess clock', sub: 'Two sides, increment', href: '#/tool-chess' },
+  { id: 'speech', name: 'Speech timer', sub: 'Green, yellow, red', render: speechScreen },
 ];
 
-export function toolsScreen(el) {
-  el.innerHTML = `
-    <section class="screen" aria-labelledby="screen-title">
-      <a class="back-link" href="#/more" aria-label="Back to More">‹ More</a>
-      <h1 id="screen-title">Tools</h1>
-      <ul class="list">
-        ${TOOLS.map(([id, name, sub]) => `<li><a class="list-item link" href="#/tool-${id}"><span>${name}</span><span>${sub} ›</span></a></li>`).join('')}
-      </ul>
-    </section>`;
-}
+export const toolsScreen = (el) => mountDrawer(el, { title: 'Tools', items: TOOLS });

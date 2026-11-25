@@ -7,6 +7,7 @@ import { formatHMS, ampm } from '../../core/time.js';
 import { getSettings, setSetting } from '../../core/store.js';
 import { esc } from '../../core/dom.js';
 import { ic } from '../../core/icons.js';
+import { emptyRow } from '../../core/mascot.js';
 
 const saved = () => getSettings().worldClocks.filter((c) => c && isValidZone(c.zone));
 
@@ -34,7 +35,7 @@ export function mountWorldClocks(host) {
         </li>`,
           )
           .join('')
-      : `<li class="empty">No cities yet.</li>`;
+      : emptyRow('No cities yet.', 'confused');
     update(Date.now());
   }
 

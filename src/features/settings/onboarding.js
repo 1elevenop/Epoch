@@ -31,7 +31,7 @@ export function onboardingScreen(el) {
     el.querySelectorAll('.dots li').forEach((li, i) => li.classList.toggle('on', i <= step));
     nextBtn.hidden = step === 3;
     if (step === 0) {
-      body.innerHTML = `<h1 id="screen-title">WAKE11</h1>
+      body.innerHTML = `<h1 id="screen-title">Epoch</h1>
         <p class="lead">An alarm clock that actually gets you up, plus timers, a stopwatch and focus sessions.</p>
         <ul class="ticks"><li>Alarms ring even when the phone is locked, silent or rebooted.</li>
         <li>Snoozing gets harder each time, and a wake-up check makes sure you stay up.</li>

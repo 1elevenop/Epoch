@@ -1,17 +1,24 @@
 // Boot, hash router, tab bar.
 
-import { TABS, PAGES } from './features/tabs.js';
+import { TABS, PAGES, homeTab } from './features/tabs.js';
 import { getSettings, setSetting } from './core/store.js';
 import { timerService } from './features/timer/service.js';
 import { showDone } from './features/timer/done.js';
 import { installLeaveDetection, focus, setDnd } from './features/focus/session.js';
 import { applyTheme } from './core/theme.js';
+import { applyAppBg } from './core/background.js';
 import { installBigDisplay } from './features/bigdisplay/bigdisplay.js';
 import { syncTimerSound } from './features/settings/alarm-defaults-ui.js';
 import { syncWidgets } from './core/widgets.js';
 import { AlarmPlugin } from './core/bridge.js';
 
+// Native status / navigation bar icons follow the theme.
+document.addEventListener('themechange', (e) => {
+  AlarmPlugin.setBarStyle?.(e.detail === 'light').catch(() => {});
+  applyAppBg().catch(() => {}); // the dim veil follows the theme
+});
 applyTheme(getSettings().theme, getSettings().accent);
+applyAppBg().catch(() => {});
 
 const view = document.getElementById('view');
 const tabbar = document.getElementById('tabbar');
@@ -49,7 +56,7 @@ export function navigate(id) {
 function route() {
   const screen = screenFromHash();
   if (!screen) {
-    navigate(getSettings().lastTab);
+    navigate(homeTab(getSettings().lastTab));
     return;
   }
   if (screen.id === current) return;
@@ -68,6 +75,7 @@ function route() {
     view.textContent = 'Something went wrong on this screen.';
   }
   document.body.classList.toggle('no-tabbar', !!screen.hideTabbar);
+  document.body.dataset.screen = screen.id;
   view.scrollTop = 0;
   window.scrollTo(0, 0);
   if (screen.isTab) setSetting('lastTab', screen.id);
@@ -85,7 +93,7 @@ route();
 // The ring WebView never shows timer alerts (its hash can change to #/ring after boot).
 if (!ringMode) timerService.init((done) => !location.hash.startsWith('#/ring') && showDone(done));
 if (!ringMode) installLeaveDetection();
-// App was killed mid-session? Give back the phone's normal mode (native only acts if WAKE11 set DND).
+// App was killed mid-session? Give back the phone's normal mode (native only acts if Epoch set DND).
 if (!ringMode && !focus.get()) setDnd(false);
 if (!ringMode) syncTimerSound();
 if (!ringMode) syncWidgets();

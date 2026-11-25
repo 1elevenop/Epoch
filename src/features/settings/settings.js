@@ -1,4 +1,4 @@
-// Settings (BLUEPRINT §6.8): theme gallery, accent, big-display transitions (live previews), general.
+// Settings (BLUEPRINT §6.8): Black / Light, accent, big-display transitions (live previews), general.
 
 import { esc } from '../../core/dom.js';
 import { getSettings, setSetting } from '../../core/store.js';
@@ -6,44 +6,41 @@ import { THEMES, ACCENTS, applyTheme, themeById } from '../../core/theme.js';
 import { TRANSITIONS, createDigits } from '../bigdisplay/digits.js';
 import { pad2 } from '../../core/time.js';
 import { backupHtml, bindBackup } from './backup-ui.js';
+import { backgroundHtml, bindBackground } from './background-ui.js';
 import { alarmDefaultsHtml, bindAlarmDefaults } from './alarm-defaults-ui.js';
 import { syncWidgets } from '../../core/widgets.js';
+import { mascot } from '../../core/mascot.js';
 
 const SCREENS = [
   ['timer', 'Timer'],
   ['stopwatch', 'Stopwatch'],
   ['focus', 'Focus'],
 ];
-const APP_VERSION = '1.0.0';
-
-function themeTile(t, selected) {
-  const v = t.t;
-  const style = `--bg:${v.bg};--surface:${v.solidSurface ?? v.surface};--text:${v.text};--text-2:${v.text2};--accent:${v.accent};--glow:${v.glow};--digit-font:${t.font.replace(/"/g, "'")}`;
-  return `<button class="theme-tile ${selected ? 'selected' : ''}" data-theme-id="${t.id}"
-      aria-pressed="${selected}" aria-label="Theme ${esc(t.name)}">
-    <span class="tt-preview" data-tt="${t.id}" style="${esc(style)}"><span class="tt-digits digits">12:34</span><span class="tt-bar"></span></span>
-    <span class="tt-name">${esc(t.name)}</span></button>`;
-}
+const APP_VERSION = '2.0.0';
 
 export function settingsScreen(el) {
   const s = getSettings();
   let target = 'timer';
   el.innerHTML = `
     <section class="screen settings" aria-labelledby="screen-title">
-      <a class="back-link" href="#/more" aria-label="Back to More">‹ More</a>
+      <a class="back-link" href="#/${s.lastTab}" aria-label="Back">Back</a>
       <h1 id="screen-title">Settings</h1>
 
       <h2 class="section-title">Theme</h2>
-      <div class="theme-grid" id="themes">${THEMES.map((t) => themeTile(t, t.id === s.theme)).join('')}</div>
+      <div class="seg" role="radiogroup" aria-label="Theme">
+        ${THEMES.map((t) => `<button class="seg-btn" role="radio" data-theme-id="${t.id}" aria-checked="${t.id === themeById(s.theme).id}">${t.name}</button>`).join('')}
+      </div>
 
       <h2 class="section-title">Accent colour</h2>
       <div class="swatches" role="radiogroup" aria-label="Accent colour">
-        <button class="swatch auto ${s.accent ? '' : 'on'}" data-accent="" role="radio" aria-checked="${!s.accent}" aria-label="Theme default">A</button>
+        <button class="swatch auto ${s.accent ? '' : 'on'}" data-accent="" role="radio" aria-checked="${!s.accent}" aria-label="Accent: theme default"></button>
         ${ACCENTS.map((c) => `<button class="swatch ${s.accent === c ? 'on' : ''}" data-accent="${c}" style="--c:${c}" role="radio" aria-checked="${s.accent === c}" aria-label="Accent ${c}"></button>`).join('')}
       </div>
 
+      ${backgroundHtml()}
+
       <h2 class="section-title">Big display transitions</h2>
-      <p class="muted">Turn the phone sideways on Timer, Stopwatch or Focus (or tap ⤢). Choose a screen, then tap a style.</p>
+      <p class="muted">Turn the phone sideways on Timer, Stopwatch or Focus (or tap the expand button). Choose a screen, then tap a style.</p>
       <div class="seg" role="tablist" aria-label="Screen">
         ${SCREENS.map(([id, l]) => `<button class="seg-btn" role="tab" data-target="${id}" aria-selected="${id === target}">${l}</button>`).join('')}
       </div>
@@ -61,10 +58,11 @@ export function settingsScreen(el) {
         <option value="0" ${s.weekStart === 0 ? 'selected' : ''}>Sunday</option></select></label>
       ${alarmDefaultsHtml(s)}
       ${backupHtml()}
-      <h2 class="section-title">More</h2>
-      <a class="list-item link" href="#/reliability"><span>Reliability</span><span>›</span></a>
-      <a class="list-item link" href="#/log"><span>Alarm log</span><span>›</span></a>
-      <p class="muted">WAKE11 ${APP_VERSION} · offline, no account.</p>
+      <h2 class="section-title">Help</h2>
+      <a class="list-item link" href="#/reliability"><span>Reliability</span></a>
+      <a class="list-item link" href="#/log"><span>Alarm log</span></a>
+      <a class="list-item link" href="#/onboarding"><span>Setup guide</span></a>
+      <div class="about">${mascot('wave', { size: 72 })}<p class="muted">Epoch ${APP_VERSION} · offline, no account.</p></div>
     </section>`;
 
   // ---- live previews ----
@@ -98,15 +96,13 @@ export function settingsScreen(el) {
 
   const section = el.querySelector('.settings');
   bindBackup(section);
+  bindBackground(section);
   section.addEventListener('click', (e) => {
     const th = e.target.closest('[data-theme-id]');
     if (th) {
       setSetting('theme', th.dataset.themeId);
       applyTheme(th.dataset.themeId, getSettings().accent);
-      el.querySelectorAll('[data-theme-id]').forEach((b) => {
-        b.classList.toggle('selected', b === th);
-        b.setAttribute('aria-pressed', String(b === th));
-      });
+      el.querySelectorAll('[data-theme-id]').forEach((b) => b.setAttribute('aria-checked', String(b === th)));
     }
     const ac = e.target.closest('[data-accent]');
     if (ac) {

@@ -109,7 +109,7 @@ describe('alarm validation', () => {
   it('needs a registered QR code when qr is in the chain', () => {
     const a = defaultAlarm();
     expect(validateAlarm({ ...a, challenge: { chain: ['qr', 'math'], level: 2, qrPayload: null } })).toContain('Register a QR code first');
-    expect(validateAlarm({ ...a, challenge: { chain: ['qr'], level: 2, qrPayload: 'WAKE11-ab' } })).toEqual([]);
+    expect(validateAlarm({ ...a, challenge: { chain: ['qr'], level: 2, qrPayload: 'EPOCH-ab' } })).toEqual([]);
     expect(validateAlarm({ ...a, challenge: { chain: [], level: 2 } })).toContain('Pick 1–4 challenges');
   });
 });

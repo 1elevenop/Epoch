@@ -25,7 +25,7 @@ export function breathingScreen(el) {
 
   el.innerHTML = `
     <section class="screen tool" aria-labelledby="screen-title">
-      <a class="back-link" href="#/tools" aria-label="Back to Tools">‹ Tools</a>
+      <a class="back-link" href="#/tools" aria-label="Back to Tools">Tools</a>
       <h1 id="screen-title">Breathing</h1>
       <div class="seg" role="tablist" aria-label="Pattern" id="pat">
         ${[['box', 'Box'], ['478', '4-7-8'], ['custom', 'Custom']].map(([v, l]) => `<button class="seg-btn" role="tab" data-v="${v}" aria-selected="${v === st.pattern}">${l}</button>`).join('')}

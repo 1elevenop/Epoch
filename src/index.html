@@ -8,8 +8,8 @@
     <!-- Offline app: everything comes from the app itself. No eval, no inline scripts, no network.
          'unsafe-inline' styles: a few style="" attributes (theme previews, memory grid). -->
     <meta http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; media-src 'self' mediastream: blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'" />
-    <title>WAKE11</title>
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' mediastream: blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'" />
+    <title>Epoch</title>
     <link rel="stylesheet" href="./styles/tokens.css" />
     <link rel="stylesheet" href="./styles/base.css" />
     <link rel="stylesheet" href="./styles/components.css" />
@@ -17,14 +17,15 @@
     <link rel="stylesheet" href="./styles/alarm.css" />
     <link rel="stylesheet" href="./styles/ring.css" />
     <link rel="stylesheet" href="./styles/focus.css" />
-    <link rel="stylesheet" href="./styles/themes.css" />
     <link rel="stylesheet" href="./styles/bigdisplay.css" />
     <link rel="stylesheet" href="./styles/audiolab.css" />
     <link rel="stylesheet" href="./styles/tools.css" />
+    <link rel="stylesheet" href="./styles/drawer.css" />
   </head>
   <body>
     <div id="app">
       <main id="view" tabindex="-1" aria-live="polite"></main>
+      <a id="gear" class="gear" href="#/settings" aria-label="Settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></a>
       <nav id="tabbar" class="tabbar" role="tablist" aria-label="Main sections"></nav>
     </div>
     <script type="module" src="./main.js"></script>

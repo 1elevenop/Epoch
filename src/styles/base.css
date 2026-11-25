@@ -61,8 +61,8 @@ button {
 }
 
 .digits {
+  font-family: var(--mono);
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.02em;
 }
 
 .sr-only {
@@ -86,3 +86,7 @@ button {
 [hidden] {
   display: none !important;
 }
+
+/* App background (core/background.js): a fixed layer behind every screen when one is chosen. */
+html[data-bg] body { background: transparent; }
+html[data-bg] body::before { content: ''; position: fixed; inset: 0; z-index: -1; background: var(--app-bg); }

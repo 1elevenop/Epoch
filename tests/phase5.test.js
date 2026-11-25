@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { diff } from '../src/features/bigdisplay/digits.js';
 import { TRANSITIONS, transitionById } from '../src/features/bigdisplay/transitions/index.js';
 import { SEGMENTS } from '../src/features/bigdisplay/transitions/fx.js';
-import { THEMES, contrast, themeById, onAccent } from '../src/core/theme.js';
+import { THEMES, contrast, themeById, onAccent, normalizeThemeId } from '../src/core/theme.js';
 import { timerView, stopwatchView, focusView, pickTimer } from '../src/features/bigdisplay/sources.js';
 import * as T from '../src/features/timer/model.js';
 import * as SW from '../src/features/stopwatch/model.js';
@@ -40,19 +40,26 @@ describe('transitions', () => {
 });
 
 describe('themes', () => {
-  const REQUIRED = ['bg', 'surface', 'raised', 'border', 'text', 'text2', 'accent', 'glow'];
-  it('12 themes with all tokens and unique ids', () => {
-    expect(THEMES).toHaveLength(12);
-    expect(new Set(THEMES.map((t) => t.id)).size).toBe(12);
+  const REQUIRED = ['bg', 'surface', 'raised', 'border', 'text', 'text2', 'text3', 'accent'];
+  it('Black and Light only, with all tokens', () => {
+    expect(THEMES.map((t) => t.id)).toEqual(['black', 'light']);
     for (const t of THEMES) for (const k of REQUIRED) expect(t.t[k], `${t.id}.${k}`).toBeTruthy();
-    expect(themeById('missing').id).toBe('oled');
+    expect(themeById('missing').id).toBe('black');
+  });
+  it('WAKE11 theme ids map to Black or Light', () => {
+    expect(normalizeThemeId('light')).toBe('light');
+    for (const id of ['oled', 'dark', 'neon', 'matrix', 'deepsea']) expect(normalizeThemeId(id)).toBe('black');
+    expect(normalizeThemeId('nope')).toBeNull();
+    expect(themeById('neon').id).toBe('black');
   });
   it('text contrast ≥ 4.5:1 on background and surface (rule 9)', () => {
     for (const t of THEMES) {
-      const surface = t.t.solidSurface ?? t.t.surface;
-      expect(contrast(t.t.text, t.t.bg), `${t.id} text/bg`).toBeGreaterThanOrEqual(4.5);
-      expect(contrast(t.t.text, surface), `${t.id} text/surface`).toBeGreaterThanOrEqual(4.5);
-      expect(contrast(t.t.text2, t.t.bg), `${t.id} text2/bg`).toBeGreaterThanOrEqual(4.5);
+      for (const bg of [t.t.bg, t.t.surface, t.t.raised]) {
+        expect(contrast(t.t.text, bg), `${t.id} text`).toBeGreaterThanOrEqual(4.5);
+        expect(contrast(t.t.text2, bg), `${t.id} text2`).toBeGreaterThanOrEqual(4.5);
+        expect(contrast(t.t.text3, bg), `${t.id} text3`).toBeGreaterThanOrEqual(4.5);
+      }
+      expect(contrast(t.t.accent, t.t.bg), `${t.id} accent text`).toBeGreaterThanOrEqual(4.5);
       expect(contrast(onAccent(t, t.t.accent), t.t.accent), `${t.id} button text`).toBeGreaterThanOrEqual(4.5);
     }
   });

@@ -1,8 +1,9 @@
-// Event countdowns (BLUEPRINT §6.7): title + date → "47 days"; cards on the Clock tab.
+// Event countdowns (BLUEPRINT §6.7): title + date → "47 days"; cards on Tools → Clock.
 // Stored in settings (so export/import carries them), validated on every read (rule 6).
 
 import { getSettings, setSetting } from '../../core/store.js';
 import { esc } from '../../core/dom.js';
+import { ic } from '../../core/icons.js';
 import * as M from './models.js';
 import { syncWidgets } from '../../core/widgets.js';
 
@@ -21,11 +22,11 @@ function card(c, now, withActions) {
     <div class="cd-main"><strong>${esc(c.title)}</strong><span class="muted">${pretty(c.date)}</span></div>
     <span class="cd-days digits">${M.daysLabel(days)}</span>
     ${withActions ? `<label class="check cd-pin"><input type="checkbox" data-act="pin" ${c.onClock ? 'checked' : ''} aria-label="Show ${esc(c.title)} on the Clock tab" /> Clock</label>
-      <button class="icon-btn" data-act="del" aria-label="Delete ${esc(c.title)}">×</button>` : ''}
+      <button class="icon-btn" data-act="del" aria-label="Delete ${esc(c.title)}">${ic('close')}</button>` : ''}
   </li>`;
 }
 
-/** Clock tab cards (only those marked "Clock"). Returns a redraw function. */
+/** Tools → Clock cards (only those marked "Clock"). Returns a redraw function. */
 export function mountCountdownCards(host) {
   const draw = (now = Date.now()) => {
     const list = M.sortCountdowns(listCountdowns().filter((c) => c.onClock), now);
@@ -38,7 +39,7 @@ export function mountCountdownCards(host) {
 export function countdownsScreen(el) {
   el.innerHTML = `
     <section class="screen tool" aria-labelledby="screen-title">
-      <a class="back-link" href="#/tools" aria-label="Back to Tools">‹ Tools</a>
+      <a class="back-link" href="#/tools" aria-label="Back to Tools">Tools</a>
       <h1 id="screen-title">Event countdowns</h1>
       <form class="form" id="f" novalidate>
         <label class="field">Event<input class="input" name="title" maxlength="60" placeholder="e.g. Exams start" required /></label>

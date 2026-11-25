@@ -5,7 +5,8 @@ import { validateAlarm, SOUNDS, DEFAULT_CHALLENGES } from '../alarm/model.js';
 import { validatePlan } from '../focus/engine.js';
 import { DEFAULT_SETTINGS } from '../../core/store.js';
 import { sanitizeCountdowns } from '../tools/models.js';
-import { THEMES } from '../../core/theme.js';
+import { normalizeThemeId } from '../../core/theme.js';
+import { isValidBg } from '../../core/background.js';
 import { TRANSITIONS } from '../bigdisplay/transitions/index.js';
 
 export const BACKUP_VERSION = 1;
@@ -17,7 +18,7 @@ const isBool = (v) => typeof v === 'boolean';
 const isArr = Array.isArray;
 
 export function buildBackup({ alarms, alarmLogs, tasks, sessions, settings }, now = Date.now()) {
-  return { version: BACKUP_VERSION, exportedAt: now, app: 'WAKE11', alarms, alarmLogs, tasks, sessions, settings };
+  return { version: BACKUP_VERSION, exportedAt: now, app: 'Epoch', alarms, alarmLogs, tasks, sessions, settings };
 }
 
 function checkAlarm(a, i, err) {
@@ -59,7 +60,6 @@ function checkSession(s, i, err) {
   if (!isNum(s.startedAt) || !isNumOrNull(s.endedAt ?? null)) err(`session ${i}: times`);
 }
 
-const THEME_IDS = new Set(THEMES.map((t) => t.id));
 const TR_IDS = new Set(TRANSITIONS.map((t) => t.id));
 /** Keeps only known settings with the right type; unknown keys are an error (rule 6). */
 function checkSettings(s, err) {
@@ -73,7 +73,9 @@ function checkSettings(s, err) {
     if (k === 'accent') {
       if (v !== null && !/^#[0-9a-f]{6}$/i.test(v)) err('settings: accent');
     } else if (k === 'theme') {
-      if (!THEME_IDS.has(v)) err('settings: theme');
+      if (!normalizeThemeId(v)) err('settings: theme'); // WAKE11 theme ids map to Black / Light
+    } else if (k === 'bgApp' || k === 'bgBig') {
+      if (!isValidBg(v)) err(`settings: ${k}`);
     } else if (k === 'bigTransition') {
       if (!v || typeof v !== 'object' || Object.entries(v).some(([kk, vv]) => !['timer', 'stopwatch', 'focus'].includes(kk) || !TR_IDS.has(vv))) err('settings: bigTransition');
     } else if (k === 'worldClocks') {
@@ -100,7 +102,7 @@ function checkSettings(s, err) {
 export function validateBackup(data) {
   const errors = [];
   const err = (m) => errors.length < 50 && errors.push(m);
-  if (!data || typeof data !== 'object') return { ok: false, errors: ['Not a WAKE11 backup file'], counts: null };
+  if (!data || typeof data !== 'object') return { ok: false, errors: ['Not an Epoch backup file'], counts: null };
   if (data.version !== BACKUP_VERSION) err(`Unsupported backup version: ${data.version}`);
   for (const k of ['alarms', 'alarmLogs', 'tasks', 'sessions']) if (!isArr(data[k])) err(`${k} is missing`);
   if (errors.length) return { ok: false, errors, counts: null };

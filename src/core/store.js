@@ -1,9 +1,9 @@
 // Web storage: IndexedDB for records (tasks, sessions, stats cache), localStorage for UI settings only.
 // Native SharedPreferences owns alarms (rule D2) — nothing alarm-related is stored here.
 
-const DB_NAME = 'wake';
-const DB_VERSION = 1;
-const STORES = ['tasks', 'sessions', 'stats'];
+const DB_NAME = 'epoch';
+const DB_VERSION = 2;
+const STORES = ['tasks', 'sessions', 'stats', 'media']; // media: background images (Blob)
 
 let dbPromise = null;
 
@@ -53,10 +53,10 @@ export const db = {
 
 // ---------- Settings (localStorage, with in-memory fallback) ----------
 
-const SETTINGS_KEY = 'wake.settings';
+const SETTINGS_KEY = 'epoch.settings';
 
 export const DEFAULT_SETTINGS = Object.freeze({
-  lastTab: 'clock',
+  lastTab: 'alarm',
   hour12: false,
   showSeconds: true,
   haptics: true,
@@ -64,7 +64,7 @@ export const DEFAULT_SETTINGS = Object.freeze({
   worldClocks: [], // [{ name, zone }]
   onboarded: false,
   onboardingSeen: false,
-  theme: 'oled',
+  theme: 'black',
   accent: null, // null = the theme's own accent
   weekStart: 1, // 1 = Monday, 0 = Sunday
   bigTransition: { timer: 'flip', stopwatch: 'odometer', focus: 'nixie' },
@@ -76,6 +76,9 @@ export const DEFAULT_SETTINGS = Object.freeze({
   timerSound: 'hard_classic', // finished timers; mirrored to native
   focusDnd: false, // Do Not Disturb during focus sessions
   countdowns: [], // [{ id, title, date: 'YYYY-MM-DD', onClock }]
+  // Backgrounds: app (portrait screens) and big display (landscape), each theme / colour / image.
+  bgApp: { mode: 'theme', color: '#000000', dim: 0.4 },
+  bgBig: { mode: 'theme', color: '#000000', dim: 0.4 },
 });
 
 let memory = null;
@@ -113,7 +116,7 @@ const memState = new Map();
 
 export function loadState(key, fallback) {
   try {
-    const raw = globalThis.localStorage?.getItem(`wake.state.${key}`) ?? memState.get(key);
+    const raw = globalThis.localStorage?.getItem(`epoch.state.${key}`) ?? memState.get(key);
     return raw ? JSON.parse(raw) : fallback;
   } catch {
     return fallback;
@@ -124,7 +127,7 @@ export function saveState(key, value) {
   const raw = JSON.stringify(value);
   memState.set(key, raw);
   try {
-    globalThis.localStorage?.setItem(`wake.state.${key}`, raw);
+    globalThis.localStorage?.setItem(`epoch.state.${key}`, raw);
   } catch {
     // keep the in-memory copy
   }

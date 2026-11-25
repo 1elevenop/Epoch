@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping. WAKE11 is a small project, so keep changes focused.
+Thanks for helping. Epoch is a small project, so keep changes focused.
 
 ## Before you open a pull request
 

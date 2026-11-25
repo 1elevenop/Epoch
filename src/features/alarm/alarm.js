@@ -10,6 +10,7 @@ import { describeDays, oneShotAlarm, errorText } from './model.js';
 import { openEditor } from './editor.js';
 import { attachSwipe } from './swipe.js';
 import { ensureNotifications } from '../../core/permissions.js';
+import { emptyRow } from '../../core/mascot.js';
 
 /** Shows a bridge error; permission errors get a one-tap fix. */
 export function showError(err) {
@@ -106,7 +107,7 @@ export function alarmScreen(el) {
     alarms.sort((a, b) => a.hour * 60 + a.minute - (b.hour * 60 + b.minute));
     list.innerHTML = alarms.length
       ? alarms.map(row).join('')
-      : '<li class="empty">No alarms. Tap “+ New” or a nap chip.</li>';
+      : emptyRow('No alarms. Tap “+ New” or a nap chip.', 'snooze');
     list.querySelectorAll('.alarm-row').forEach((li) => attachSwipe(li, () => remove(li.dataset.id)));
     tick(Date.now());
   }

@@ -5,6 +5,7 @@ import { focus } from './session.js';
 import { listSessions } from './data.js';
 import * as E from './engine.js';
 import { formatDuration } from '../../core/time.js';
+import { emptyRow } from '../../core/mascot.js';
 
 export function focusHome(el) {
   const st = focus.get();
@@ -19,8 +20,8 @@ export function focusHome(el) {
           : `<a class="btn btn-round focus-start" href="#/focus-setup" aria-label="Start a focus session">Start focus session</a>`
       }
       <div class="row-links">
-        <a class="list-item link" href="#/tasks"><span>Tasks</span><span>›</span></a>
-        <a class="list-item link" href="#/focus-stats"><span>Stats</span><span>›</span></a>
+        <a class="list-item link" href="#/tasks"><span>Tasks</span></a>
+        <a class="list-item link" href="#/focus-stats"><span>Stats</span></a>
       </div>
       <h2 class="section-title">Recent sessions</h2>
       <ul class="log-list" id="recent"><li class="empty">Loading…</li></ul>
@@ -38,6 +39,6 @@ export function focusHome(el) {
                 ${s.leaves.length} ${s.leaves.length === 1 ? 'leave' : 'leaves'}${s.review ? ` · rated ${s.review.rating}/5` : ''}</div></li>`,
           )
           .join('')
-      : '<li class="empty">No sessions yet. Start your first one above.</li>';
+      : emptyRow('No sessions yet. Start your first one above.', 'focused');
   });
 }

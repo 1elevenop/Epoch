@@ -21,7 +21,7 @@ export function speechScreen(el) {
 
   el.innerHTML = `
     <section class="screen tool speech" aria-labelledby="screen-title">
-      <a class="back-link" href="#/tools" aria-label="Back to Tools">‹ Tools</a>
+      <a class="back-link" href="#/tools" aria-label="Back to Tools">Tools</a>
       <h1 id="screen-title">Speech timer</h1>
       <div class="plan-grid" id="cfg">
         <label class="field">Yellow at (min)<input class="input" type="number" inputmode="numeric" id="yellow" min="1" max="180" value="${st.yellow}" /></label>

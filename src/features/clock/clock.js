@@ -1,4 +1,4 @@
-// Clock tab: digital or analog face, date, next alarm, world clocks, night mode.
+// Tools → Clock: digital or analog face, date, next alarm, world clocks, night mode.
 
 import { subscribe } from '../../core/ticker.js';
 import { formatClock, ampm, formatUntil } from '../../core/time.js';
@@ -13,6 +13,7 @@ import { ic } from '../../core/icons.js';
 export function clockScreen(el) {
   el.innerHTML = `
     <section class="screen" aria-labelledby="screen-title">
+      <a class="back-link" href="#/tools" aria-label="Back to Tools">Tools</a>
       <h1 id="screen-title" class="sr-only">Clock</h1>
       <div class="toolbar">
         <button class="btn btn-ghost" id="face-toggle"></button>
