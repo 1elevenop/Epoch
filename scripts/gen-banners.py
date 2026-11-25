@@ -1,7 +1,8 @@
 """README banner and GitHub social preview from the logo and real screenshots.
 
 Usage: python scripts/gen-banners.py   (run from the repo root; needs Pillow and Windows' Segoe UI)
-Writes media/banner/wake11-banner.png (1280x400) and media/banner/wake11-social.png (1280x640).
+Writes media/banner/epoch-banner.png (1280x400) and media/banner/epoch-social.png (1280x640),
+and media/demo/epoch-demo.gif from the Black screenshots.
 """
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
@@ -10,8 +11,9 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "media" / "banner"
 FONTS = Path("C:/Windows/Fonts")
 BG = (0, 0, 0)
-TEXT = (242, 243, 245)
-TEXT2 = (154, 160, 166)
+TEXT = (232, 229, 218)  # creme
+TEXT2 = (168, 165, 151)
+SCARLET = (245, 51, 44)
 TAGLINE = "The alarm clock that makes sure you actually get up"
 SUB = "Offline alarm, timers and focus for Android"
 
@@ -31,13 +33,13 @@ def rounded(im, radius):
 def phone(path, width):
     shot = Image.open(path).convert("RGB")
     shot = shot.resize((width, round(shot.height * width / shot.width)), Image.LANCZOS)
-    frame = Image.new("RGB", (shot.width + 16, shot.height + 16), (42, 45, 51))
+    frame = Image.new("RGB", (shot.width + 16, shot.height + 16), (27, 27, 25))
     frame.paste(shot, (8, 8))
     return rounded(rounded(frame, 44), 44)
 
 
 def text_block(draw, x, y, title_size, tag_size, sub_size):
-    draw.text((x, y), "WAKE11", font=font("seguisb.ttf", title_size), fill=TEXT)
+    draw.text((x, y), "Epoch", font=font("seguisb.ttf", title_size), fill=TEXT)
     y += round(title_size * 1.25)
     draw.text((x, y), TAGLINE, font=font("segoeui.ttf", tag_size), fill=TEXT)
     y += round(tag_size * 1.6)
@@ -46,7 +48,7 @@ def text_block(draw, x, y, title_size, tag_size, sub_size):
 
 def banner():
     im = Image.new("RGB", (1280, 400), BG)
-    icon = Image.open(ROOT / "media/logo/wake11-icon-1024.png").resize((216, 216), Image.LANCZOS)
+    icon = Image.open(ROOT / "media/logo/epoch-icon.png").resize((216, 216), Image.LANCZOS)
     im.paste(icon, (96, 92), icon)
     text_block(ImageDraw.Draw(im), 360, 118, 72, 28, 22)
     return im
@@ -54,17 +56,17 @@ def banner():
 
 def social():
     im = Image.new("RGB", (1280, 640), BG)
-    icon = Image.open(ROOT / "media/logo/wake11-icon-1024.png").resize((120, 120), Image.LANCZOS)
+    icon = Image.open(ROOT / "media/logo/epoch-icon.png").resize((120, 120), Image.LANCZOS)
     im.paste(icon, (72, 150), icon)
     d = ImageDraw.Draw(im)
-    d.text((72, 300), "WAKE11", font=font("seguisb.ttf", 64), fill=TEXT)
+    d.text((72, 300), "Epoch", font=font("seguisb.ttf", 64), fill=TEXT)
     tag = font("segoeui.ttf", 28)
     d.text((72, 392), "The alarm clock that makes", font=tag, fill=TEXT)
     d.text((72, 430), "sure you actually get up", font=tag, fill=TEXT)
     d.text((72, 492), SUB, font=font("segoeui.ttf", 20), fill=TEXT2)
     # Two phones rising from the bottom edge, the ring screen in front.
-    back = phone(ROOT / "media/screenshots/dark/02-alarms.png", 268)
-    front = phone(ROOT / "media/screenshots/dark/11-ring-challenge.png", 288)
+    back = phone(ROOT / "media/screenshots/black/01-alarms.png", 268)
+    front = phone(ROOT / "media/screenshots/black/09-ring-challenge.png", 288)
     shadow = Image.new("RGBA", (front.width + 60, front.height + 60), (0, 0, 0, 0))
     ImageDraw.Draw(shadow).rounded_rectangle((30, 30, front.width + 30, front.height + 30), 44, fill=(0, 0, 0, 200))
     shadow = shadow.filter(ImageFilter.GaussianBlur(18))
@@ -74,8 +76,22 @@ def social():
     return im
 
 
+def demo():
+    """A short loop through the main screens (alarm list → ring → focus → tools → big display)."""
+    names = ["01-alarms", "09-ring-challenge", "04-focus", "05-focus-stats", "06-tools-clock", "07-audio-lab"]
+    frames = []
+    for n in names:
+        shot = Image.open(ROOT / f"media/screenshots/black/{n}.png").convert("RGB")
+        frames.append(shot.resize((360, round(shot.height * 360 / shot.width)), Image.LANCZOS))
+    pal = [f.quantize(colors=128, method=Image.Quantize.MEDIANCUT) for f in frames]
+    out = ROOT / "media" / "demo" / "epoch-demo.gif"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    pal[0].save(out, save_all=True, append_images=pal[1:], duration=1800, loop=0, optimize=True)
+
+
 if __name__ == "__main__":
     OUT.mkdir(parents=True, exist_ok=True)
-    banner().save(OUT / "wake11-banner.png", optimize=True)
-    social().save(OUT / "wake11-social.png", optimize=True)
-    print("wrote", OUT)
+    banner().save(OUT / "epoch-banner.png", optimize=True)
+    social().save(OUT / "epoch-social.png", optimize=True)
+    demo()
+    print("wrote", OUT, "and media/demo/epoch-demo.gif")

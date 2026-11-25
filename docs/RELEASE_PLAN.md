@@ -143,9 +143,9 @@ Signing stays the same key (fingerprint `9E:B4:…:CB:3D`), so future Epoch upda
 - [ ] Only after the import is confirmed, and with the owner's OK: uninstall WAKE11 on the test phone.
 
 ### 7.3 Repo content
-- [ ] New screenshots in `media/screenshots/` (Black and Light; no personal data): Alarm, Timer, Stopwatch, Focus, Tools with an open card, Audio Lab, Settings → Background, big display landscape, ring screen, widgets.
-- [ ] Update `scripts/gen-banners.py` to the new name, palette and mark → `media/banner/epoch-banner.png`, `epoch-social.png`; delete `wake11-*` banners; record a new demo GIF (`media/demo/epoch-demo.gif`).
-- [ ] README: image links, "What's new in 2.0", and a **Moving from WAKE11** section (Export → install Epoch → Import → uninstall WAKE11). Fix the line "Updates install over the old version" to say it applies from Epoch 2.0 on.
+- [x] New screenshots (2026-11-26) in `media/screenshots/black/` (10) and `light/` (8), demo data from `scripts/demo-backup.mjs`, status bar cropped, ring screen without One UI's pop-up; the phone's own data was restored afterwards. Old WAKE11 `dark/` and `light/` sets removed. Widgets not re-shot (add them on the phone, then capture `11-widgets.png`).
+- [x] `scripts/gen-banners.py` → `media/banner/epoch-banner.png`, `epoch-social.png` (3D mascot, creme text) and `media/demo/epoch-demo.gif` (screen loop from the Black set); `wake11-*` banners and GIF deleted (2026-11-26).
+- [x] README: new image links (all checked), "What's new in 2.0", **Moving from WAKE11**, updates line fixed, Settings paths instead of "More" (2026-11-26). Check it renders on GitHub after the push.
 - [ ] GitHub social preview image (repo Settings → Social preview) → `epoch-social.png`.
 - [ ] CHANGELOG `2.0.0 — Epoch` gets the date; BLUEPRINT §17 phase 7 → ✅ with what is still open.
 
