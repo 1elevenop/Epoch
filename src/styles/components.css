@@ -122,13 +122,13 @@
   font-size: 14px;
 }
 
+/* Opacity only: animating transform would make .screen the containing block
+   for its position:fixed .bottom-actions, so they would start mid-screen. */
 @keyframes fade-in {
   from {
     opacity: 0;
-    transform: translateY(4px);
   }
   to {
     opacity: 1;
-    transform: none;
   }
 }
