@@ -9,7 +9,7 @@ import { esc } from '../core/dom.js';
 import { runChain } from '../features/challenges/runner.js';
 
 /** Debug switch for device test T13: makes the web screen "fail" so the native fallback appears. */
-const BREAK_KEY = 'wake.debug.breakRing';
+const BREAK_KEY = 'epoch.debug.breakRing';
 export const ringBroken = () => {
   try {
     return localStorage.getItem(BREAK_KEY) === '1';

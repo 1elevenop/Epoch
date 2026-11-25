@@ -1,4 +1,4 @@
-package app.wake11
+package app.epoch
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -67,7 +67,7 @@ class RingService : Service() {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
         val n = Notification.Builder(this, CHANNEL)
-            .setSmallIcon(R.drawable.ic_stat_wake11)
+            .setSmallIcon(R.drawable.ic_stat_epoch)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(if (escalated) "You missed the wake-up check — snooze locked" else label.ifBlank { "Alarm" } + " — tap to dismiss")
             .setCategory(Notification.CATEGORY_ALARM)
@@ -164,8 +164,8 @@ class RingService : Service() {
     }
 
     companion object {
-        const val ACTION_START = "app.wake11.RING_START"
-        const val ACTION_STOP = "app.wake11.RING_STOP"
+        const val ACTION_START = "app.epoch.RING_START"
+        const val ACTION_STOP = "app.epoch.RING_STOP"
         /** Notifications on and the ring channel not blocked: needed for the full-screen ring screen. */
         fun notificationsAllowed(ctx: Context) =
             androidx.core.app.NotificationManagerCompat.from(ctx).areNotificationsEnabled() && channelEnabled(ctx)

@@ -85,7 +85,7 @@ route();
 // The ring WebView never shows timer alerts (its hash can change to #/ring after boot).
 if (!ringMode) timerService.init((done) => !location.hash.startsWith('#/ring') && showDone(done));
 if (!ringMode) installLeaveDetection();
-// App was killed mid-session? Give back the phone's normal mode (native only acts if WAKE11 set DND).
+// App was killed mid-session? Give back the phone's normal mode (native only acts if Epoch set DND).
 if (!ringMode && !focus.get()) setDnd(false);
 if (!ringMode) syncTimerSound();
 if (!ringMode) syncWidgets();

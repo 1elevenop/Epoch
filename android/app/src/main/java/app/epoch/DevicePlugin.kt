@@ -1,4 +1,4 @@
-package app.wake11
+package app.epoch
 
 import android.Manifest
 import android.app.KeyguardManager
@@ -114,7 +114,7 @@ class DevicePlugin : Plugin() {
         call.resolve(JSObject().put("access", FocusDnd.hasAccess(context)).put("owned", FocusDnd.isOwned(context)))
     }
 
-    /** Opens Android's "Do Not Disturb access" list so the owner can allow WAKE11 once. */
+    /** Opens Android's "Do Not Disturb access" list so the owner can allow Epoch once. */
     @PluginMethod
     fun openDndAccess(call: PluginCall) {
         val i = android.content.Intent(android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS)
@@ -132,7 +132,7 @@ class DevicePlugin : Plugin() {
     fun setFocusDnd(call: PluginCall) {
         if (call.getBoolean("on") == true) {
             when (val r = FocusDnd.turnOn(context)) {
-                "denied" -> call.reject("WAKE11 is not allowed to change Do Not Disturb", "DND_ACCESS_DENIED")
+                "denied" -> call.reject("Epoch is not allowed to change Do Not Disturb", "DND_ACCESS_DENIED")
                 else -> call.resolve(JSObject().put("result", r))
             }
         } else {

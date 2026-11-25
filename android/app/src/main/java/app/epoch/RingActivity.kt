@@ -1,4 +1,4 @@
-package app.wake11
+package app.epoch
 
 import android.graphics.Color
 import android.os.Build
@@ -77,7 +77,7 @@ class RingActivity : BridgeActivity() {
         if (fallbackShown && key == fallbackKey) return // same ring: keep the problem and what was typed
         fallbackKey = key
         fallbackShown = true
-        android.util.Log.w("WAKE11", "Ring web screen not ready in time — native fallback")
+        android.util.Log.w("Epoch", "Ring web screen not ready in time — native fallback")
         if (rs.phase == RingState.WAKE_CHECK_PROMPT) {
             setContentView(wakeCheckView())
             return

@@ -1,9 +1,9 @@
 {
-  "name": "wake-app",
+  "name": "epoch-app",
   "version": "1.0.1",
   "private": true,
   "type": "module",
-  "description": "WAKE11 — clock, alarm, focus and audio app (Capacitor + vanilla JS)",
+  "description": "Epoch — alarm, timer, focus and audio app (Capacitor + vanilla JS)",
   "scripts": {
     "build": "vite build",
     "test": "vitest run",

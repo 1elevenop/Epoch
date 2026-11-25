@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- WAKE11 analog widget (dial). One 200x200 canvas, pivot at the centre, drawn pointing to 12. -->
+<!-- Epoch analog widget (dial). One 200x200 canvas, pivot at the centre, drawn pointing to 12. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="200dp" android:height="200dp" android:viewportWidth="200" android:viewportHeight="200">
     <path android:fillColor="#101114" android:pathData="M100,4 a96,96 0 1,1 -0.01,0 z" />

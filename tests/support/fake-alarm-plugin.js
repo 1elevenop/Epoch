@@ -246,7 +246,7 @@ export function createMockAlarmPlugin({ clock = () => Date.now() } = {}) {
     dnd: { access: true, owned: false, filter: 'all' },
     async dndStatus() { return { access: this.dnd.access, owned: this.dnd.owned }; },
     async openDndAccess() {},
-    // Mirrors FocusDnd.kt: only turns DND off again if WAKE11 turned it on and nobody changed it.
+    // Mirrors FocusDnd.kt: only turns DND off again if Epoch turned it on and nobody changed it.
     async setFocusDnd(on) {
       const d = this.dnd;
       if (on) {

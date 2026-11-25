@@ -1,4 +1,4 @@
-// AlarmPlugin bridge (BLUEPRINT §4): talks to the native Kotlin plugins. WAKE11 is Android-only
+// AlarmPlugin bridge (BLUEPRINT §4): talks to the native Kotlin plugins. Epoch is Android-only
 // (D9); there is no browser build. Off-device every call rejects with code NOT_ANDROID (rule 5).
 
 import { Capacitor, registerPlugin } from '@capacitor/core';
@@ -52,11 +52,11 @@ function createNativeAlarmPlugin() {
 
 /** Stand-in when the native plugin is missing: every method rejects with a clear error code. */
 function unavailablePlugin() {
-  const fail = () => Promise.reject(Object.assign(new Error('WAKE11 runs on Android only'), { code: 'NOT_ANDROID' }));
+  const fail = () => Promise.reject(Object.assign(new Error('Epoch runs on Android only'), { code: 'NOT_ANDROID' }));
   return new Proxy({}, { get: (_, key) => (key === 'then' ? undefined : fail) });
 }
 
 const useNative = Capacitor.isNativePlatform() && Capacitor.isPluginAvailable(PLUGIN);
-if (!useNative) console.error('[bridge] native AlarmPlugin not available — WAKE11 is Android-only');
+if (!useNative) console.error('[bridge] native AlarmPlugin not available — Epoch is Android-only');
 
 export const AlarmPlugin = useNative ? createNativeAlarmPlugin() : unavailablePlugin();

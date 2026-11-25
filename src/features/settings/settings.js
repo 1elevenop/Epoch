@@ -64,7 +64,7 @@ export function settingsScreen(el) {
       <h2 class="section-title">More</h2>
       <a class="list-item link" href="#/reliability"><span>Reliability</span><span>›</span></a>
       <a class="list-item link" href="#/log"><span>Alarm log</span><span>›</span></a>
-      <p class="muted">WAKE11 ${APP_VERSION} · offline, no account.</p>
+      <p class="muted">Epoch ${APP_VERSION} · offline, no account.</p>
     </section>`;
 
   // ---- live previews ----

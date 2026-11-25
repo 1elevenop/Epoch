@@ -1,4 +1,4 @@
-package app.wake11
+package app.epoch
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -10,8 +10,8 @@ class ExactAlarmDeniedException : SecurityException("Exact alarm permission is n
 
 /** Wraps AlarmManager.setAlarmClock() (decision D4). Store is always written before scheduling. */
 object AlarmScheduler {
-    const val ACTION_FIRE = "app.wake11.FIRE" // regular trigger of an alarm
-    const val ACTION_RESUME = "app.wake11.RESUME" // snooze end, reboot resume, queued ring
+    const val ACTION_FIRE = "app.epoch.FIRE" // regular trigger of an alarm
+    const val ACTION_RESUME = "app.epoch.RESUME" // snooze end, reboot resume, queued ring
     const val EXTRA_ID = "alarmId"
     const val EXTRA_QUEUED = "queued"
 

@@ -14,7 +14,7 @@ export async function collectBackup() {
 
 export function backupFileName(now = new Date()) {
   const p = (n) => String(n).padStart(2, '0');
-  return `wake11-backup-${now.getFullYear()}-${p(now.getMonth() + 1)}-${p(now.getDate())}-${p(now.getHours())}${p(now.getMinutes())}.json`;
+  return `epoch-backup-${now.getFullYear()}-${p(now.getMonth() + 1)}-${p(now.getDate())}-${p(now.getHours())}${p(now.getMinutes())}.json`;
 }
 
 /** Writes a validated backup. Native alarms go first: if Android refuses them, nothing else changes. */

@@ -8,20 +8,20 @@ import { ic } from '../../core/icons.js';
 
 const OEM_STEPS = {
   samsung: [
-    'Settings → Battery → Background usage limits → Never sleeping apps → add WAKE11.',
-    'Settings → Apps → WAKE11 → Battery → Unrestricted.',
-    'Settings → Battery → Background usage limits: WAKE11 must not be in Sleeping apps or Deep sleeping apps.',
-    'Recent apps → tap the WAKE11 icon → Keep open (lock it).',
+    'Settings → Battery → Background usage limits → Never sleeping apps → add Epoch.',
+    'Settings → Apps → Epoch → Battery → Unrestricted.',
+    'Settings → Battery → Background usage limits: Epoch must not be in Sleeping apps or Deep sleeping apps.',
+    'Recent apps → tap the Epoch icon → Keep open (lock it).',
   ],
-  xiaomi: ['Security app → Autostart → enable WAKE11.', 'App info → Battery saver → No restrictions.', 'Lock WAKE11 in recent apps.'],
-  default: ['App info → Battery → Unrestricted / Not optimized.', 'Allow the app to start automatically if your phone has an Autostart setting.', 'Lock WAKE11 in recent apps if your launcher supports it.'],
+  xiaomi: ['Security app → Autostart → enable Epoch.', 'App info → Battery saver → No restrictions.', 'Lock Epoch in recent apps.'],
+  default: ['App info → Battery → Unrestricted / Not optimized.', 'Allow the app to start automatically if your phone has an Autostart setting.', 'Lock Epoch in recent apps if your launcher supports it.'],
 };
 
 export const ITEMS = [
   ['exactAlarm', 'Exact alarms', 'Needed to ring at the exact minute.', 'exactAlarm'],
   ['fullScreenIntent', 'Full-screen alarm', 'Shows the alarm over the lock screen.', 'fullScreen'],
   ['notifications', 'Notifications', 'The ringing alarm is shown as a notification.', 'notifications'],
-  ['batteryUnrestricted', 'Battery: unrestricted', 'Stops Android from delaying or killing WAKE11.', 'battery'],
+  ['batteryUnrestricted', 'Battery: unrestricted', 'Stops Android from delaying or killing Epoch.', 'battery'],
 ];
 
 export function oemSteps(manufacturer = '') {
@@ -53,7 +53,7 @@ export function reliabilityScreen(el) {
       <ul class="rel-list" id="rel-list"><li class="empty">Checking…</li></ul>
       <div class="card" id="oem"></div>
       <div class="card">
-        <h2>Never force-stop WAKE11</h2>
+        <h2>Never force-stop Epoch</h2>
         <p>"Force stop" in App info cancels every alarm until you open the app again. Android does this by design; no app can prevent it.</p>
       </div>
       <button class="btn" data-act="test" aria-label="Run a 10 second test alarm">Run 10-second test alarm</button>

@@ -1,4 +1,4 @@
-package app.wake11
+package app.epoch
 
 import android.app.AlarmManager
 import android.app.Notification
@@ -19,10 +19,10 @@ import org.json.JSONObject
  * Tap ✓ within the window → passed. No tap → ring again, escalated (snooze locked, level 4, max volume).
  */
 object WakeCheck {
-    const val ACTION_PROMPT = "app.wake11.WAKE_CHECK_PROMPT"
-    const val ACTION_TIMEOUT = "app.wake11.WAKE_CHECK_TIMEOUT"
-    const val ACTION_CONFIRM = "app.wake11.WAKE_CHECK_CONFIRM"
-    const val ACTION_REPOST = "app.wake11.WAKE_CHECK_REPOST"
+    const val ACTION_PROMPT = "app.epoch.WAKE_CHECK_PROMPT"
+    const val ACTION_TIMEOUT = "app.epoch.WAKE_CHECK_TIMEOUT"
+    const val ACTION_CONFIRM = "app.epoch.WAKE_CHECK_CONFIRM"
+    const val ACTION_REPOST = "app.epoch.WAKE_CHECK_REPOST"
     private const val NOTIF_ID = 4712
 
     fun start(ctx: Context, rs: RingState, alarm: Alarm, now: Long) {
@@ -133,7 +133,7 @@ object WakeCheck {
         )
         val confirm = pending(ctx, ACTION_CONFIRM)
         val n = Notification.Builder(ctx, RingService.CHANNEL)
-            .setSmallIcon(R.drawable.ic_stat_wake11)
+            .setSmallIcon(R.drawable.ic_stat_epoch)
             .setContentTitle("Are you up?")
             .setContentText("Tap ✓ within $windowSec s or the alarm rings again.")
             .setCategory(Notification.CATEGORY_ALARM)
@@ -163,7 +163,7 @@ object WakeCheck {
 class WakeCheckReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         context.getSystemService(PowerManager::class.java)
-            .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "wake11:wakecheck").acquire(10_000)
+            .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "epoch:wakecheck").acquire(10_000)
         when (intent.action) {
             WakeCheck.ACTION_PROMPT -> WakeCheck.prompt(context)
             WakeCheck.ACTION_TIMEOUT -> WakeCheck.timeout(context)

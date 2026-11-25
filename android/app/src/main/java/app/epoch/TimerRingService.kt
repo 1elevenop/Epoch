@@ -1,4 +1,4 @@
-package app.wake11
+package app.epoch
 
 import android.app.Activity
 import android.app.Notification
@@ -55,7 +55,7 @@ class TimerRingService : Service() {
             try {
                 player = RingService.createPlayer(this, TimerAlarms.sound(this)).apply { isLooping = true; start() }
             } catch (e: Exception) {
-                android.util.Log.w("WAKE11", "timer sound failed: ${e.message}")
+                android.util.Log.w("Epoch", "timer sound failed: ${e.message}")
             }
         }
         handler.removeCallbacksAndMessages(null)
@@ -77,7 +77,7 @@ class TimerRingService : Service() {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
         return Notification.Builder(this, RingService.CHANNEL)
-            .setSmallIcon(R.drawable.ic_stat_wake11)
+            .setSmallIcon(R.drawable.ic_stat_epoch)
             .setContentTitle("Time's up")
             .setContentText(ringing.values.joinToString(", ").ifBlank { "Timer" })
             .setCategory(Notification.CATEGORY_ALARM)
@@ -106,7 +106,7 @@ class TimerRingService : Service() {
     }
 
     companion object {
-        const val ACTION_STOP_ALL = "app.wake11.TIMER_STOP_ALL"
+        const val ACTION_STOP_ALL = "app.epoch.TIMER_STOP_ALL"
         private const val NOTIF_ID = 4721
         private const val AUTO_STOP_MS = 10 * 60_000L
 

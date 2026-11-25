@@ -1,4 +1,4 @@
-package app.wake11
+package app.epoch
 
 import android.app.Activity
 import android.content.Intent
@@ -82,7 +82,7 @@ class BackupPlugin : Plugin() {
 
     @PluginMethod
     fun saveFile(call: PluginCall) {
-        val name = call.getString("name") ?: "wake11-backup.json"
+        val name = call.getString("name") ?: "epoch-backup.json"
         if (call.getString("text") == null) return call.reject("text is required", "INVALID")
         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
             .addCategory(Intent.CATEGORY_OPENABLE)

@@ -1,4 +1,4 @@
-package app.wake11
+package app.epoch
 
 import android.app.AlarmManager
 import android.app.Notification
@@ -17,7 +17,7 @@ import android.os.PowerManager
  * status bar keeps showing the real alarm time.
  */
 object Sunrise {
-    private const val ACTION = "app.wake11.SUNRISE"
+    private const val ACTION = "app.epoch.SUNRISE"
     const val EXTRA_ID = "alarmId"
     const val EXTRA_END = "endAt"
     const val EXTRA_START = "startAt"
@@ -71,7 +71,7 @@ object Sunrise {
             .putExtra(EXTRA_ID, alarmId).putExtra(EXTRA_START, startAt).putExtra(EXTRA_END, endAt)
         val pi = PendingIntent.getActivity(ctx, NOTIF_ID, open, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         val n = Notification.Builder(ctx, CHANNEL)
-            .setSmallIcon(R.drawable.ic_stat_wake11)
+            .setSmallIcon(R.drawable.ic_stat_epoch)
             .setContentTitle("Sunrise")
             .setContentText("Your alarm rings soon")
             .setCategory(Notification.CATEGORY_ALARM)
@@ -97,7 +97,7 @@ class SunriseReceiver : BroadcastReceiver() {
         // Only for the trigger it was planned for, and never while another alarm rings or snoozes.
         if (!alarm.enabled || alarm.nextTriggerAt != endAt || endAt <= now || store.ringState() != null) return
         context.getSystemService(PowerManager::class.java)
-            .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "wake11:sunrise").acquire(5_000)
+            .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "epoch:sunrise").acquire(5_000)
         Sunrise.show(context, id, endAt - alarm.sunriseMin * 60_000L, endAt)
     }
 }

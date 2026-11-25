@@ -1,4 +1,4 @@
-package app.wake11
+package app.epoch
 
 import android.content.Context
 import android.content.Intent
@@ -78,7 +78,7 @@ object RingController {
 
     /**
      * Backup to the full-screen notification: open the ring screen directly. Android allows this when
-     * WAKE11 is in the foreground; if blocked, the call is dropped and the notification still applies.
+     * Epoch is in the foreground; if blocked, the call is dropped and the notification still applies.
      */
     fun openRingScreen(ctx: Context) {
         try {
@@ -87,7 +87,7 @@ object RingController {
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_USER_ACTION),
             )
         } catch (e: Exception) {
-            android.util.Log.w("WAKE11", "Direct ring screen start blocked: ${e.message}")
+            android.util.Log.w("Epoch", "Direct ring screen start blocked: ${e.message}")
         }
     }
 

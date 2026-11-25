@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Launch screen before the WebView is ready (pre-Android 12): black + WAKE11 mark. -->
+<!-- Launch screen before the WebView is ready (pre-Android 12): black + Epoch mark. -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@drawable/ic_launcher_background"/>
     <item android:drawable="@drawable/ic_launcher_foreground" android:width="216dp" android:height="216dp" android:gravity="center"/>

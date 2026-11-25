@@ -1,4 +1,4 @@
-package app.wake11
+package app.epoch
 
 import android.app.AlarmManager
 import android.app.Notification
@@ -17,7 +17,7 @@ import org.json.JSONObject
  * and rings at endAt with setAlarmClock (D4). Store before side effects (rule 4).
  */
 object TimerAlarms {
-    const val ACTION_FIRE = "app.wake11.TIMER_FIRE"
+    const val ACTION_FIRE = "app.epoch.TIMER_FIRE"
     const val EXTRA_ID = "timerId"
     private const val PREFS = "wake_timers"
     private const val RUNNING_CHANNEL = "timers_running"
@@ -128,7 +128,7 @@ object TimerAlarms {
         )
         val count = all(ctx).size
         val n = Notification.Builder(ctx, RUNNING_CHANNEL)
-            .setSmallIcon(R.drawable.ic_stat_wake11)
+            .setSmallIcon(R.drawable.ic_stat_epoch)
             .setContentTitle(next.runningName() + if (count > 1) " (+${count - 1} more)" else "")
             .setUsesChronometer(true)
             .setChronometerCountDown(true)
@@ -146,7 +146,7 @@ class TimerReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val id = intent.getStringExtra(TimerAlarms.EXTRA_ID) ?: return
         context.getSystemService(PowerManager::class.java)
-            .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "wake11:timer").acquire(10_000)
+            .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "epoch:timer").acquire(10_000)
         TimerAlarms.fire(context, id)
     }
 }

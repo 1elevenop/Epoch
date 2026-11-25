@@ -40,7 +40,7 @@ export function setupScreen(el) {
           <label class="field">Noise volume<input type="range" name="noiseVol" min="0.05" max="1" step="0.05" value="${noise.focusNoiseVolume}" aria-label="Background noise volume" /></label>
         </div>
         <label class="switch-row">Do Not Disturb during the session<input type="checkbox" role="switch" name="dnd" ${noise.focusDnd ? 'checked' : ''} /></label>
-        <div class="row dnd-hint" id="dnd-hint" hidden><span class="muted">WAKE11 needs Do Not Disturb access once: tap Allow, find WAKE11 near the bottom of the list and turn it on.</span>
+        <div class="row dnd-hint" id="dnd-hint" hidden><span class="muted">Epoch needs Do Not Disturb access once: tap Allow, find Epoch near the bottom of the list and turn it on.</span>
           <button type="button" class="btn btn-ghost" data-act="dnd-access" aria-label="Allow Do Not Disturb access in Android settings">Allow</button></div>
         <h3 class="form-section">Tasks for this session</h3>
         <ul class="pick" id="pick"><li class="empty">Loading…</li></ul>

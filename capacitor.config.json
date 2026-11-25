@@ -1,6 +1,6 @@
 {
-  "appId": "app.wake11",
-  "appName": "WAKE11",
+  "appId": "app.epoch",
+  "appName": "Epoch",
   "webDir": "dist",
   "backgroundColor": "#000000",
   "android": {

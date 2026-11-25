@@ -1,4 +1,4 @@
-package app.wake11
+package app.epoch
 
 import android.content.Intent
 import android.os.Bundle
@@ -30,7 +30,7 @@ class MainActivity : BridgeActivity() {
     }
 
     /**
-     * Safety net: if an alarm is ringing, opening WAKE11 always shows the ring screen, so the alarm
+     * Safety net: if an alarm is ringing, opening Epoch always shows the ring screen, so the alarm
      * can be stopped even when Android hid the notification / full-screen screen.
      */
     override fun onResume() {

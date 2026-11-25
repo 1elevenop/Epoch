@@ -17,7 +17,7 @@ const isBool = (v) => typeof v === 'boolean';
 const isArr = Array.isArray;
 
 export function buildBackup({ alarms, alarmLogs, tasks, sessions, settings }, now = Date.now()) {
-  return { version: BACKUP_VERSION, exportedAt: now, app: 'WAKE11', alarms, alarmLogs, tasks, sessions, settings };
+  return { version: BACKUP_VERSION, exportedAt: now, app: 'Epoch', alarms, alarmLogs, tasks, sessions, settings };
 }
 
 function checkAlarm(a, i, err) {
@@ -100,7 +100,7 @@ function checkSettings(s, err) {
 export function validateBackup(data) {
   const errors = [];
   const err = (m) => errors.length < 50 && errors.push(m);
-  if (!data || typeof data !== 'object') return { ok: false, errors: ['Not a WAKE11 backup file'], counts: null };
+  if (!data || typeof data !== 'object') return { ok: false, errors: ['Not an Epoch backup file'], counts: null };
   if (data.version !== BACKUP_VERSION) err(`Unsupported backup version: ${data.version}`);
   for (const k of ['alarms', 'alarmLogs', 'tasks', 'sessions']) if (!isArr(data[k])) err(`${k} is missing`);
   if (errors.length) return { ok: false, errors, counts: null };

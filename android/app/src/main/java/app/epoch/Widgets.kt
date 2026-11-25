@@ -1,4 +1,4 @@
-package app.wake11
+package app.epoch
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -26,8 +26,8 @@ import java.util.Locale
  */
 object Widgets {
     private const val PREFS = "wake_widgets"
-    const val ACTION_NAP = "app.wake11.widget.NAP"
-    const val ACTION_MIDNIGHT = "app.wake11.widget.MIDNIGHT"
+    const val ACTION_NAP = "app.epoch.widget.NAP"
+    const val ACTION_MIDNIGHT = "app.epoch.widget.MIDNIGHT"
     const val EXTRA_MIN = "minutes"
     val ROUTES = setOf("clock", "alarm", "timer", "tool-countdowns")
     private val ZONE_IDS: Set<String> by lazy { ZoneId.getAvailableZoneIds() }
@@ -89,7 +89,7 @@ object Widgets {
                 Kind.COUNTDOWN -> countdown(ctx)
             }
         } catch (e: Exception) {
-            android.util.Log.w("WAKE11", "widget ${kind.name} failed: ${e.message}")
+            android.util.Log.w("Epoch", "widget ${kind.name} failed: ${e.message}")
             return
         }
         mgr.updateAppWidget(ids, views)
@@ -108,10 +108,10 @@ object Widgets {
         ctx.getSystemService(AlarmManager::class.java).set(AlarmManager.RTC, c.timeInMillis, pi)
     }
 
-    /** Opens WAKE11 on one screen (route checked against [ROUTES] in MainActivity). */
+    /** Opens Epoch on one screen (route checked against [ROUTES] in MainActivity). */
     fun open(ctx: Context, route: String): PendingIntent {
         val i = Intent(ctx, MainActivity::class.java)
-            .setAction("app.wake11.OPEN.$route")
+            .setAction("app.epoch.OPEN.$route")
             .putExtra(MainActivity.EXTRA_ROUTE, route)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
         return PendingIntent.getActivity(ctx, route.hashCode(), i, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)

@@ -44,7 +44,7 @@ async function syncAlarm() {
 }
 
 /**
- * Do Not Disturb for the session (BLUEPRINT §6.5). Native only restores DND if WAKE11 turned it on
+ * Do Not Disturb for the session (BLUEPRINT §6.5). Native only restores DND if Epoch turned it on
  * and nobody changed it since. Failures never block the session.
  */
 export function setDnd(on) {

@@ -1,4 +1,4 @@
-package app.wake11
+package app.epoch
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
@@ -38,7 +38,7 @@ class WidgetActionReceiver : BroadcastReceiver() {
     private fun nap(ctx: Context, minutes: Int) {
         if (minutes !in setOf(10, 30, 60)) return
         if (!AlarmScheduler.canScheduleExact(ctx) || !RingService.notificationsAllowed(ctx)) {
-            Toast.makeText(ctx, "WAKE11 can't set alarms yet. Open WAKE11 → More → Reliability.", Toast.LENGTH_LONG).show()
+            Toast.makeText(ctx, "Epoch can't set alarms yet. Open Epoch → Settings → Reliability.", Toast.LENGTH_LONG).show()
             return
         }
         val now = System.currentTimeMillis()

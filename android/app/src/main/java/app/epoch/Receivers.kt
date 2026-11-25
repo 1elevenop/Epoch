@@ -1,4 +1,4 @@
-package app.wake11
+package app.epoch
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -10,7 +10,7 @@ class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val id = intent.getStringExtra(AlarmScheduler.EXTRA_ID) ?: return
         val wl = context.getSystemService(PowerManager::class.java)
-            .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "wake11:alarm")
+            .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "epoch:alarm")
         wl.acquire(10_000)
         RingController.fire(
             context, id,
