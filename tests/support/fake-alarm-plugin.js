@@ -225,6 +225,7 @@ export function createMockAlarmPlugin({ clock = () => Date.now() } = {}) {
       emit('timerStopped', { id });
     },
     async setImmersive() {},
+    async setBarStyle() {},
     async getReliabilityStatus() {
       return { exactAlarm: true, fullScreenIntent: true, notifications: true, batteryUnrestricted: true, manufacturer: 'web-mock', model: 'browser', sdk: 0 };
     },

@@ -54,6 +54,7 @@ export function applyTheme(id, accent = null) {
     '--text-2': theme.t.text2,
     '--text-3': theme.t.text3,
     '--accent': acc,
+    '--accent-default': theme.t.accent,
     '--on-accent': onAccent(theme, acc),
     '--digit-font': DIGIT_FONT,
     '--slot-w': '0.62em',
@@ -62,5 +63,6 @@ export function applyTheme(id, accent = null) {
   root.dataset.theme = theme.id;
   root.style.colorScheme = theme.id === 'light' ? 'light' : 'dark';
   document.querySelector('meta[name=theme-color]')?.setAttribute('content', theme.t.bg);
+  document.dispatchEvent(new CustomEvent('themechange', { detail: theme.id }));
   return theme;
 }

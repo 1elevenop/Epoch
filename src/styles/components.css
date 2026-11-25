@@ -172,4 +172,6 @@ a.list-item.link::after {
 }
 .gear svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; }
 body.no-tabbar .gear, body.ring-mode .gear, body[data-screen='settings'] .gear { display: none; }
-body:not(.no-tabbar) .screen-head { margin-right: var(--s10); }
+body:not(.no-tabbar) .screen > :is(.screen-head, .section-head):first-child { margin-right: var(--s10); }
+.screen > p { margin: 0; }
+.list-item span:last-child:not(:first-child) { margin-left: auto; text-align: right; }

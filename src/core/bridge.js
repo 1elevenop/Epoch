@@ -30,6 +30,7 @@ function createNativeAlarmPlugin() {
     getTimerState: () => p.getTimerState(),
     stopTimerRing: (id = null) => p.stopTimerRing(id ? { id } : {}),
     setImmersive: (on) => d.setImmersive({ on }),
+    setBarStyle: (light) => d.setBarStyle({ light }),
     getLogs: async () => (await p.getLogs()).logs,
     exportAlarms: () => b.exportAlarms(),
     importAlarms: (alarms, alarmLogs) => b.importAlarms({ alarms, alarmLogs }),

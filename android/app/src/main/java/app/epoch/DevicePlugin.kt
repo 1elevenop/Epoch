@@ -108,6 +108,19 @@ class DevicePlugin : Plugin() {
         }
     }
 
+    /** Bar icons follow the theme: dark icons on Light, light icons on Black. */
+    @PluginMethod
+    fun setBarStyle(call: PluginCall) {
+        val light = call.getBoolean("light") ?: false
+        val act = activity ?: return call.reject("No activity", "ERROR")
+        act.runOnUiThread {
+            val c = androidx.core.view.WindowCompat.getInsetsController(act.window, act.window.decorView)
+            c.isAppearanceLightStatusBars = light
+            c.isAppearanceLightNavigationBars = light
+            call.resolve()
+        }
+    }
+
     /** {access, owned} for the focus setup screen. */
     @PluginMethod
     fun dndStatus(call: PluginCall) {

@@ -31,7 +31,7 @@ export function settingsScreen(el) {
 
       <h2 class="section-title">Accent colour</h2>
       <div class="swatches" role="radiogroup" aria-label="Accent colour">
-        <button class="swatch auto ${s.accent ? '' : 'on'}" data-accent="" role="radio" aria-checked="${!s.accent}" aria-label="Theme default">A</button>
+        <button class="swatch auto ${s.accent ? '' : 'on'}" data-accent="" role="radio" aria-checked="${!s.accent}" aria-label="Accent: theme default"></button>
         ${ACCENTS.map((c) => `<button class="swatch ${s.accent === c ? 'on' : ''}" data-accent="${c}" style="--c:${c}" role="radio" aria-checked="${s.accent === c}" aria-label="Accent ${c}"></button>`).join('')}
       </div>
 

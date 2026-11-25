@@ -11,6 +11,8 @@ import { syncTimerSound } from './features/settings/alarm-defaults-ui.js';
 import { syncWidgets } from './core/widgets.js';
 import { AlarmPlugin } from './core/bridge.js';
 
+// Native status / navigation bar icons follow the theme.
+document.addEventListener('themechange', (e) => AlarmPlugin.setBarStyle?.(e.detail === 'light').catch(() => {}));
 applyTheme(getSettings().theme, getSettings().accent);
 
 const view = document.getElementById('view');
