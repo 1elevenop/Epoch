@@ -29,7 +29,7 @@ object Widgets {
     const val ACTION_NAP = "app.epoch.widget.NAP"
     const val ACTION_MIDNIGHT = "app.epoch.widget.MIDNIGHT"
     const val EXTRA_MIN = "minutes"
-    val ROUTES = setOf("clock", "alarm", "timer", "tool-countdowns")
+    val ROUTES = setOf("tool-clock", "alarm", "timer", "tool-countdowns")
     private val ZONE_IDS: Set<String> by lazy { ZoneId.getAvailableZoneIds() }
 
     enum class Kind(val cls: Class<*>) {
@@ -82,7 +82,7 @@ object Widgets {
         val views = try {
             when (kind) {
                 Kind.DIGITAL -> digital(ctx)
-                Kind.ANALOG -> RemoteViews(ctx.packageName, R.layout.widget_analog).apply { setOnClickPendingIntent(R.id.w_root, open(ctx, "clock")) }
+                Kind.ANALOG -> RemoteViews(ctx.packageName, R.layout.widget_analog).apply { setOnClickPendingIntent(R.id.w_root, open(ctx, "tool-clock")) }
                 Kind.WORLD -> world(ctx)
                 Kind.ALARM -> alarm(ctx)
                 Kind.TIMER -> timer(ctx)
@@ -161,7 +161,7 @@ object Widgets {
         setCharSequence(R.id.w_clock, "setFormat24Hour", clock)
         setTextViewText(R.id.w_next, next?.let { "Alarm $it" } ?: "")
         setViewVisibility(R.id.w_next, if (next == null) View.GONE else View.VISIBLE)
-        setOnClickPendingIntent(R.id.w_root, open(ctx, "clock"))
+        setOnClickPendingIntent(R.id.w_root, open(ctx, "tool-clock"))
     }
 
     private val WORLD_ROWS = intArrayOf(R.id.w_row1, R.id.w_row2, R.id.w_row3)
@@ -182,7 +182,7 @@ object Widgets {
             }
         }
         setViewVisibility(R.id.w_empty, if (list.length() == 0) View.VISIBLE else View.GONE)
-        setOnClickPendingIntent(R.id.w_root, open(ctx, "clock"))
+        setOnClickPendingIntent(R.id.w_root, open(ctx, "tool-clock"))
     }
 
     private fun alarm(ctx: Context) = RemoteViews(ctx.packageName, R.layout.widget_alarm).apply {

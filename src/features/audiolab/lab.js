@@ -11,7 +11,6 @@ const TOOLS = [
 export function labScreen(el) {
   el.innerHTML = `
     <section class="screen" aria-labelledby="screen-title">
-      <a class="back-link" href="#/more" aria-label="Back to More">‹ More</a>
       <h1 id="screen-title">Audio Lab</h1>
       <ul class="list">
         ${TOOLS.map(([id, name, sub]) => `<li><a class="list-item link" href="#/audio-${id}"><span>${name}</span><span>${sub} ›</span></a></li>`).join('')}

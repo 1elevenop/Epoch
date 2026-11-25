@@ -47,7 +47,7 @@ export function statusList(status, items = ITEMS) {
 export function reliabilityScreen(el) {
   el.innerHTML = `
     <section class="screen" aria-labelledby="screen-title">
-      <a class="back-link" href="#/more" aria-label="Back to More">‹ More</a>
+      <a class="back-link" href="#/settings" aria-label="Back to Settings">‹ Settings</a>
       <h1 id="screen-title">Reliability</h1>
       <p class="sub left">These settings decide whether alarms ring when the phone is locked, asleep or on battery saver.</p>
       <ul class="rel-list" id="rel-list"><li class="empty">Checking…</li></ul>

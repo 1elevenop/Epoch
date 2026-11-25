@@ -1,4 +1,4 @@
-// More → Alarm log: every ring instance + the BLUEPRINT §1 metric (average snoozes per morning).
+// Settings → Alarm log: every ring instance + the BLUEPRINT §1 metric (average snoozes per morning).
 
 import { AlarmPlugin } from '../../core/bridge.js';
 import { esc } from '../../core/dom.js';
@@ -27,7 +27,7 @@ export function summarize(logs, now = Date.now(), days = 14) {
 export function logScreen(el) {
   el.innerHTML = `
     <section class="screen" aria-labelledby="screen-title">
-      <a class="back-link" href="#/more" aria-label="Back to More">‹ More</a>
+      <a class="back-link" href="#/settings" aria-label="Back to Settings">‹ Settings</a>
       <h1 id="screen-title">Alarm log</h1>
       <div class="stats" id="stats"></div>
       <ul class="log-list" id="log-list"><li class="empty">Loading…</li></ul>

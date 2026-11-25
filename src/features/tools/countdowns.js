@@ -1,4 +1,4 @@
-// Event countdowns (BLUEPRINT §6.7): title + date → "47 days"; cards on the Clock tab.
+// Event countdowns (BLUEPRINT §6.7): title + date → "47 days"; cards on Tools → Clock.
 // Stored in settings (so export/import carries them), validated on every read (rule 6).
 
 import { getSettings, setSetting } from '../../core/store.js';
@@ -25,7 +25,7 @@ function card(c, now, withActions) {
   </li>`;
 }
 
-/** Clock tab cards (only those marked "Clock"). Returns a redraw function. */
+/** Tools → Clock cards (only those marked "Clock"). Returns a redraw function. */
 export function mountCountdownCards(host) {
   const draw = (now = Date.now()) => {
     const list = M.sortCountdowns(listCountdowns().filter((c) => c.onClock), now);

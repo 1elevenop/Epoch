@@ -1,6 +1,6 @@
 // Boot, hash router, tab bar.
 
-import { TABS, PAGES } from './features/tabs.js';
+import { TABS, PAGES, homeTab } from './features/tabs.js';
 import { getSettings, setSetting } from './core/store.js';
 import { timerService } from './features/timer/service.js';
 import { showDone } from './features/timer/done.js';
@@ -49,7 +49,7 @@ export function navigate(id) {
 function route() {
   const screen = screenFromHash();
   if (!screen) {
-    navigate(getSettings().lastTab);
+    navigate(homeTab(getSettings().lastTab));
     return;
   }
   if (screen.id === current) return;
@@ -68,6 +68,7 @@ function route() {
     view.textContent = 'Something went wrong on this screen.';
   }
   document.body.classList.toggle('no-tabbar', !!screen.hideTabbar);
+  document.body.dataset.screen = screen.id;
   view.scrollTop = 0;
   window.scrollTo(0, 0);
   if (screen.isTab) setSetting('lastTab', screen.id);

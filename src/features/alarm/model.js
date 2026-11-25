@@ -101,7 +101,7 @@ export function validateAlarm(a) {
 export function errorText(err) {
   switch (err?.code) {
     case 'EXACT_ALARM_DENIED':
-      return 'Exact alarms are blocked. Open More → Reliability to fix it.';
+      return 'Exact alarms are blocked. Open Settings → Reliability to fix it.';
     case 'NOTIFICATIONS_DENIED':
       return 'Notifications are off, so an alarm could not show its stop screen. Allow notifications first.';
     case 'INVALID':

@@ -30,7 +30,7 @@ export function settingsScreen(el) {
   let target = 'timer';
   el.innerHTML = `
     <section class="screen settings" aria-labelledby="screen-title">
-      <a class="back-link" href="#/more" aria-label="Back to More">‹ More</a>
+      <a class="back-link" href="#/${s.lastTab}" aria-label="Back">‹ Back</a>
       <h1 id="screen-title">Settings</h1>
 
       <h2 class="section-title">Theme</h2>
@@ -61,9 +61,10 @@ export function settingsScreen(el) {
         <option value="0" ${s.weekStart === 0 ? 'selected' : ''}>Sunday</option></select></label>
       ${alarmDefaultsHtml(s)}
       ${backupHtml()}
-      <h2 class="section-title">More</h2>
+      <h2 class="section-title">Help</h2>
       <a class="list-item link" href="#/reliability"><span>Reliability</span><span>›</span></a>
       <a class="list-item link" href="#/log"><span>Alarm log</span><span>›</span></a>
+      <a class="list-item link" href="#/onboarding"><span>Setup guide</span><span>›</span></a>
       <p class="muted">Epoch ${APP_VERSION} · offline, no account.</p>
     </section>`;
 

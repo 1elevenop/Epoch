@@ -56,7 +56,7 @@ export const db = {
 const SETTINGS_KEY = 'epoch.settings';
 
 export const DEFAULT_SETTINGS = Object.freeze({
-  lastTab: 'clock',
+  lastTab: 'alarm',
   hour12: false,
   showSeconds: true,
   haptics: true,
