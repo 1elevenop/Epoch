@@ -128,7 +128,7 @@ Extra Android items:
 Signing stays the same key (fingerprint `9E:B4:…:CB:3D`), so future Epoch updates install over Epoch.
 
 ### 7.1 Decisions (owner)
-- [ ] **Repo name:** rename `1elevenop/WAKE11` → `1elevenop/Epoch` before the release (GitHub redirects old URLs, clones and release links), or keep the name. Recommended: rename, then `git remote set-url origin` locally.
+- [x] **Repo name:** renamed `1elevenop/WAKE11` → `1elevenop/Epoch` (2026-11-25); GitHub redirects old URLs, clones and release links; local `origin` updated.
 - [ ] **Release type:** full release `v2.0.0` (recommended) or a pre-release `v2.0.0-beta.1` for a few days first.
 
 ### 7.2 Finish on the phone (debug build, then release build)
