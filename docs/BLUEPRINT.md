@@ -620,7 +620,7 @@ Test phone: Samsung Galaxy S25 Ultra (SM-S938B), Android 17.
 | 5d. Tools (interval/HIIT, breathing, countdowns, chess clock, speech timer) | ✅ | Built and checked on the phone; beeps/voice by ear still open |
 | 5e. Sunrise pre-alarm + DND during focus | ✅ | Built and checked on the phone; real-morning sunrise still open |
 | 6. Home-screen widgets | ✅ | 6 widgets; checked on the home screen (analog not placed yet) |
-| 7. Epoch 2.0 rebrand + redesign | 🔄 | Name/package, Black + Light, six tabs + gear, Geist, unslop passes, Affinity icons. Checked on the phone: tabs, Stopwatch bar fix, Light bars. Open: alarm/timer ring under the new package, Epoch → Epoch backup import, widgets, screenshots/banners |
+| 7. Epoch 2.0 rebrand + redesign | ✅ (released v2.0.0, 2026-11-26) | Name/package, Black + Light, six tabs + gear, Geist, unslop passes, Affinity icons, mascot icon and moods, screenshots/banners. Checked on the phone: tabs, Stopwatch bar fix, Light bars, test alarm ring + challenge under `app.epoch` (debug and release). Open: wake-up check with a real alarm, WAKE11 → Epoch backup import, widgets, real-photo background via the file picker |
 
 ### 17.2 Acceptance checklists (§11)
 | Phase | Check | Status |

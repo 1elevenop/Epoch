@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.0.0 — Epoch (unreleased)
+## 2.0.0 — Epoch (2026-11-26)
 
 WAKE11 is now **Epoch**, with a new package id (`app.epoch`), so it installs as a new app: export a backup in WAKE11 and import it in Epoch.
 

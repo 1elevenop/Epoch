@@ -129,7 +129,7 @@ Signing stays the same key (fingerprint `9E:B4:…:CB:3D`), so future Epoch upda
 
 ### 7.1 Decisions (owner)
 - [x] **Repo name:** renamed `1elevenop/WAKE11` → `1elevenop/Epoch` (2026-11-25); GitHub redirects old URLs, clones and release links; local `origin` updated.
-- [ ] **Release type:** full release `v2.0.0` (recommended) or a pre-release `v2.0.0-beta.1` for a few days first.
+- [x] **Release type:** full release `v2.0.0` (owner, 2026-11-26).
 
 ### 7.2 Finish on the phone (debug build, then release build)
 - [ ] Grant Epoch's permissions through the setup guide (notifications, alarms & reminders, full-screen, battery unrestricted, Samsung never-sleeping list).
@@ -147,10 +147,10 @@ Signing stays the same key (fingerprint `9E:B4:…:CB:3D`), so future Epoch upda
 - [x] `scripts/gen-banners.py` → `media/banner/epoch-banner.png`, `epoch-social.png` (3D mascot, creme text) and `media/demo/epoch-demo.gif` (screen loop from the Black set); `wake11-*` banners and GIF deleted (2026-11-26).
 - [x] README: new image links (all checked), "What's new in 2.0", **Moving from WAKE11**, updates line fixed, Settings paths instead of "More" (2026-11-26). Check it renders on GitHub after the push.
 - [ ] GitHub social preview image (repo Settings → Social preview) → `epoch-social.png`.
-- [ ] CHANGELOG `2.0.0 — Epoch` gets the date; BLUEPRINT §17 phase 7 → ✅ with what is still open.
+- [x] CHANGELOG `2.0.0 — Epoch` dated 2026-11-26; BLUEPRINT §17 phase 7 → ✅ with what is still open.
 
 ### 7.4 Merge and gate
-- [ ] Open a PR `claude/epoch-rebrand-redesign-92271a` → `main`; review the diff; merge (squash not needed, history is clean).
+- [x] PR 1elevenop/Epoch#1 `claude/epoch-rebrand-redesign-92271a` → `main`, merged 2026-11-26; review the diff; merge (squash not needed, history is clean).
 - [x] `npm test` 125/125, `npm audit` 0, Kotlin unit tests pass, `npm outdated`: only vitest 5.1.1 → 5.1.2 (dev, patch) (2026-11-26). Manual secret scan clean (no keystore or real passwords tracked; `keystore.properties` git-ignored; new images carry no metadata).
 - [ ] `gitleaks detect` on the whole history (not installed on this PC yet).
 - [x] `npm run build && npx cap sync android && cd android && gradlew assembleRelease` with versionName 2.0.0 / versionCode 9 (2026-11-26).
